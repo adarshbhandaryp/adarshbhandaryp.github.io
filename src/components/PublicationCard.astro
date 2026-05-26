@@ -1,0 +1,63 @@
+---
+import type { PublicationEntry } from '../utils/publications';
+import { externalPublicationLinks, getPublicationSummary, getPublicationUrl } from '../utils/publications';
+
+interface Props {
+  publication: PublicationEntry;
+  compact?: boolean;
+}
+
+const { publication, compact = false } = Astro.props;
+const { data, slug } = publication;
+const links = externalPublicationLinks(publication);
+const codeLink = links.find((link) => link.label === 'Code');
+const paperLink = links.find((link) => ['Paper', 'PDF', 'DOI', 'arXiv'].includes(link.label));
+const summary = getPublicationSummary(publication);
+---
+
+<article class="group h-full rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-900/5 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10">
+  {data.image && !compact && (
+    <div class="aspect-[16/9] overflow-hidden rounded-t-lg bg-slate-100">
+      <img src={data.image} alt={data.imageAlt || data.title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+    </div>
+  )}
+
+  <div class={compact ? 'flex h-full flex-col p-5' : 'flex h-full flex-col p-6'}>
+    <div class="mb-4 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-700">
+      <span>{data.venue}</span>
+      <span aria-hidden="true">/</span>
+      <span>{data.year}</span>
+      <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[0.68rem] text-slate-700">{data.type}</span>
+    </div>
+
+    <h3 class="text-lg font-bold leading-snug text-slate-950 md:text-xl">
+      <a href={getPublicationUrl(slug)} class="outline-none transition hover:text-blue-700 focus-visible:text-blue-700">
+        {data.title}
+      </a>
+    </h3>
+
+    <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{summary}</p>
+
+    <div class="mt-5 flex flex-wrap gap-2">
+      {data.tags.slice(0, compact ? 3 : 5).map((tag) => (
+        <span class="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-800">{tag}</span>
+      ))}
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-3 pt-1">
+      <a href={getPublicationUrl(slug)} class="inline-flex items-center rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+        Read summary
+      </a>
+      {paperLink && (
+        <a href={paperLink.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+          {paperLink.label}
+        </a>
+      )}
+      {codeLink && (
+        <a href={codeLink.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+          Code
+        </a>
+      )}
+    </div>
+  </div>
+</article>

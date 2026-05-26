@@ -1,67 +1,67 @@
 [
-    {
-        "role": "PhD Researcher",
-        "company": "Pattern Recognition Lab, FAU",
-        "location": "Erlangen, Germany",
-        "dates": "May 2020 – Present",
-        "description": [
-            "Developed self-supervised learning methods improving classification and lesion detection in mammography.",
-            "Built a multi-country mammography dataset repository of ~100,000 images for large-scale experimentation.",
-            "Designed and trained multimodal vision-language foundation models for breast imaging analysis.",
-            "Ranked 4th in the MICCAI ODELIA Challenge 2025 for breast MRI malignancy classification.",
-            "Designed reproducible MLOps pipelines using Docker and SLURM for large-scale deep learning."
-        ]
-    },
-    {
-        "role": "Guest Researcher",
-        "company": "West China Hospital, Sichuan University",
-        "location": "Chengdu, China",
-        "dates": "July 2024 – September 2024",
-        "description": [
-            "Conducted clinical validation of a Siemens Healthineers breast MRI AI prototype.",
-            "Initiated research projects aimed at improving clinical screening workflows.",
-            "Collaborated with radiologists to streamline and improve medical image annotation quality."
-        ]
-    },
-    {
-        "role": "Doctoral Researcher",
-        "company": "Siemens Healthineers",
-        "location": "Erlangen, Germany",
-        "dates": "May 2020 – March 2024",
-        "description": [
-            "Performed clinical validation of mammography AI algorithms in international collaborations (Vietnam cohort).",
-            "Contributed to workflow optimization under regulatory and clinical constraints.",
-            "Developed deep learning methods for categorizing positioning artifacts in mammography."
-        ]
-    },
-    {
-        "role": "Working Student & Master’s Thesis",
-        "company": "Siemens Healthineers",
-        "location": "Erlangen, Germany",
-        "dates": "October 2017 – March 2020",
-        "description": [
-            "Developed MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
-            "Evaluated IoT technologies for healthcare workflow optimization.",
-            "Co-invented a secure method for unlocking medical devices."
-        ]
-    },
-    {
-        "role": "Senior Engineer (Medical Devices)",
-        "company": "Transcaal Engineers India Pvt. Ltd.",
-        "location": "Bangalore, India",
-        "dates": "March 2015 – February 2016",
-        "description": [
-            "Generated ~25% annual company revenue through QA services across five Indian states.",
-            "Led and mentored a biomedical engineering team."
-        ]
-    },
-    {
-        "role": "Calibration Engineer",
-        "company": "Transcaal Engineers India Pvt. Ltd.",
-        "location": "Bangalore, India",
-        "dates": "September 2014 – February 2015",
-        "description": [
-            "Performed preventive maintenance and compliance testing of medical devices using Fluke biomedical equipment."
-        ]
-    }
+  {
+    "role": "PhD Researcher",
+    "company": "Pattern Recognition Lab, FAU",
+    "location": "Erlangen, Germany",
+    "dates": "May 2020 - Present",
+    "description": [
+      "Developed self-supervised learning methods improving classification and lesion detection in mammography.",
+      "Built a multi-country mammography dataset repository of approximately 100,000 images for large-scale experimentation.",
+      "Designed and trained multimodal vision-language foundation models for breast imaging analysis.",
+      "Ranked 4th in the MICCAI ODELIA Challenge 2025 for breast MRI malignancy classification.",
+      "Designed reproducible MLOps pipelines using Docker and SLURM for large-scale deep learning."
+    ]
+  },
+  {
+    "role": "Guest Researcher",
+    "company": "West China Hospital, Sichuan University",
+    "location": "Chengdu, China",
+    "dates": "July 2024 - September 2024",
+    "description": [
+      "Conducted clinical validation of a Siemens Healthineers breast MRI AI prototype.",
+      "Initiated research projects aimed at improving clinical screening workflows.",
+      "Collaborated with radiologists to streamline and improve medical image annotation quality."
+    ]
+  },
+  {
+    "role": "Doctoral Researcher",
+    "company": "Siemens Healthineers",
+    "location": "Erlangen, Germany",
+    "dates": "May 2020 - March 2024",
+    "description": [
+      "Performed clinical validation of mammography AI algorithms in international collaborations (Vietnam cohort).",
+      "Contributed to workflow optimization under regulatory and clinical constraints.",
+      "Developed deep learning methods for categorizing positioning artifacts in mammography."
+    ]
+  },
+  {
+    "role": "Working Student and Master's Thesis",
+    "company": "Siemens Healthineers",
+    "location": "Erlangen, Germany",
+    "dates": "October 2017 - March 2020",
+    "description": [
+      "Developed MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
+      "Evaluated IoT technologies for healthcare workflow optimization.",
+      "Co-invented a secure method for unlocking medical devices."
+    ]
+  },
+  {
+    "role": "Senior Engineer (Medical Devices)",
+    "company": "Transcaal Engineers India Pvt. Ltd.",
+    "location": "Bangalore, India",
+    "dates": "March 2015 - February 2016",
+    "description": [
+      "Generated approximately 25% annual company revenue through QA services across five Indian states.",
+      "Led and mentored a biomedical engineering team."
+    ]
+  },
+  {
+    "role": "Calibration Engineer",
+    "company": "Transcaal Engineers India Pvt. Ltd.",
+    "location": "Bangalore, India",
+    "dates": "September 2014 - February 2015",
+    "description": [
+      "Performed preventive maintenance and compliance testing of medical devices using Fluke biomedical equipment."
+    ]
+  }
 ]

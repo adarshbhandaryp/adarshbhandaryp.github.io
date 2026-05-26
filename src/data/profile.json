@@ -1,15 +1,15 @@
 {
-    "name": "Adarsh Bhandary Panambur",
-    "title": "Deep Learning Expert ",
-    "tagline": "Specializing in medical imaging, mammography, breast MRI, and multimodal vision-language models.",
-    "location": "Erlangen, Germany",
-    "email": "adarshbhandaryp@gmail.com",
-    "linkedin": "https://linkedin.com/in/adarshbhandaryp",
-    "github": "https://github.com/adarshbhandaryp",
-    "proof": [
-        "FAU Pattern Recognition Lab",
-        "Siemens Healthineers",
-        "West China Hospital",
-        "4th Place MICCAI ODELIA Challenge 2025"
-    ]
+  "name": "Adarsh Bhandary Panambur",
+  "title": "Deep Learning Expert",
+  "tagline": "Specializing in medical imaging, mammography, breast MRI, and multimodal vision-language models.",
+  "location": "Erlangen, Germany",
+  "email": "adarshbhandaryp@gmail.com",
+  "linkedin": "https://linkedin.com/in/adarshbhandaryp",
+  "github": "https://github.com/adarshbhandaryp",
+  "proof": [
+    "FAU Pattern Recognition Lab",
+    "Siemens Healthineers",
+    "West China Hospital",
+    "4th Place MICCAI ODELIA Challenge 2025"
+  ]
 }

@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
+import { externalPublicationLinks, getPublications, getPublicationSummary } from '../../utils/publications';
+
+export async function getStaticPaths() {
+  const publications = await getPublications();
+
+  return publications.map((publication) => ({
+    params: { slug: publication.slug },
+    props: { publication },
+  }));
+}
+
+const { publication } = Astro.props;
+const { data } = publication;
+const links = externalPublicationLinks(publication);
+const related = (await getPublications())
+  .filter((item) => item.slug !== publication.slug)
+  .filter((item) => item.data.tags.some((tag) => data.tags.includes(tag)))
+  .slice(0, 3);
+const summary = getPublicationSummary(publication);
+const citation = data.citation || `${data.authors.join(', ')}. (${data.year}). ${data.title}. ${data.venue}.`;
+---
+
+<BaseLayout
+  title={`${data.title} | Publication Summary`}
+  description={summary}
+  image={data.image}
+>
+  <Nav />
+
+  <main class="bg-white">
+    <article>
+      <header class="bg-hero px-5 pb-16 pt-32 text-white md:px-8 md:pb-20">
+        <div class="mx-auto max-w-5xl">
+          <a href={`${import.meta.env.BASE_URL}publications/`} class="text-sm font-semibold text-blue-100 transition hover:text-white">Back to publications</a>
+          <div class="mt-8 flex flex-wrap gap-2">
+            {data.tags.map((tag) => (
+              <span class="rounded-full border border-blue-200/20 bg-white/10 px-3 py-1 text-xs font-semibold text-blue-50">{tag}</span>
+            ))}
+          </div>
+          <h1 class="mt-6 text-4xl font-bold tracking-tight md:text-6xl">{data.title}</h1>
+          <p class="mt-6 text-lg leading-8 text-blue-50/85">{data.venue} / {data.year} / {data.type}</p>
+          <p class="mt-4 max-w-4xl text-base leading-7 text-blue-50/75">{data.authors.join(', ')}</p>
+
+          {links.length > 0 && (
+            <div class="mt-8 flex flex-wrap gap-3">
+              {links.map((link) => (
+                <a href={link.href} target="_blank" rel="noopener noreferrer" class="rounded-md bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-blue-50">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:px-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div class="min-w-0 space-y-10">
+          {data.image && (
+            <img src={data.image} alt={data.imageAlt || data.title} class="aspect-[16/9] w-full rounded-lg object-cover shadow-lg shadow-slate-900/10" />
+          )}
+
+          <section class="mini-blog-section">
+            <h2>Plain-language summary</h2>
+            <p>{summary}</p>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Abstract</h2>
+            <p>{data.abstract}</p>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Why it matters</h2>
+            <p>{data.relevance}</p>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Contribution</h2>
+            <p>{data.contribution}</p>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Method overview</h2>
+            <p>{data.method}</p>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Key findings</h2>
+            <ul>
+              {data.keyResults.map((result) => <li>{result}</li>)}
+            </ul>
+          </section>
+
+          <section class="mini-blog-section">
+            <h2>Citation</h2>
+            <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+              <p class="font-mono text-sm leading-6 text-slate-700">{citation}</p>
+              <pre class="mt-4 overflow-x-auto rounded-md bg-slate-950 p-4 text-sm text-blue-50"><code>{data.bibtex || 'TODO: Add BibTeX.'}</code></pre>
+            </div>
+          </section>
+        </div>
+
+        <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">Publication</h2>
+            <dl class="mt-4 space-y-3 text-sm">
+              <div>
+                <dt class="font-semibold text-slate-900">Year</dt>
+                <dd class="text-slate-600">{data.year}</dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-slate-900">Type</dt>
+                <dd class="capitalize text-slate-600">{data.type}</dd>
+              </div>
+              {data.status && (
+                <div>
+                  <dt class="font-semibold text-slate-900">Status</dt>
+                  <dd class="text-slate-600">{data.status}</dd>
+                </div>
+              )}
+            </dl>
+          </div>
+        </aside>
+      </div>
+    </article>
+
+    {related.length > 0 && (
+      <section class="bg-slate-50 px-5 py-14 md:px-8">
+        <div class="mx-auto max-w-7xl">
+          <h2 class="text-2xl font-bold text-slate-950 md:text-3xl">Related publications</h2>
+          <div class="mt-8 grid gap-6 md:grid-cols-3">
+            {related.map((item) => <PublicationCard publication={item} compact />)}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</BaseLayout>

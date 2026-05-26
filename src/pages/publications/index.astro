@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
+import { getPublications } from '../../utils/publications';
+
+const publications = await getPublications();
+const years = [...new Set(publications.map((publication) => publication.data.year))].sort((a, b) => b - a);
+const types = [...new Set(publications.map((publication) => publication.data.type))].sort();
+const tags = [...new Set(publications.flatMap((publication) => publication.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Publications | Adarsh Bhandary Panambur"
+  description="Publication archive for Adarsh Bhandary Panambur, including medical imaging papers, preprints, workshops, clinical validation studies, and patents."
+>
+  <Nav />
+
+  <main class="bg-white">
+    <section class="bg-hero px-5 pb-16 pt-32 text-white md:px-8 md:pb-20">
+      <div class="mx-auto max-w-7xl">
+        <p class="section-eyebrow text-blue-200">Publication Archive</p>
+        <h1 class="mt-4 max-w-4xl text-4xl font-bold tracking-tight md:text-6xl">Research notes and publication summaries</h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-blue-50/80">
+          Browse publication mini-blog pages by year, type, and topic. Missing manuscript details are intentionally marked as TODO placeholders.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-5 py-10 md:px-8 md:py-14">
+      <form id="publication-filters" class="grid gap-4 rounded-lg border border-slate-200 bg-slate-50 p-4 md:grid-cols-3" aria-label="Publication filters">
+        <label class="block">
+          <span class="text-sm font-semibold text-slate-700">Year</span>
+          <select id="filter-year" class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900">
+            <option value="all">All years</option>
+            {years.map((year) => <option value={String(year)}>{year}</option>)}
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="text-sm font-semibold text-slate-700">Topic</span>
+          <select id="filter-tag" class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900">
+            <option value="all">All topics</option>
+            {tags.map((tag) => <option value={tag}>{tag}</option>)}
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="text-sm font-semibold text-slate-700">Type</span>
+          <select id="filter-type" class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900">
+            <option value="all">All types</option>
+            {types.map((type) => <option value={type}>{type}</option>)}
+          </select>
+        </label>
+      </form>
+
+      <p id="publication-count" class="mt-5 text-sm font-medium text-slate-600" aria-live="polite">
+        Showing {publications.length} publications
+      </p>
+
+      <div id="publication-grid" class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {publications.map((publication) => (
+          <div
+            data-publication-card
+            data-year={publication.data.year}
+            data-type={publication.data.type}
+            data-tags={publication.data.tags.join('|')}
+          >
+            <PublicationCard publication={publication} compact />
+          </div>
+        ))}
+      </div>
+
+      <p id="publication-empty" class="mt-10 hidden rounded-lg border border-slate-200 bg-slate-50 p-6 text-slate-600">
+        No publications match the selected filters.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const yearFilter = document.getElementById('filter-year') as HTMLSelectElement | null;
+  const tagFilter = document.getElementById('filter-tag') as HTMLSelectElement | null;
+  const typeFilter = document.getElementById('filter-type') as HTMLSelectElement | null;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-publication-card]'));
+  const count = document.getElementById('publication-count');
+  const empty = document.getElementById('publication-empty');
+
+  function applyFilters() {
+    const selectedYear = yearFilter?.value || 'all';
+    const selectedTag = tagFilter?.value || 'all';
+    const selectedType = typeFilter?.value || 'all';
+    let visible = 0;
+
+    cards.forEach((card) => {
+      const matchesYear = selectedYear === 'all' || card.dataset.year === selectedYear;
+      const matchesType = selectedType === 'all' || card.dataset.type === selectedType;
+      const cardTags = (card.dataset.tags || '').split('|');
+      const matchesTag = selectedTag === 'all' || cardTags.includes(selectedTag);
+      const shouldShow = matchesYear && matchesType && matchesTag;
+
+      card.classList.toggle('hidden', !shouldShow);
+      if (shouldShow) visible += 1;
+    });
+
+    if (count) count.textContent = `Showing ${visible} publication${visible === 1 ? '' : 's'}`;
+    empty?.classList.toggle('hidden', visible !== 0);
+  }
+
+  [yearFilter, tagFilter, typeFilter].forEach((filter) => {
+    filter?.addEventListener('change', applyFilters);
+  });
+</script>

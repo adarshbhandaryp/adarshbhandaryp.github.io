@@ -1,45 +1,116 @@
 # Adarsh Bhandary Panambur - Portfolio Website
 
-This is a premium personal portfolio website built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com). It is designed to be hosted on GitHub Pages at `https://adarshbhandaryp.github.io/profile/`.
+Astro + Tailwind CSS academic portfolio for a medical imaging and deep learning researcher.
 
-## 🚀 Project Structure
+The site is configured for GitHub Pages at:
 
-- `src/components`: UI components (Hero, Nav, ProjectCard, etc.)
-- `src/layouts`: Base layout with global styles and meta tags.
-- `src/pages`: The main entry point (`index.astro`).
-- `src/data`: JSON files containing the content (Resume, Projects, etc.).
-- `src/styles`: Global CSS (custom fonts, animations, noise texture).
+```text
+https://adarshbhandaryp.github.io/home/
+```
 
-## 🛠️ Local Development
+## Project Structure
 
-1.  **Install Dependencies**:
-    ```bash
-    npm install
-    ```
+- `src/pages/index.astro`: Homepage.
+- `src/pages/publications/index.astro`: Filterable publication archive.
+- `src/pages/publications/[slug].astro`: Publication mini-blog detail pages.
+- `src/content/publications`: Markdown publication entries.
+- `src/content/config.ts`: Publication content schema.
+- `src/components`: Reusable UI sections and cards.
+- `src/data`: Profile, project, experience, education, skill, and gallery data.
+- `public`: Static assets served under the `/home/` base path.
 
-2.  **Start Development Server**:
-    ```bash
-    npm run dev
-    ```
-    Open your browser to `http://localhost:4321/profile/`.
+## Local Development
 
-3.  **Build for Production**:
-    ```bash
-    npm run build
-    ```
-    The output will be in the `dist/` directory.
+Install dependencies:
 
-## 📦 Deployment
+```bash
+npm install
+```
 
-This project is configured to deploy automatically to GitHub Pages using GitHub Actions.
+Start the dev server:
 
-1.  Push this code to your repository: `https://github.com/adarshbhandaryp/profile`
-2.  Go to **Settings > Pages** in your GitHub repository.
-3.  Under **Build and deployment**, select **GitHub Actions** as the source.
-4.  The workflow defined in `.github/workflows/deploy.yml` will automatically build and deploy the site on every push to `main`.
+```bash
+npm run dev
+```
 
-## 📝 Customization
+Open:
 
-- **Content**: Update the JSON files in `src/data/`.
-- **Styles**: Modify `tailwind.config.mjs` for colors and `src/styles/global.css` for global styles.
-- **Base Path**: If deploying to a different path, update `base` in `astro.config.mjs`.
+```text
+http://localhost:4321/home/
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+## Adding a Publication
+
+1. Create a new Markdown file in `src/content/publications/`.
+
+   Use a URL-safe filename, for example:
+
+   ```text
+   src/content/publications/my-new-paper.md
+   ```
+
+2. Fill the frontmatter fields.
+
+   ```yaml
+   ---
+   title: "Paper Title"
+   authors:
+     - "Author A"
+     - "Author B"
+   venue: "Conference or Journal"
+   year: 2026
+   type: "conference"
+   status: "Published"
+   abstract: "TODO: Add abstract."
+   plainLanguageSummary: "TODO: Add a short summary."
+   contribution: "TODO: Add contribution summary."
+   method: "TODO: Add method overview."
+   keyResults:
+     - "TODO: Add verified key result."
+   relevance: "TODO: Explain clinical or research relevance."
+   links:
+     paper: "https://example.com/paper"
+     code: "https://github.com/example/repo"
+     doi: "10.xxxx/example"
+     arxiv: "arXiv:0000.00000"
+   image: "/home/example-thumbnail.jpg"
+   imageAlt: "Thumbnail description"
+   tags:
+     - "Mammography"
+     - "Deep Learning"
+   featured: false
+   bibtex: "TODO: Add BibTeX."
+   ---
+   ```
+
+   Supported `type` values are `journal`, `conference`, `workshop`, `preprint`, `thesis`, and `patent`.
+
+3. Add any thumbnail image to `public/`.
+
+   Reference it with the GitHub Pages base path:
+
+   ```yaml
+   image: "/home/thumbnail.jpg"
+   ```
+
+4. Run:
+
+   ```bash
+   npm run build
+   ```
+
+## Deployment
+
+The repository uses GitHub Actions for GitHub Pages deployment. Push to `main`, then ensure repository settings use:
+
+```text
+Settings > Pages > Build and deployment > GitHub Actions
+```
+
+The Astro base path is configured in `astro.config.mjs` as `/home`.
