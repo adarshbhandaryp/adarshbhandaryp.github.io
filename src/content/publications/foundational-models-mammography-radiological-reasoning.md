@@ -10,13 +10,14 @@ venue: "Journal submission"
 year: 2025
 type: "journal"
 status: "Under internal review"
-abstract: "TODO: Add abstract after the submission details can be shared."
-plainLanguageSummary: "TODO: Add a plain-language summary after confirming shareable details."
-contribution: "TODO: Add verified contribution summary."
-method: "TODO: Add method overview after confirming shareable details."
+abstract: "TODO: Add abstract after submission details can be shared."
+plainLanguageSummary: "This work studies mammography foundation models for radiological reasoning with vision-language methods."
+contribution: "TODO: Add verified contribution summary after public release."
+method: "TODO: Add method overview after public release."
 keyResults:
+  - "Under internal review in the existing repository content."
   - "TODO: Add verified key results when shareable."
-relevance: "TODO: Explain research relevance when shareable."
+relevance: "Reasoning-oriented foundation models could support more structured and explainable mammography AI."
 links: {}
 tags:
   - "Mammography"

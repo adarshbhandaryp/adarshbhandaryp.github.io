@@ -11,14 +11,17 @@ venue: "German Conference on Medical Image Computing (BVM)"
 year: 2026
 type: "conference"
 status: "Accepted"
-abstract: "TODO: Add the accepted abstract when available."
-plainLanguageSummary: "TODO: Add a plain-language summary of this BVM work."
-contribution: "TODO: Add verified contribution summary."
-method: "TODO: Add method overview."
+abstract: "This BVM 2026 poster studies opportunistic breast cancer risk stratification from low-dose chest CT using multiple instance learning."
+plainLanguageSummary: "The project asks whether routine chest CT scans can provide useful breast cancer risk signals without a dedicated breast imaging exam."
+contribution: "The public BVM program verifies the title, authors, and poster-session placement."
+method: "The title indicates a multiple instance learning setup for risk stratification from low-dose chest CT."
 keyResults:
-  - "TODO: Add verified key results."
-relevance: "TODO: Explain relevance for opportunistic breast cancer risk stratification."
+  - "Accepted as poster P55 in the BVM 2026 program."
+  - "TODO: Add metrics after the abstract or paper is publicly available."
+relevance: "Opportunistic risk assessment can extract more preventive value from imaging already acquired for other clinical reasons."
 links: {}
+sourceUrl: "https://www.bvm-conf.org/wp-content/uploads/2026/01/Programmheft_der_Konferenz_20260126.pdf"
+sourceLabel: "BVM program"
 tags:
   - "Low-dose CT"
   - "Risk Stratification"

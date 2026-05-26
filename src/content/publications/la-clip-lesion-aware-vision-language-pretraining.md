@@ -9,13 +9,14 @@ venue: "European Congress of Radiology (ECR)"
 year: 2026
 type: "conference"
 status: "Accepted"
-abstract: "TODO: Add the accepted abstract when available."
-plainLanguageSummary: "TODO: Add a plain-language summary of LA-CLIP."
-contribution: "TODO: Add verified contribution summary."
-method: "TODO: Add method overview."
+abstract: "TODO: Add the ECR abstract when the public poster or proceedings page is available."
+plainLanguageSummary: "LA-CLIP is a lesion-aware mammography vision-language pretraining project centered on ROI-guided contrastive learning."
+contribution: "The title indicates a pretraining method that injects lesion-region information into image-text representation learning."
+method: "TODO: Add the verified ROI-guided contrastive learning details from the accepted abstract."
 keyResults:
-  - "TODO: Add verified key results."
-relevance: "TODO: Explain relevance for mammography vision-language pretraining."
+  - "Accepted for ECR 2026 according to the existing repository content."
+  - "TODO: Add public results after the ECR page is available."
+relevance: "Lesion-aware pretraining can make mammography vision-language models less dependent on global image shortcuts."
 links: {}
 tags:
   - "Mammography"

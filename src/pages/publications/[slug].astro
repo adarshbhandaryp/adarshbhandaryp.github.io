@@ -61,7 +61,22 @@ const citation = data.citation || `${data.authors.join(', ')}. (${data.year}). $
       <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:px-8 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div class="min-w-0 space-y-10">
           {data.image && (
-            <img src={data.image} alt={data.imageAlt || data.title} class="aspect-[16/9] w-full rounded-lg object-cover shadow-lg shadow-slate-900/10" />
+            <figure class="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-lg shadow-slate-900/10">
+              <img src={data.image} alt={data.imageAlt || data.title} class="max-h-[34rem] w-full bg-white object-contain" />
+              {(data.figureCaption || data.sourceUrl) && (
+                <figcaption class="border-t border-slate-200 px-5 py-3 text-sm leading-6 text-slate-600">
+                  {data.figureCaption}
+                  {data.sourceUrl && (
+                    <>
+                      {' '}
+                      <a href={data.sourceUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700 hover:text-blue-900">
+                        {data.sourceLabel || 'Source'}
+                      </a>
+                    </>
+                  )}
+                </figcaption>
+              )}
+            </figure>
           )}
 
           <section class="mini-blog-section">
@@ -124,6 +139,11 @@ const citation = data.citation || `${data.authors.join(', ')}. (${data.year}). $
                 </div>
               )}
             </dl>
+            {data.sourceUrl && (
+              <a href={data.sourceUrl} target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700">
+                {data.sourceLabel || 'Source'}
+              </a>
+            )}
           </div>
         </aside>
       </div>

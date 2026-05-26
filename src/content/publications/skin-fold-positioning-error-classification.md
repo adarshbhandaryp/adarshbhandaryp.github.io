@@ -12,13 +12,14 @@ venue: "Journal submission"
 year: 2025
 type: "journal"
 status: "Under internal review"
-abstract: "TODO: Add abstract after the submission details can be shared."
-plainLanguageSummary: "TODO: Add a plain-language summary after confirming shareable details."
-contribution: "TODO: Add verified contribution summary."
-method: "TODO: Add method overview after confirming shareable details."
+abstract: "TODO: Add abstract after submission details can be shared."
+plainLanguageSummary: "This study targets automated detection of skin-fold positioning errors in mammography quality control."
+contribution: "TODO: Add verified contribution summary after public release."
+method: "TODO: Add model and dataset details after public release."
 keyResults:
+  - "Under internal review in the existing repository content."
   - "TODO: Add verified key results when shareable."
-relevance: "TODO: Explain relevance for mammography quality control."
+relevance: "Positioning artifacts can reduce mammography quality; automated quality checks can support repeatability and workflow safety."
 links: {}
 tags:
   - "Mammography"
