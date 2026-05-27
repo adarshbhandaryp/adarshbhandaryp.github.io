@@ -13,13 +13,13 @@ year: 2025
 type: "journal"
 status: "Under internal review"
 abstract: "TODO: Add abstract after submission details can be shared."
-plainLanguageSummary: "This study targets automated detection of skin-fold positioning errors in mammography quality control."
+plainLanguageSummary: "This study investigates CNN-based detection of skin-fold positioning errors for mammography quality control."
 contribution: "TODO: Add verified contribution summary after public release."
 method: "TODO: Add model and dataset details after public release."
 keyResults:
   - "Under internal review in the existing repository content."
   - "TODO: Add verified key results when shareable."
-relevance: "Positioning artifacts can reduce mammography quality; automated quality checks can support repeatability and workflow safety."
+relevance: "Automated positioning-error detection can support repeatable mammography quality control and reduce avoidable workflow variability."
 links: {}
 tags:
   - "Mammography"

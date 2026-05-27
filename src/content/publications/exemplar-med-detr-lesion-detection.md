@@ -10,14 +10,14 @@ year: 2025
 type: "conference"
 status: "Accepted"
 abstract: "Exemplar Med-DETR is a multi-modal contrastive detector for robust lesion detection across mammography, chest X-ray, and angiography."
-plainLanguageSummary: "The detector uses exemplar features as visual references, helping it search for lesions even when anatomy is dense or cluttered."
+plainLanguageSummary: "Exemplar Med-DETR uses learned exemplar representations to improve lesion localization under dense anatomy, domain shift, and cross-modality variation."
 contribution: "The paper introduces exemplar-guided feature-based detection with cross-attention and iterative training."
 method: "Class-specific exemplar features are derived inside the model and fused with image features through cross-attention for detection."
 keyResults:
   - "The arXiv abstract reports mAP50 0.70 for mammography mass detection and 0.55 for calcifications."
   - "It reports a 16 percentage-point absolute improvement over previous state of the art on Vietnamese dense breast mammograms."
   - "A radiologist-supported evaluation on 100 out-of-distribution Chinese mammograms showed a twofold lesion-detection gain."
-relevance: "Generalizable lesion detection is important when models move across populations, scanners, and imaging modalities."
+relevance: "The study addresses a central translational barrier in medical detection: maintaining lesion-level performance across populations, scanners, and imaging modalities."
 links:
   pdf: "https://papers.miccai.org/miccai-2025/paper/2054_paper.pdf"
   paper: "https://arxiv.org/abs/2507.19621"

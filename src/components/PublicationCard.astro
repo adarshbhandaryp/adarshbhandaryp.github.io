@@ -16,9 +16,16 @@ const summary = getPublicationSummary(publication);
 ---
 
 <article class="group h-full rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-900/5 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10">
-  {data.image && !compact && (
+  {data.image ? (
     <div class="aspect-[16/9] overflow-hidden rounded-t-lg bg-slate-100">
       <img src={data.image} alt={data.imageAlt || data.title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+    </div>
+  ) : (
+    <div class="aspect-[16/9] rounded-t-lg bg-gradient-to-br from-slate-950 via-blue-950 to-slate-800 p-5 text-white">
+      <div class="flex h-full flex-col justify-between rounded-md border border-white/15 bg-white/10 p-4">
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-100">{data.type} / {data.year}</p>
+        <p class={compact ? 'max-w-sm text-base font-bold leading-tight' : 'max-w-sm text-xl font-bold leading-tight'}>{data.tags.slice(0, 2).join(' + ') || 'Medical AI'}</p>
+      </div>
     </div>
   )}
 

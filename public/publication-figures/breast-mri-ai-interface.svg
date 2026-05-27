@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Breast MRI AI detection visual</title>
+  <desc id="desc">A schematic interface showing MRI slices and an AI lesion marker.</desc>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <rect x="64" y="58" width="832" height="424" rx="24" fill="#0f172a"/>
+  <rect x="100" y="100" width="500" height="330" rx="18" fill="#111827" stroke="#334155"/>
+  <g fill="none" stroke="#94a3b8" stroke-width="18" opacity=".9">
+    <ellipse cx="278" cy="266" rx="116" ry="88"/>
+    <ellipse cx="426" cy="266" rx="116" ry="88"/>
+  </g>
+  <circle cx="454" cy="232" r="24" fill="#ef4444" opacity=".85"/>
+  <circle cx="454" cy="232" r="50" fill="none" stroke="#fecaca" stroke-width="5"/>
+  <rect x="636" y="100" width="220" height="330" rx="18" fill="#ffffff"/>
+  <text x="666" y="154" fill="#0f172a" font-family="Inter, Arial" font-size="26" font-weight="800">AI findings</text>
+  <rect x="666" y="190" width="148" height="10" rx="5" fill="#bfdbfe"/>
+  <rect x="666" y="228" width="104" height="10" rx="5" fill="#cbd5e1"/>
+  <rect x="666" y="266" width="156" height="10" rx="5" fill="#cbd5e1"/>
+  <rect x="666" y="320" width="150" height="54" rx="12" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="692" y="355" fill="#1d4ed8" font-family="Inter, Arial" font-size="18" font-weight="800">low FP target</text>
+</svg>

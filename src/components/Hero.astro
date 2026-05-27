@@ -1,6 +1,6 @@
 ---
 import profile from '../data/profile.json';
-const base = import.meta.env.BASE_URL;
+import { sitePath } from '../utils/site';
 ---
 
 <section class="relative overflow-hidden bg-hero pt-28 text-white md:pt-32">
@@ -28,13 +28,13 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <div class="mt-10 flex flex-wrap gap-4">
-        <a href={`${base}publications/`} class="rounded-md bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+        <a href={sitePath('publications/')} class="rounded-md bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
           View publications
         </a>
-        <a href={`${base}#contact`} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+        <a href={sitePath('#contact')} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
           Contact
         </a>
-        <a href={`${base}CV.pdf`} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+        <a href={sitePath('CV.pdf')} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
           CV
         </a>
       </div>
@@ -43,7 +43,7 @@ const base = import.meta.env.BASE_URL;
     <div class="relative mx-auto w-full max-w-sm pb-8 md:max-w-md md:pb-0">
       <div class="rounded-lg border border-white/15 bg-white/10 p-3 shadow-2xl shadow-slate-950/40 backdrop-blur">
         <img
-          src={`${base}profile_photo.jpg`}
+          src={sitePath('profile_photo.jpg')}
           alt={profile.name}
           class="aspect-[4/5] w-full rounded-md object-cover object-top"
           loading="eager"

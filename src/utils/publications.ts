@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { sitePath } from './site';
 
 export type PublicationEntry = CollectionEntry<'publications'>;
 
@@ -12,7 +13,7 @@ export async function getPublications() {
 }
 
 export function getPublicationUrl(slug: string) {
-  return `${import.meta.env.BASE_URL}publications/${slug}/`;
+  return sitePath(`publications/${slug}/`);
 }
 
 export function getPublicationSummary(publication: PublicationEntry) {

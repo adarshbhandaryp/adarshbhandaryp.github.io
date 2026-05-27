@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">PatchCLIP patch-level contrastive learning visual</title>
+  <desc id="desc">A schematic showing image patches aligned with text embeddings and local prediction maps.</desc>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <rect x="62" y="72" width="260" height="320" rx="22" fill="#ffffff" stroke="#cbd5e1"/>
+  <g fill="#dbeafe" stroke="#93c5fd">
+    <rect x="100" y="118" width="70" height="70" rx="10"/><rect x="180" y="118" width="70" height="70" rx="10"/>
+    <rect x="100" y="198" width="70" height="70" rx="10"/><rect x="180" y="198" width="70" height="70" rx="10"/>
+    <rect x="100" y="278" width="70" height="70" rx="10"/><rect x="180" y="278" width="70" height="70" rx="10"/>
+  </g>
+  <rect x="180" y="198" width="70" height="70" rx="10" fill="#1d4ed8"/>
+  <text x="118" y="430" fill="#0f172a" font-family="Inter, Arial" font-size="24" font-weight="800">image patches</text>
+  <path d="M340 232H474" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M474 232l-22-18M474 232l-22 18" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <rect x="506" y="140" width="220" height="184" rx="22" fill="#0f172a"/>
+  <text x="548" y="206" fill="#bfdbfe" font-family="Inter, Arial" font-size="24" font-weight="800">contrastive</text>
+  <text x="565" y="242" fill="#ffffff" font-family="Inter, Arial" font-size="24" font-weight="800">alignment</text>
+  <rect x="594" y="276" width="44" height="8" rx="4" fill="#38bdf8"/>
+  <path d="M746 232H858" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <path d="M858 232l-22-18M858 232l-22 18" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+  <rect x="742" y="354" width="150" height="70" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="774" y="397" fill="#0f172a" font-family="Inter, Arial" font-size="20" font-weight="800">report text</text>
+  <rect x="752" y="94" width="146" height="146" rx="20" fill="#ffffff" stroke="#cbd5e1"/>
+  <circle cx="825" cy="167" r="36" fill="#dbeafe"/><circle cx="839" cy="154" r="18" fill="#1d4ed8"/>
+  <text x="715" y="282" fill="#0f172a" font-family="Inter, Arial" font-size="24" font-weight="800">local evidence map</text>
+</svg>

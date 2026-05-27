@@ -11,6 +11,7 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import Gallery from '../components/Gallery.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import { sitePath } from '../utils/site';
 
 import projects from '../data/projects.json';
 import education from '../data/education.json';
@@ -50,7 +51,7 @@ import education from '../data/education.json';
           title="Recent papers, preprints, and clinical studies"
           description="Each publication now has a dedicated mini-blog style page with summary fields, links, and room for verified notes."
         />
-        <a href={`${import.meta.env.BASE_URL}publications/`} class="mb-12 inline-flex w-fit rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 md:mb-14">
+        <a href={sitePath('publications/')} class="mb-12 inline-flex w-fit rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 md:mb-14">
           Full archive
         </a>
       </div>

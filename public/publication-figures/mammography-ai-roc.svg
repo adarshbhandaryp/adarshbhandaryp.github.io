@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">AI-assisted mammography cohort visual</title>
+  <desc id="desc">A schematic comparison of unaided and AI-assisted mammography screening curves.</desc>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <rect x="80" y="76" width="800" height="380" rx="24" fill="#ffffff" stroke="#cbd5e1"/>
+  <path d="M170 390H790M170 390V140" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+  <path d="M175 380 C290 344 382 294 480 236 C570 182 664 150 770 136" fill="none" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M175 372 C300 318 396 250 500 196 C594 148 686 122 770 112" fill="none" stroke="#1d4ed8" stroke-width="8" stroke-linecap="round"/>
+  <rect x="590" y="300" width="198" height="88" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="622" y="336" fill="#1e3a8a" font-family="Inter, Arial" font-size="21" font-weight="800">AI-assisted</text>
+  <text x="622" y="365" fill="#475569" font-family="Inter, Arial" font-size="17">screening read</text>
+  <text x="276" y="120" fill="#0f172a" font-family="Inter, Arial" font-size="32" font-weight="800">Dense-breast screening cohort</text>
+  <text x="382" y="438" fill="#475569" font-family="Inter, Arial" font-size="18">false-positive rate</text>
+  <text x="110" y="294" fill="#475569" font-family="Inter, Arial" font-size="18" transform="rotate(-90 110 294)">sensitivity</text>
+</svg>
