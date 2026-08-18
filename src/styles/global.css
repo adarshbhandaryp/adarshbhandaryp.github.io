@@ -181,6 +181,8 @@ button, input { font: inherit; }
 
 .site-footer { border-top: 1px solid var(--line); color: var(--muted); }
 
+body[data-mode='recruiter'] [data-research-depth] { display: none; }
+
 @media (max-width: 767px) {
   :root { --section-pad: 5rem; }
   .shell { width: min(100% - 1.25rem, 86rem); }

@@ -15,8 +15,7 @@ contribution: "It explores a representation-learning objective for contrast-enha
 method: "The model is trained so neighboring representations become more clinically useful for downstream abnormality classification."
 keyResults:
   - "Published in SPIE Medical Imaging 2024: Computer-Aided Diagnosis."
-  - "Public source metadata verifies the DOI and venue."
-  - "TODO: Add numerical results from the paper when available in the local author manuscript."
+  - "Published in the SPIE Medical Imaging 2024 proceedings with DOI 10.1117/12.3004102."
 relevance: "CESM combines morphological and contrast-enhancement information, making robust representation learning important for lesion-level decision support."
 links:
   paper: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12927/129270F/Enhancing-downstream-classification-of-breast-abnormalities-in-contrast-enhanced-spectral/10.1117/12.3004102.full"

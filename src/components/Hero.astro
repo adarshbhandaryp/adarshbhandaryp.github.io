@@ -19,8 +19,7 @@ import { sitePath } from '../utils/site';
         <span>PANAMBUR</span>
       </h1>
       <p class="hero-role">{profile.role}</p>
-      <p class="hero-statement" data-research-copy>{profile.tagline}</p>
-      <p class="hero-statement" data-recruiter-copy>Research scientist building multimodal AI products, scalable GPU workflows, and reproducible systems from prototype to real-world application.</p>
+      <p class="hero-statement">{profile.tagline}</p>
       <div class="hero-actions">
         <a href="#work" class="btn-primary magnetic">Explore my work <span aria-hidden="true">↓</span></a>
         <button type="button" class="btn-secondary magnetic" data-open-ask>Ask Adarsh <span aria-hidden="true">⌁</span></button>
@@ -34,7 +33,7 @@ import { sitePath } from '../utils/site';
     </div>
 
     <div class="portrait-stage" aria-label="Portrait of Adarsh Bhandary Panambur">
-      <div class="portrait-meta portrait-meta-top"><span>SUBJECT / ABP</span><span>SCAN 06.2026</span></div>
+      <div class="portrait-meta portrait-meta-top"><span>SUBJECT / ABP</span><span>CURRENT STATE / 2026</span></div>
       <div class="portrait-frame">
         <img src={sitePath('profile_photo.jpg')} alt={profile.name} width="1200" height="1800" fetchpriority="high" />
         <div class="portrait-scan" aria-hidden="true"></div>
@@ -142,9 +141,6 @@ import { sitePath } from '../utils/site';
   h1 span:nth-child(3) { color: #b8c6d9; font-size: .52em; letter-spacing: .18em; line-height: 1.5; }
   .hero-role { margin-top: clamp(2rem,5vh,3.8rem); color: #d8e3f1; font-size: clamp(.92rem,1.5vw,1.15rem); font-weight: 500; }
   .hero-statement { max-width: 42rem; margin-top: 1rem; color: var(--muted); font-size: clamp(1rem,1.4vw,1.2rem); line-height: 1.75; }
-  [data-recruiter-copy] { display: none; }
-  :global(body[data-mode='recruiter']) [data-research-copy] { display: none; }
-  :global(body[data-mode='recruiter']) [data-recruiter-copy] { display: block; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2.2rem; }
   .hero-social { display: flex; gap: 1.4rem; margin-top: 2rem; }
   .hero-social a { color: #8091a8; font-family: ui-monospace,monospace; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; transition: color .2s ease; }

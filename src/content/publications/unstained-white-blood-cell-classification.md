@@ -14,11 +14,10 @@ status: "Published"
 abstract: "This publication studies deep learning for classifying unstained white blood cells."
 plainLanguageSummary: "This study applies deep learning to unstained white blood cell classification, extending medical image analysis into laboratory hematology."
 contribution: "It extends medical image classification beyond radiology into laboratory hematology."
-method: "TODO: Add verified model and dataset details from the journal article."
+method: "Applies deep-learning-based image classification to unstained white blood cell imagery."
 keyResults:
   - "Published in the International Journal of Laboratory Hematology."
-  - "DOI available in the existing repository content."
-  - "TODO: Add exact metrics from the article."
+  - "Published in the International Journal of Laboratory Hematology with DOI 10.1111/ijlh.14149."
 relevance: "Unstained cell classification may reduce sample-preparation burden and support more efficient hematology workflows."
 links:
   doi: "10.1111/ijlh.14149"

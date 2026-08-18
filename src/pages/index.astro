@@ -2,34 +2,30 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
+import AISystemsFlagship from '../components/AISystemsFlagship.astro';
 import DataPipeline from '../components/DataPipeline.astro';
 import FeaturedResearch from '../components/FeaturedResearch.astro';
 import ScaleSection from '../components/ScaleSection.astro';
 import ResearchConstellation from '../components/ResearchConstellation.astro';
 import ExperienceJourney from '../components/ExperienceJourney.astro';
-import Gallery from '../components/Gallery.astro';
-import CurrentWork from '../components/CurrentWork.astro';
-import CapabilityMatrix from '../components/CapabilityMatrix.astro';
 import FlagshipPublications from '../components/FlagshipPublications.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout
-  title="Adarsh Bhandary Panambur | Medical AI, Multimodal AI & HPC"
-  description="Research Scientist at NHR@FAU building medical AI, vision-language models, multimodal systems, GPU infrastructure, and clinically grounded research software."
+  title="Adarsh Bhandary Panambur | Research Scientist · AI Systems · Medical AI · HPC"
+  description="Research Scientist at NHR@FAU building locally deployed LLM and VLM applications, retrieval and agent workflows, scalable GPU inference, multimodal AI, and clinically grounded medical AI systems."
 >
   <Nav />
   <main id="main-content">
     <Hero />
-    <DataPipeline />
+    <AISystemsFlagship />
+    <div data-research-depth><DataPipeline /></div>
     <FeaturedResearch />
-    <ScaleSection />
-    <ResearchConstellation />
+    <div data-research-depth><ScaleSection /></div>
+    <div data-research-depth><ResearchConstellation /></div>
     <ExperienceJourney />
-    <Gallery />
-    <CurrentWork />
-    <CapabilityMatrix />
     <FlagshipPublications />
     <Contact />
   </main>

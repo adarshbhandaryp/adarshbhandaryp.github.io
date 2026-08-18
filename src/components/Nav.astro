@@ -17,9 +17,10 @@ const commands = [
   { label: 'Medical AI', meta: 'Mammography · MRI · clinical AI', href: sitePath('#research'), keywords: 'medical ai breast mammography MRI' },
   { label: 'HPC & AI systems', meta: 'GPU clusters · SLURM · inference', href: sitePath('#scale'), keywords: 'hpc gpu slurm distributed compute llm' },
   { label: 'Experience journey', meta: 'FAU · Siemens · WCH · NHR', href: sitePath('#experience'), keywords: 'experience siemens west china nhr fau' },
+  { label: 'Talks & recognition', meta: 'Conference presentations', href: sitePath('talks/'), keywords: 'talks recognition conference presentations gallery' },
   { label: 'MammoBLIP', meta: 'Vision-language report generation', href: sitePath('publications/mammoblip-mammography-report-generation/'), keywords: 'vlm vision language mammoblip report' },
   { label: 'Breast MRI research', meta: 'BE-WISE · clinical validation', href: sitePath('#research'), keywords: 'mri breast be-wise odelia' },
-  { label: 'Download CV', meta: 'PDF · 219 KB', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
+  { label: 'Download CV', meta: 'PDF résumé', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
   { label: 'Recruiter CV', meta: 'Web · print-friendly', href: sitePath('cv/'), keywords: 'cv resume recruiter experience' },
   { label: 'GitHub', meta: '@adarshbhandaryp', href: profile.github, external: true, keywords: 'github code' },
   { label: 'LinkedIn', meta: 'Professional profile', href: profile.linkedin, external: true, keywords: 'linkedin social' },
@@ -51,6 +52,10 @@ const commands = [
 
   <div id="mobile-nav" class="mobile-nav" hidden>
     <div class="shell">
+      <div class="mobile-mode-switch" role="group" aria-label="Content mode">
+        <button type="button" data-mode-button="research" aria-pressed="true">Research mode</button>
+        <button type="button" data-mode-button="recruiter" aria-pressed="false">Recruiter mode</button>
+      </div>
       {links.map((link, index) => <a href={link.href}><span>0{index + 1}</span>{link.name}</a>)}
       <a href={sitePath('cv/')}><span>05</span>CV</a>
       <button type="button" data-open-ask><span>06</span>Ask Adarsh</button>
@@ -58,7 +63,7 @@ const commands = [
   </div>
 </nav>
 
-<div class="dialog-backdrop" id="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title" hidden>
+<div class="dialog-backdrop" id="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title" hidden data-nosnippet>
   <div class="dialog-panel command-panel">
     <div class="command-search">
       <span aria-hidden="true">⌕</span>
@@ -78,7 +83,7 @@ const commands = [
           </a>
         )
       ))}
-      <p class="command-empty" id="command-empty" hidden>No matching research node.</p>
+      <p class="command-empty" id="command-empty" hidden>No results found.</p>
     </div>
     <div class="command-footer"><span>↑↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></div>
   </div>
@@ -207,6 +212,9 @@ const commands = [
   .mobile-trigger span { display: block; width: 1.25rem; height: 1px; background: white; }
   .mobile-nav { border-top: 1px solid var(--line); background: rgba(5,8,16,.98); }
   .mobile-nav .shell { display: grid; padding-block: 1rem 1.6rem; }
+  .mobile-mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-bottom: .7rem; }
+  .mobile-mode-switch button { display: block !important; border: 1px solid var(--line) !important; border-radius: .2rem; padding: .65rem !important; color: var(--muted); font-family: ui-monospace,monospace !important; font-size: .58rem !important; text-align: center !important; text-transform: uppercase; }
+  .mobile-mode-switch button[aria-pressed='true'] { border-color: var(--line-bright); background: #172336; color: white; }
   .mobile-nav a, .mobile-nav button { display: flex; gap: 1rem; border-bottom: 1px solid var(--line); padding: .85rem 0; text-align: left; font-family: Outfit,sans-serif; font-size: 1.35rem; }
   .mobile-nav span { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .58rem; }
   .command-search { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem; border-bottom: 1px solid var(--line); padding: .9rem 1rem; }

@@ -1,0 +1,85 @@
+---
+import system from '../data/aiSystems.json';
+import current from '../data/current.json';
+---
+
+<section id="work" class="section-shell ai-system-section section-rule" aria-labelledby="ai-system-title">
+  <div class="system-grid grid-field" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="system-heading reveal">
+      <div>
+        <p class="section-kicker">01 / CURRENT SYSTEMS WORK</p>
+        <h2 id="ai-system-title" class="section-title">{system.title}</h2>
+      </div>
+      <div>
+        <p class="system-statement">{system.statement}</p>
+        <p class="system-note"><span aria-hidden="true"></span>{system.privacyNote}</p>
+      </div>
+    </div>
+
+    <div class="system-architecture reveal" aria-label="Applied AI system architecture">
+      <div class="architecture-line" aria-hidden="true"><i></i><i></i><i></i></div>
+      {system.stages.map((stage, index) => (
+        <article class={`system-stage stage-${stage.id}`}>
+          <span>0{index + 1}</span>
+          <div class="stage-core" aria-hidden="true">
+            {stage.id === 'runtime' && <><i></i><i></i><i></i></>}
+            {stage.id === 'retrieval' && <><b></b><b></b><b></b><b></b></>}
+            {stage.id === 'agents' && <><i></i><b></b><em></em></>}
+            {stage.id === 'inference' && <>{Array.from({ length: 9 }).map(() => <b></b>)}</>}
+            {stage.id === 'application' && <><em></em><i></i></>}
+          </div>
+          <h3>{stage.label}</h3>
+          <p>{stage.detail}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="system-evidence reveal">
+      {system.evidence.map((item) => <div><span>{item.label}</span><strong>{item.value}</strong></div>)}
+    </div>
+
+    <div class="system-proof reveal">
+      <p class="mono-label">PUBLIC ENGINEERING EVIDENCE</p>
+      <div>
+        {current.map((item) => (
+          <article>
+            <span>{item.type}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ai-system-section { overflow: hidden; background: radial-gradient(circle at 50% 45%,rgba(36,124,255,.13),transparent 32rem),#060b14; }
+  .system-grid { position: absolute; inset: 0; opacity: .24; }
+  .system-heading { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: clamp(2rem,7vw,7rem); }
+  .system-heading .section-title { max-width: 10ch; }
+  .system-statement { max-width: 44rem; color: #d7e3f1; font-size: clamp(1.15rem,2vw,1.55rem); line-height: 1.65; }
+  .system-note { display: flex; align-items: center; gap: .55rem; margin-top: 1.3rem; color: #71869f; font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .08em; text-transform: uppercase; }
+  .system-note span { width: .4rem; height: .4rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 .8rem var(--mint); }
+  .system-architecture { position: relative; display: grid; grid-template-columns: repeat(5,1fr); margin-top: clamp(4rem,8vw,7rem); border: 1px solid var(--line); background: rgba(5,9,17,.8); }
+  .architecture-line { position: absolute; left: 10%; right: 10%; top: 46%; height: 1px; background: linear-gradient(90deg,var(--cyan),var(--blue),var(--mint)); box-shadow: 0 0 1rem rgba(50,199,255,.28); }
+  .architecture-line i { position: absolute; width: .4rem; height: .4rem; margin-top: -.18rem; border-radius: 50%; background: white; box-shadow: 0 0 .8rem var(--cyan); animation: system-packet 5s linear infinite; }
+  .architecture-line i:nth-child(2) { animation-delay: -1.65s; }.architecture-line i:nth-child(3) { animation-delay: -3.3s; }
+  .system-stage { position: relative; z-index: 1; min-width: 0; border-right: 1px solid var(--line); padding: 1rem clamp(.65rem,1.5vw,1.25rem) 1.4rem; }.system-stage:last-child { border-right: 0; }
+  .system-stage > span { color: #5d7189; font-family: ui-monospace,monospace; font-size: .52rem; }
+  .stage-core { position: relative; display: grid; width: min(8vw,6.2rem); min-width: 4.8rem; aspect-ratio: 1; place-items: center; margin: 2.4rem auto; border: 1px solid #29435d; border-radius: 50%; background: #091522; box-shadow: 0 0 2rem rgba(36,124,255,.08); }
+  .stage-runtime i { position: absolute; width: 44%; height: 18%; border: 1px solid #38739a; background: #0d2133; }.stage-runtime i:first-child { transform: translateY(-72%); }.stage-runtime i:last-child { transform: translateY(72%); }
+  .stage-retrieval .stage-core { grid-template-columns: repeat(2,1fr); gap: 3px; padding: 27%; }.stage-retrieval b { aspect-ratio: 1; background: #236889; }.stage-retrieval b:nth-child(3) { background: var(--mint); }
+  .stage-agents .stage-core i,.stage-agents .stage-core b,.stage-agents .stage-core em { position: absolute; width: .65rem; height: .65rem; border-radius: 50%; background: var(--cyan); }.stage-agents .stage-core i { transform: translate(-1.35rem,1rem); }.stage-agents .stage-core b { transform: translate(1.35rem,1rem); background: var(--mint); }.stage-agents .stage-core em { transform: translateY(-1.3rem); background: white; }.stage-agents .stage-core::before,.stage-agents .stage-core::after { position: absolute; width: 2.8rem; height: 1px; content: ''; background: #31769c; transform: rotate(28deg); }.stage-agents .stage-core::after { transform: rotate(-28deg); }
+  .stage-inference .stage-core { grid-template-columns: repeat(3,1fr); gap: 2px; padding: 24%; }.stage-inference b { aspect-ratio: 1; background: #1e4b69; animation: compute-pulse 2.5s ease-in-out infinite; }.stage-inference b:nth-child(2n) { background: #2e80a5; }
+  .stage-application .stage-core em { width: 42%; height: 52%; border: 1px solid var(--mint); }.stage-application .stage-core i { position: absolute; right: 22%; bottom: 22%; width: .6rem; height: .6rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 1rem var(--mint); }
+  .system-stage h3 { min-height: 2.2rem; font-family: ui-monospace,monospace; font-size: clamp(.6rem,.8vw,.72rem); letter-spacing: .07em; }.system-stage p { color: var(--muted); font-size: .65rem; }
+  .system-evidence { display: grid; grid-template-columns: repeat(5,1fr); border: 1px solid var(--line); border-top: 0; }.system-evidence div { display: grid; gap: .35rem; border-right: 1px solid var(--line); padding: 1rem; }.system-evidence div:last-child { border-right: 0; }.system-evidence span { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .48rem; letter-spacing: .1em; }.system-evidence strong { color: #c6d3e3; font-size: .68rem; font-weight: 500; }
+  .system-proof { margin-top: 4rem; }.system-proof > div { display: grid; grid-template-columns: repeat(4,1fr); margin-top: 1rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }.system-proof article { border-right: 1px solid var(--line); padding: 1.3rem; }.system-proof article:last-child { border-right: 0; }.system-proof article > span { color: var(--mint); font-family: ui-monospace,monospace; font-size: .5rem; text-transform: uppercase; }.system-proof h3 { margin-top: .65rem; font-size: 1rem; font-weight: 500; }.system-proof article p { margin-top: .7rem; color: var(--muted); font-size: .68rem; line-height: 1.65; }
+  @keyframes system-packet { from { left: 0; } to { left: 100%; } } @keyframes compute-pulse { 50% { opacity: .35; } }
+  @media (max-width: 800px) {
+    .system-heading { grid-template-columns: 1fr; }.system-architecture { grid-template-columns: 1fr; }.architecture-line { left: 4.25rem; right: auto; top: 7%; bottom: 7%; width: 1px; height: auto; }.architecture-line i { animation: none; }.system-stage { display: grid; grid-template-columns: 2rem 6rem 1fr; align-items: center; gap: 1rem; border-right: 0; border-bottom: 1px solid var(--line); padding: .8rem; }.system-stage:last-child { border-bottom: 0; }.stage-core { grid-column: 2; grid-row: span 2; width: 5.5rem; min-width: 0; margin: .5rem 0; }.system-stage h3,.system-stage p { grid-column: 3; min-height: 0; }.system-evidence { grid-template-columns: 1fr; }.system-evidence div { border-right: 0; border-bottom: 1px solid var(--line); }.system-evidence div:last-child { border-bottom: 0; }.system-proof > div { grid-template-columns: repeat(2,1fr); }.system-proof article:nth-child(2) { border-right: 0; }.system-proof article:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 520px) { .system-proof > div { grid-template-columns: 1fr; }.system-proof article { border-right: 0; border-bottom: 1px solid var(--line); }.system-proof article:nth-child(2) { border-right: 0; } }
+</style>

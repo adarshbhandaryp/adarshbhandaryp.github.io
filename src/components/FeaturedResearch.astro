@@ -1,5 +1,5 @@
 ---
-import { externalPublicationLinks, getPublications, getPublicationUrl } from '../utils/publications';
+import { externalPublicationLinks, getPublications, getPublicationSummary, getPublicationUrl } from '../utils/publications';
 import { sitePath } from '../utils/site';
 
 const all = await getPublications();
@@ -38,7 +38,7 @@ const stories = storySpecs.map((spec, index) => {
 <section id="research" class="section-shell research-stories section-rule" aria-labelledby="research-title">
   <div class="shell">
     <div class="story-intro reveal">
-      <p class="section-kicker">02 / FEATURED RESEARCH</p>
+      <p class="section-kicker">03 / FEATURED RESEARCH</p>
       <h2 id="research-title" class="section-title">FLAGSHIP RESEARCH STORIES</h2>
       <p class="section-copy">Selected systems and studies where representation learning meets the realities of medical data, radiology language, and clinical validation.</p>
     </div>
@@ -58,8 +58,8 @@ const stories = storySpecs.map((spec, index) => {
           <div class="story-content">
             <p class="mono-label">{story.label}</p>
             <h3>{story.publication.data.title}</h3>
-            <p data-research-copy>{story.publication.data.contribution.replace(/^TODO:\s*/i, '') || story.publication.data.plainLanguageSummary}</p>
-            <p data-recruiter-copy>{story.publication.data.relevance}</p>
+            <p data-research-copy>{getPublicationSummary(story.publication)}</p>
+            <p data-recruiter-copy data-nosnippet>{story.publication.data.relevance}</p>
             <div class="story-meta"><span>{story.publication.data.venue}</span><span>{story.publication.data.year}</span></div>
             <div class="story-links">
               <a href={getPublicationUrl(story.publication.slug)} class="text-link">Explore project</a>
@@ -96,6 +96,7 @@ const stories = storySpecs.map((spec, index) => {
   .story-meta { display: flex; gap: 1rem; margin-top: 1.6rem; color: #70849c; font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
   .story-meta span + span::before { content: '/'; margin-right: 1rem; color: #3a4a5e; }
   .story-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+  :global(body[data-mode='recruiter']) .research-story:nth-child(n+3) { display: none; }
   @keyframes story-scan { 0%,15% { top: 0; } 65%,100% { top: 100%; } }
   @media (max-width: 800px) {
     .story-intro, .research-story { grid-template-columns: 1fr; }

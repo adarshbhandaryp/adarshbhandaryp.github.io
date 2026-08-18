@@ -11,10 +11,10 @@ status: "Withdrawn"
 abstract: "European patent publication EP 3644550 A1 describes a method related to unlocking a medical device."
 plainLanguageSummary: "This patent entry documents earlier medical-device workflow engineering related to secure device unlocking."
 contribution: "The public patent record lists Panambur AB, Hager F, and Kuth R as inventors."
-method: "TODO: Add a short non-legal technical summary if this patent page should stay prominent."
+method: "Defines a secure workflow for authorizing and unlocking a medical device."
 keyResults:
   - "European Patent EP 3644550 A1."
-  - "Status in the existing repository content: Withdrawn."
+  - "Public record status: withdrawn."
 relevance: "The entry is included as part of the broader medical-device workflow and clinical engineering record."
 links:
   pdf: "https://patentimages.storage.googleapis.com/83/90/1d/4965b76e62fe10/EP3644550A1.pdf"

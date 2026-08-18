@@ -31,6 +31,7 @@ const personJsonLd = {
   affiliation: { '@type': 'Organization', name: 'National High Performance Computing Center (NHR@FAU)' },
   homeLocation: { '@type': 'Place', name: profile.location },
   sameAs: [profile.github, profile.linkedin],
+  knowsAbout: ['Artificial Intelligence', 'High-performance computing', 'Large language models', 'Vision-language models', 'Multimodal AI', 'Medical imaging', 'Clinical AI validation'],
 };
 const structuredData = jsonLd ? [personJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])] : [personJsonLd];
 ---
@@ -42,7 +43,9 @@ const structuredData = jsonLd ? [personJsonLd, ...(Array.isArray(jsonLd) ? jsonL
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#050810" />
+		<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
 		<link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
+    <link rel="sitemap" type="application/xml" href={sitePath('sitemap.xml')} />
     <link rel="canonical" href={canonicalUrl} />
 		<meta name="generator" content={Astro.generator} />
 

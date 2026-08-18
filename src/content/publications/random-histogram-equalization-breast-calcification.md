@@ -14,7 +14,6 @@ contribution: "It introduces an image-enhancement augmentation question for mamm
 method: "Random histogram equalization is applied during model training and compared against baseline deep learning classification."
 keyResults:
   - "Published in the BVM 2022 medical image computing proceedings."
-  - "TODO: Add exact metrics from the paper."
 relevance: "Calcifications are subtle mammographic findings, making robustness to acquisition and intensity variation clinically relevant."
 links:
   paper: "https://link.springer.com/chapter/10.1007/978-3-658-36932-3_38"

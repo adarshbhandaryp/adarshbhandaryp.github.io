@@ -1,0 +1,134 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=13mm,top=11mm,bottom=11mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\definecolor{ink}{HTML}{142238}
+\definecolor{accent}{HTML}{147A9E}
+\definecolor{muted}{HTML}{56657A}
+\definecolor{rule}{HTML}{D8E0E8}
+\definecolor{RULE}{HTML}{D8E0E8}
+\definecolor{panel}{HTML}{F2F6F8}
+\color{ink}
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
+\titleformat{\section}{\bfseries\color{accent}\fontsize{9}{10}\selectfont\uppercase}{}{0pt}{}[\vspace{2pt}\color{rule}\titlerule]
+\titlespacing*{\section}{0pt}{7pt}{4pt}
+\setlist[itemize]{leftmargin=3.5mm,itemsep=1.1pt,topsep=2pt,parsep=0pt,label=\textcolor{accent}{--}}
+\newcommand{\role}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} $\cdot$ \textcolor{accent}{#2} & \textcolor{muted}{\footnotesize #3}\\
+    \multicolumn{2}{@{}l@{}}{\textcolor{muted}{\footnotesize #4}}
+  \end{tabularx}\vspace{-1pt}}
+\newcommand{\compactrole}[4]{\textbf{#1} $\cdot$ \textcolor{accent}{#2}\hfill\textcolor{muted}{\footnotesize #3}\\[-1pt]\textcolor{muted}{\footnotesize #4}\par\vspace{3pt}}
+\begin{document}
+
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+  {\fontsize{21}{23}\selectfont\bfseries\mbox{Adarsh Bhandary Panambur}} & \textcolor{muted}{Erlangen, Germany}\\
+  {\small\color{accent}\bfseries RESEARCH SCIENTIST $\cdot$ AI SYSTEMS $\cdot$ MEDICAL AI $\cdot$ HPC} & \href{mailto:adarshbhandaryp@gmail.com}{adarshbhandaryp@gmail.com}\\
+  {\small\textcolor{muted}{LLMs/VLMs $\cdot$ Retrieval $\cdot$ Agents $\cdot$ GPU Inference $\cdot$ Clinical Translation}} & +49 15212015614\\
+  & \href{https://adarshbhandaryp.github.io/home/}{adarshbhandaryp.github.io/home} $\cdot$ \href{https://linkedin.com/in/adarshbhandaryp}{LinkedIn} $\cdot$ \href{https://github.com/adarshbhandaryp}{GitHub}
+\end{tabularx}
+
+\section{Profile}
+Research Scientist working across AI systems, high-performance computing, and medical AI. Builds locally deployed and API-backed LLM/VLM applications, retrieval and agent workflows, scalable GPU inference, multimodal foundation models, and clinically validated research software. Experienced in moving from curated datasets and research prototypes to reproducible infrastructure and practical applications.
+
+\section{Systems Evidence}
+\colorbox{panel}{\parbox{\dimexpr\textwidth-2\fboxsep-2pt}{\vspace{2pt}\centering
+\textbf{LOCAL MODELS}\; $\rightarrow$ \;\textbf{RETRIEVAL}\; $\rightarrow$ \;\textbf{AGENTS}\; $\rightarrow$ \;\textbf{GPU INFERENCE}\; $\rightarrow$ \;\textbf{APPLICATION}\\[2pt]
+\footnotesize Local + API-backed runtimes $\cdot$ Grounded context $\cdot$ Tool-using workflows $\cdot$ GPU clusters + SLURM $\cdot$ Research software\vspace{2pt}}}
+
+\section{Professional Experience}
+\role{Research Scientist}{National High Performance Computing Center (NHR@FAU), FAU}{06/2026 - Present}{Erlangen, Germany}
+\begin{itemize}
+  \item Design and prototype AI applications using locally deployed LLMs and VLMs, foundation-model APIs, and retrieval pipelines.
+  \item Build tool-using agent workflows and research software with open-source AI frameworks.
+  \item Engineer scalable training, serving, and inference workflows on GPU clusters and supercomputing infrastructure.
+  \item Develop, deploy, and optimize multimodal AI systems for practical research applications.
+  \item Collaborate with academic and industrial partners to translate AI research into practical solutions.
+\end{itemize}
+
+\role{PhD Researcher}{Pattern Recognition Lab, FAU}{05/2020 - Present}{Erlangen, Germany}
+\textit{Thesis: Deep learning algorithms for advanced mammography and breast cancer analysis}
+\begin{itemize}
+  \item Developed self-supervised learning methods for classification and lesion detection in mammography and contrast-enhanced mammography.
+  \item Built a multi-country mammography repository of approximately 100,000 images for large-scale experimentation.
+  \item Designed and trained multimodal image-text foundation models for breast imaging analysis and radiological reasoning.
+  \item Ranked 4th in the MICCAI ODELIA Challenge 2025 for breast MRI malignancy classification.
+  \item Built reproducible Docker and SLURM pipelines for training, experiment tracking, and large-scale deep learning.
+\end{itemize}
+
+\role{Guest Researcher}{West China Hospital, Sichuan University}{07/2024 - 09/2024}{Chengdu, China}
+\begin{itemize}
+  \item Validated a Siemens Healthineers breast MRI AI prototype on an external clinical cohort.
+  \item Initiated research to improve breast cancer screening workflows and collaborated with radiologists on annotation quality.
+\end{itemize}
+
+\role{Doctoral Researcher}{Siemens Healthineers}{05/2020 - 02/2024}{Erlangen, Germany}
+\begin{itemize}
+  \item Validated mammography AI in an international Vietnamese cohort under clinical and regulatory constraints.
+  \item Developed deep-learning methods for mammography positioning-artifact classification and improved annotation workflows with radiologists.
+\end{itemize}
+
+\role{Working Student and Master's Thesis}{Siemens Healthineers}{10/2017 - 03/2020}{Erlangen, Germany}
+\begin{itemize}
+  \item Built MATLAB workflow prototypes, evaluated IoT and blockchain use cases, and co-invented a secure medical-device unlocking method.
+  \item Master's thesis: CNN-based lung nodule type classification in low-dose CT.
+\end{itemize}
+
+\newpage
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+  {\fontsize{17}{19}\selectfont\bfseries Adarsh Bhandary Panambur} & \textcolor{accent}{AI SYSTEMS $\cdot$ MEDICAL AI $\cdot$ HPC}
+\end{tabularx}
+
+\section{Earlier Medical-Device Engineering}
+\compactrole{Senior Engineer}{Transcaal Engineers India Pvt. Ltd.}{03/2015 - 02/2016}{Generated approximately 25\% of annual company revenue through QA services across five states; led and mentored a biomedical engineering team.}
+\compactrole{Calibration Engineer}{Transcaal Engineers India Pvt. Ltd.}{09/2014 - 02/2015}{Delivered hospital equipment testing, preventive maintenance, and standards-based compliance using Fluke biomedical equipment.}
+
+\section{Capability Matrix}
+\begin{tabularx}{\textwidth}{@{}X X X@{}}
+\textbf{MODEL} & \textbf{SCALE} & \textbf{TRANSLATE}\\[2pt]
+Foundation models & GPU computing & Medical imaging\\
+Vision-language models & SLURM and distributed training & Clinical validation\\
+Self-supervised learning & DeepSpeed and Docker & Radiology workflows\\
+Classification, detection, segmentation & Model serving and inference & Research software and reproducible AI
+\end{tabularx}
+\vspace{3pt}
+\textcolor{muted}{\footnotesize PyTorch $\cdot$ Hugging Face $\cdot$ MONAI $\cdot$ MMDetection $\cdot$ TensorFlow $\cdot$ OpenCV $\cdot$ Linux $\cdot$ Axolotl $\cdot$ SGLang $\cdot$ WandB}
+
+\section{Education}
+\compactrole{PhD Research Student}{Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg}{05/2020 - Present}{AI / Medical Imaging}
+\compactrole{M.Sc. Medical Data Engineering}{Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg}{04/2016 - 03/2020}{Data and Image Processing}
+\compactrole{B.E. Medical Electronics}{Dr. Ambedkar Institute of Technology}{08/2010 - 06/2014}{Bangalore, India}
+
+\section{Selected Research Output}
+\begin{itemize}[leftmargin=3.5mm,itemsep=2.4pt]
+  \item \textbf{BE-WISER: Class-Aware Weak Slice-Level Supervision for Breast MRI.} Research Square preprint, 2026.
+  \item \textbf{Dataset-Informed Transfer Learning (DITL) for Breast Cancer Screening and Lesion Diagnosis.} CVIP 2025 / \href{https://arxiv.org/abs/2607.26043}{arXiv:2607.26043}, 2026.
+  \item \textbf{Attention-Guided Erasing for Enhanced Transfer Learning in Breast Abnormality Classification.} IJCARS, 2025.
+  \item \textbf{MammoBLIP: End-to-End Mammography Report Generation with Vision-Language Models.} IEEE MIC, 2025.
+  \item \textbf{BE-WISE: Breast MRI Evaluation with Weakly-Informed Slice-level Explanation.} BVM, 2026.
+  \item \textbf{Towards Foundational Models in Mammography: Vision-Language Models for Radiological Reasoning.} Under internal review, 2025.
+  \item \textbf{Attention-Guided Erasing for Breast Density Classification.} BVM, 2024.
+  \item \textbf{Clinical AI validation studies in Vietnamese mammography and a Chinese breast MRI cohort.} ECR, 2024-2025.
+\end{itemize}
+
+\section{Additional}
+\begin{tabularx}{\textwidth}{@{}>{\hsize=.82\hsize}X >{\hsize=1.18\hsize}X@{}}
+\textbf{Programming:} Python, MATLAB, C++ & \textbf{Languages:} English (C2), German (B1), Hindi, Konkani, Kannada\\[3pt]
+\textbf{Modalities:} Mammography, MRI, low-dose CT, chest X-ray, hematology & \textbf{Interests:} Cooking, padel tennis, hiking, table tennis
+\end{tabularx}
+
+\vfill
+\textcolor{muted}{\footnotesize Full publication archive and interactive research portfolio: \href{https://adarshbhandaryp.github.io/home/}{adarshbhandaryp.github.io/home/}}
+
+\end{document}

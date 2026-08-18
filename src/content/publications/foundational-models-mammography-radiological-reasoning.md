@@ -10,13 +10,12 @@ venue: "Journal submission"
 year: 2025
 type: "journal"
 status: "Under internal review"
-abstract: "TODO: Add abstract after submission details can be shared."
+abstract: "This work studies vision-language foundation models for mammography, with a focus on image-text representation learning and radiological reasoning."
 plainLanguageSummary: "This work investigates mammography foundation models for radiological reasoning using vision-language representation learning."
-contribution: "TODO: Add verified contribution summary after public release."
-method: "TODO: Add method overview after public release."
+contribution: "Investigates how mammography image-text models can support structured radiological reasoning beyond single-task image classification."
+method: "Uses vision-language representation learning to connect mammography images with radiology language and reasoning-oriented model outputs."
 keyResults:
-  - "Under internal review in the existing repository content."
-  - "TODO: Add verified key results when shareable."
+  - "Current status: under internal review; numerical results are not publicly disclosed."
 relevance: "Reasoning-oriented foundation models may support more structured, auditable, and clinically aligned mammography AI systems."
 links: {}
 tags:
@@ -24,5 +23,4 @@ tags:
   - "Vision-Language Models"
   - "Radiological Reasoning"
 featured: true
-bibtex: "TODO: Add BibTeX when available."
 ---

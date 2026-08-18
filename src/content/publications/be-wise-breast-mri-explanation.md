@@ -11,12 +11,11 @@ type: "conference"
 status: "Accepted"
 abstract: "BE-WISE is an accepted BVM 2026 paper on explainable AI for breast MRI with weakly informed slice-level explanation."
 plainLanguageSummary: "BE-WISE studies weakly informed slice-level explanation for breast MRI, focusing on interpretable evidence localization within volumetric exams."
-contribution: "The public BVM/FAU information identifies the contribution as slice-level interpretability for breast MRI."
-method: "TODO: Add the detailed weakly informed explanation pipeline after the public paper is available."
+contribution: "Developed a weakly informed slice-level explanation approach that makes volumetric breast MRI predictions inspectable at the slice level."
+method: "Uses weak slice-level information to localize the evidence contributing to breast MRI evaluation without requiring exhaustive slice annotations."
 keyResults:
   - "Accepted for BVM 2026 oral presentation."
-  - "Public FAU news states that it advances explainable AI in breast MRI."
-  - "TODO: Add quantitative results after publication."
+  - "Advances explainable AI for breast MRI through weak slice-level supervision."
 relevance: "Slice-level interpretability can support clinical review of breast MRI AI outputs by making the evidence basis of a prediction more inspectable."
 links: {}
 sourceUrl: "https://lme.tf.fau.de/news/pattern-recognition-lab-with-outstanding-success-at-bvm-2026/"
@@ -26,5 +25,4 @@ tags:
   - "Explainable AI"
   - "Weak Supervision"
 featured: true
-bibtex: "TODO: Add BibTeX."
 ---

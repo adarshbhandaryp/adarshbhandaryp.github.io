@@ -8,7 +8,7 @@ const journey = [...experience].reverse();
 <section id="experience" class="section-shell experience-section section-rule" aria-labelledby="experience-title">
   <div class="shell">
     <div class="experience-head reveal">
-      <div><p class="section-kicker">05 / TRAJECTORY</p><h2 id="experience-title" class="section-title">FROM DEVICES TO AI SYSTEMS</h2></div>
+      <div><p class="section-kicker">06 / TRAJECTORY</p><h2 id="experience-title" class="section-title">FROM DEVICES TO AI SYSTEMS</h2></div>
       <div><p class="section-copy">A progression shaped by the constraints of medical devices, clinical workflows, deep learning research, external validation, foundation models, and large-scale compute.</p><a href={sitePath('cv/')} class="text-link">Open full CV</a></div>
     </div>
 
@@ -22,7 +22,7 @@ const journey = [...experience].reverse();
           <h4>{role.role}</h4>
           <p class="journey-date">{role.dates} / {role.location}</p>
           <p data-research-copy>{role.description[0]}</p>
-          <p data-recruiter-copy>{role.description[Math.min(1, role.description.length - 1)]}</p>
+          <p data-recruiter-copy data-nosnippet>{role.recruiterSummary}</p>
         </article>
       ))}
     </div>

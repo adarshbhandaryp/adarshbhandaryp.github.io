@@ -1,0 +1,54 @@
+{
+  "title": "AI SYSTEMS / APPLIED GENAI",
+  "statement": "Designed and prototyped AI applications using locally deployed LLMs, foundation-model APIs, retrieval pipelines, agent workflows, and scalable GPU inference infrastructure.",
+  "privacyNote": "Public system architecture only. Project and partner details remain confidential.",
+  "stages": [
+    {
+      "id": "runtime",
+      "label": "LOCAL MODELS",
+      "detail": "LLM · VLM runtimes"
+    },
+    {
+      "id": "retrieval",
+      "label": "RETRIEVAL",
+      "detail": "Grounded context"
+    },
+    {
+      "id": "agents",
+      "label": "AGENTS",
+      "detail": "Tools · workflows"
+    },
+    {
+      "id": "inference",
+      "label": "GPU INFERENCE",
+      "detail": "Cluster · serving"
+    },
+    {
+      "id": "application",
+      "label": "APPLICATION",
+      "detail": "Research software"
+    }
+  ],
+  "evidence": [
+    {
+      "label": "RUNTIME",
+      "value": "Local + API-backed models"
+    },
+    {
+      "label": "CONTEXT",
+      "value": "Retrieval pipelines"
+    },
+    {
+      "label": "ORCHESTRATION",
+      "value": "Tool-using agents"
+    },
+    {
+      "label": "SCALE",
+      "value": "GPU clusters + SLURM"
+    },
+    {
+      "label": "DELIVERY",
+      "value": "AI applications"
+    }
+  ]
+}

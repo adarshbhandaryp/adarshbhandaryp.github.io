@@ -13,8 +13,8 @@ const prompts = [
 const answers = [
   {
     keywords: ['llm', 'large language', 'agent', 'foundation model api'],
-    answer: 'At NHR@FAU, Adarsh develops, deploys, and optimizes LLMs, VLMs, and multimodal AI systems. His current work also includes AI-powered applications, agentic workflows, foundation-model APIs, and open-source AI frameworks.',
-    label: 'See AI systems work', href: sitePath('#scale'),
+    answer: 'At NHR@FAU, Adarsh prototypes applications around locally deployed LLM and VLM runtimes, foundation-model APIs, retrieval pipelines, and tool-using agent workflows, with GPU-backed training and inference infrastructure.',
+    label: 'See AI systems work', href: sitePath('#work'),
   },
   {
     keywords: ['hpc', 'gpu', 'cluster', 'slurm', 'supercomput', 'distributed', 'scale'],
@@ -49,10 +49,10 @@ const answers = [
 ];
 ---
 
-<div id="ask-dialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="ask-title" hidden data-answers={JSON.stringify(answers)} data-publications-path={sitePath('publications/')}>
+<div id="ask-dialog" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="ask-title" hidden data-answers={JSON.stringify(answers)} data-publications-path={sitePath('publications/')} data-nosnippet>
   <div class="dialog-panel ask-panel">
     <header class="ask-header">
-      <div><span class="ask-pulse" aria-hidden="true"></span><div><p>LOCAL KNOWLEDGE INTERFACE</p><h2 id="ask-title">ASK ADARSH</h2></div></div>
+      <div><span class="ask-pulse" aria-hidden="true"></span><div><p>PRIVATE PROFILE SEARCH</p><h2 id="ask-title">ASK ADARSH</h2></div></div>
       <button type="button" id="close-ask" aria-label="Close Ask Adarsh">ESC</button>
     </header>
     <div class="ask-body" id="ask-body" aria-live="polite">
@@ -71,7 +71,7 @@ const answers = [
       <input id="ask-question" name="question" autocomplete="off" placeholder="Ask about MRI, VLMs, Siemens, HPC…" />
       <button type="submit">SEND ↗</button>
     </form>
-    <footer class="ask-footer"><span>STATIC FALLBACK / NO API KEY</span><span>STRUCTURED SITE DATA / V1.0</span></footer>
+    <footer class="ask-footer"><span>LOCAL / PRIVATE</span><span>PUBLIC PROFILE DATA</span></footer>
   </div>
 </div>
 

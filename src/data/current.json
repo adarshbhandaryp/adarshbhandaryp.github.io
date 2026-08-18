@@ -1,20 +1,26 @@
 [
   {
-    "title": "Scalable multimodal AI systems",
-    "description": "Developing and optimizing LLM, VLM, and multimodal AI workflows on GPU clusters and supercomputing infrastructure at NHR@FAU.",
-    "type": "Research",
-    "status": "Active"
+    "title": "Local model runtimes",
+    "description": "Deploying and evaluating LLM and VLM runtimes for privacy-aware, GPU-backed research applications.",
+    "type": "System",
+    "status": "Current"
   },
   {
-    "title": "Medical image-text foundation models",
-    "description": "Advancing multimodal representation learning and radiological reasoning for mammography and breast imaging.",
-    "type": "Research",
-    "status": "Ongoing"
+    "title": "Retrieval and grounded generation",
+    "description": "Prototyping retrieval pipelines that connect domain knowledge with foundation-model APIs and locally deployed models.",
+    "type": "Applied AI",
+    "status": "Current"
   },
   {
-    "title": "AI-powered research applications",
-    "description": "Building research software and agentic workflows with foundation model APIs and open-source AI frameworks.",
-    "type": "Software",
-    "status": "Building"
+    "title": "Agent workflows and research software",
+    "description": "Building tool-using agent workflows, model-backed interfaces, and reproducible research software around open-source AI frameworks.",
+    "type": "Application",
+    "status": "Current"
+  },
+  {
+    "title": "Scalable inference infrastructure",
+    "description": "Designing training, serving, and inference workflows for GPU clusters and supercomputing environments.",
+    "type": "Infrastructure",
+    "status": "Current"
   }
 ]
