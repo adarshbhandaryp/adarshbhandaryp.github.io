@@ -28,5 +28,4 @@ tags:
   - "Deep Learning"
   - "Cell Classification"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

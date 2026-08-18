@@ -32,5 +32,4 @@ tags:
   - "Contrastive Learning"
   - "Medical AI"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

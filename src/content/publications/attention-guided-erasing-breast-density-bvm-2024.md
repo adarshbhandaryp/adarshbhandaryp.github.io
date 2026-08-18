@@ -33,5 +33,4 @@ tags:
   - "Data Augmentation"
   - "Breast Density"
 featured: true
-bibtex: "TODO: Add BibTeX."
 ---

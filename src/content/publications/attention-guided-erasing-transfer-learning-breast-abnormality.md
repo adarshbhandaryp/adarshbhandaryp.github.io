@@ -33,5 +33,4 @@ tags:
   - "Transfer Learning"
   - "Breast Abnormality Classification"
 featured: true
-bibtex: "TODO: Add BibTeX."
 ---

@@ -22,5 +22,4 @@ tags:
   - "Vision-Language Pretraining"
   - "Contrastive Learning"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

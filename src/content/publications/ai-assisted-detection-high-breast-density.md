@@ -36,5 +36,4 @@ tags:
   - "Clinical Validation"
   - "Breast Density"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

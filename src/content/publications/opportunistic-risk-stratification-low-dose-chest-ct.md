@@ -26,5 +26,4 @@ tags:
   - "Risk Stratification"
   - "Multiple Instance Learning"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

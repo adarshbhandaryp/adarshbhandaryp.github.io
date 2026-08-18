@@ -25,5 +25,4 @@ tags:
   - "Calcification"
   - "Image Enhancement"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

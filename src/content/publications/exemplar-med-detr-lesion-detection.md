@@ -30,5 +30,4 @@ tags:
   - "Lesion Detection"
   - "Detection Transformers"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

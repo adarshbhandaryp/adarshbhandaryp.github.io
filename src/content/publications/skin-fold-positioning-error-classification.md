@@ -25,5 +25,4 @@ tags:
   - "Quality Control"
   - "CNN"
 featured: false
-bibtex: "TODO: Add BibTeX when available."
 ---

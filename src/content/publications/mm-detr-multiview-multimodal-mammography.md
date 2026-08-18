@@ -29,5 +29,4 @@ tags:
   - "Mass Detection"
   - "Multimodal Learning"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

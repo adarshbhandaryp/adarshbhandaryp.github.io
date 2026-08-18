@@ -24,5 +24,4 @@ tags:
   - "Medical Devices"
   - "Patent"
 featured: false
-bibtex: "TODO: Add citation details if needed."
 ---

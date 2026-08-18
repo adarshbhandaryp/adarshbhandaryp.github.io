@@ -30,5 +30,4 @@ tags:
   - "Representation Learning"
   - "Breast Abnormality Classification"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

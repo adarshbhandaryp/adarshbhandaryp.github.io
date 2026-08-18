@@ -36,5 +36,4 @@ tags:
   - "Clinical Validation"
   - "Screening"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

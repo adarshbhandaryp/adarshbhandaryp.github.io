@@ -31,5 +31,4 @@ tags:
   - "Vision-Language Models"
   - "Report Generation"
 featured: true
-bibtex: "TODO: Add BibTeX."
 ---

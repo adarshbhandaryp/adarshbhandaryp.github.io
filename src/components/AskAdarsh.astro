@@ -19,7 +19,7 @@ const answers = [
   {
     keywords: ['hpc', 'gpu', 'cluster', 'slurm', 'supercomput', 'distributed', 'scale'],
     answer: 'Adarsh is a Research Scientist at NHR@FAU working across AI and high-performance computing. He designs scalable training and inference pipelines on GPU clusters and supercomputing infrastructure, and has built reproducible deep-learning pipelines with Docker and SLURM.',
-    label: 'Explore compute systems', href: sitePath('#scale'),
+    label: 'Explore AI systems work', href: sitePath('#work'),
   },
   {
     keywords: ['siemens', 'healthineers', 'medical device'],
@@ -58,7 +58,7 @@ const answers = [
     <div class="ask-body" id="ask-body" aria-live="polite">
       <div class="assistant-message">
         <span>ABP / 00</span>
-        <p>Ask about Adarsh's public research, experience, publications, or technical capabilities. Answers run locally from structured website data—no prompt or personal data leaves this page.</p>
+        <p>Ask about Adarsh's research, experience, publications, or technical capabilities, then follow the evidence into the portfolio.</p>
       </div>
       <div class="suggested-prompts" id="suggested-prompts">
         {prompts.map((prompt) => <button type="button" data-question={prompt}>{prompt}</button>)}
@@ -71,7 +71,7 @@ const answers = [
       <input id="ask-question" name="question" autocomplete="off" placeholder="Ask about MRI, VLMs, Siemens, HPC…" />
       <button type="submit">SEND ↗</button>
     </form>
-    <footer class="ask-footer"><span>LOCAL / PRIVATE</span><span>PUBLIC PROFILE DATA</span></footer>
+    <footer class="ask-footer"><span>PROFILE Q&amp;A</span><span>RESEARCH / EXPERIENCE / OUTPUT</span></footer>
   </div>
 </div>
 
@@ -106,7 +106,7 @@ const answers = [
     if (!thread) return;
     const user = document.createElement('div'); user.className = 'user-message'; user.textContent = question;
     const response = document.createElement('div'); response.className = 'assistant-message';
-    const label = document.createElement('span'); label.textContent = 'ABP / LOCAL';
+    const label = document.createElement('span'); label.textContent = 'ABP / ANSWER';
     const copy = document.createElement('p'); copy.textContent = match.answer;
     const link = document.createElement('a'); link.href = match.href; link.textContent = `${match.label} →`;
     response.append(label, copy, link); thread.append(user, response);

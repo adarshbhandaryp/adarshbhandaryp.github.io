@@ -28,5 +28,4 @@ tags:
   - "Transfer Learning"
   - "Luminal Subtypes"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

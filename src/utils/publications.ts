@@ -18,11 +18,11 @@ export function getPublicationUrl(slug: string) {
 
 export function getPublicationSummary(publication: PublicationEntry) {
   const candidates = [publication.data.plainLanguageSummary, publication.data.contribution, publication.data.relevance, publication.data.abstract];
-  return candidates.find((value) => value && !/^TODO:/i.test(value)) || 'Publication details are available in the research archive.';
+  return candidates.find(Boolean) || 'Publication details are available in the research archive.';
 }
 
 export function isVerifiedPublicationText(value?: string) {
-  return Boolean(value && !/^TODO:/i.test(value));
+  return Boolean(value);
 }
 
 export function externalPublicationLinks(publication: PublicationEntry) {

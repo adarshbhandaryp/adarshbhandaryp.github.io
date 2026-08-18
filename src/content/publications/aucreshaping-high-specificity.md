@@ -32,5 +32,4 @@ tags:
   - "Sensitivity"
   - "High Specificity"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---

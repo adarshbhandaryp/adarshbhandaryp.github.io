@@ -35,5 +35,4 @@ tags:
   - "Clinical Validation"
   - "Lesion Detection"
 featured: false
-bibtex: "TODO: Add BibTeX."
 ---
