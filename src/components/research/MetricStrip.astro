@@ -15,7 +15,7 @@ const { metrics, compact = false } = Astro.props;
 </div>
 
 <style>
-  .metric-strip { display: grid; grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); border: 1px solid var(--line); border-right: 0; background: #08111e; }
+  .metric-strip { display: grid; grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); border: 1px solid var(--line); border-right: 0; background: var(--surface); box-shadow: 0 1.5rem 5rem rgba(1,6,14,.16); }
   .metric-cell { min-height: 9rem; border-right: 1px solid var(--line); padding: 1.35rem; }
   .metric-cell::before { display: block; width: 1.8rem; height: 2px; margin-bottom: 1.3rem; content: ''; background: var(--cyan); }
   .tone-positive::before { background: var(--mint); }.tone-caution::before { background: var(--amber); }

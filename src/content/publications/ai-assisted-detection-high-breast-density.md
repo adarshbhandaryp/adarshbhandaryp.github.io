@@ -26,7 +26,7 @@ relevance: "High breast density remains a major limitation for mammography sensi
 links:
   poster: "https://epos.myesr.org/poster/esr/ecr2025/C-21046"
   doi: "10.26044/ecr2025/C-21046"
-image: "/home/publication-figures/mammography-ai-roc.svg"
+image: "/publication-figures/mammography-ai-roc.svg"
 imageAlt: "AI-assisted mammography detection visual for dense breast cohorts"
 figureCaption: "Local visual summary of AI-assisted mammography assessment in dense-breast cohorts."
 sourceUrl: "https://epos.myesr.org/poster/esr/ecr2025/C-21046"

@@ -21,7 +21,7 @@ relevance: "Structured report generation provides a research path toward consist
 links:
   paper: "https://ieeexplore.ieee.org/document/11286311"
   pdf: "https://lme.tf.fau.de/wp-content/uploads/2020/08/MammoBLIP__End_to_End_Mammography_Report_Generation_Using_a_Curated__Standardized_Multi_Institutional_Public_Dataset-1.pdf"
-image: "/home/ieee.jpeg"
+image: "/ieee.jpeg"
 imageAlt: "Presentation on MammoBLIP at IEEE Medical Imaging Conference 2025"
 figureCaption: "Presentation photo from IEEE MIC 2025. The paper PDF contains the MammoBLIP pipeline overview."
 sourceUrl: "https://lme.tf.fau.de/wp-content/uploads/2020/08/MammoBLIP__End_to_End_Mammography_Report_Generation_Using_a_Curated__Standardized_Multi_Institutional_Public_Dataset-1.pdf"
@@ -37,7 +37,7 @@ story:
   researchQuestion: "Can a model go directly from a mammogram to a structured radiology report?"
   storyIntro: "MammoBLIP aligns mammography images with standardized report language, then conditions a frozen biomedical language model on the learned visual representation to generate structured text end to end."
   heroFigure:
-    src: "/home/research/mammoblip-mammography-report-generation/mammoblip-pipeline.webp"
+    src: "/research/mammoblip-mammography-report-generation/mammoblip-pipeline.webp"
     alt: "MammoBLIP pipeline connecting five public mammography datasets to an EVA-CLIP encoder, multimodal transformer, BioMedLM, and generated radiology report"
     caption: "MammoBLIP aligns standardized mammogram and text representations, then injects the learned visual embedding into BioMedLM to generate a structured report. Frozen modules are marked in the original figure."
     label: "FIG 01 / IMAGE-TO-LANGUAGE PIPELINE"

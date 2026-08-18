@@ -21,7 +21,7 @@ links:
   paper: "https://arxiv.org/abs/2607.26043"
   pdf: "https://arxiv.org/pdf/2607.26043"
   arxiv: "arXiv:2607.26043"
-image: "/home/cvip2025.jpeg"
+image: "/cvip2025.jpeg"
 imageAlt: "Presentation on Dataset-Informed Transfer Learning at CVIP 2025"
 figureCaption: "Oral presentation of DITL at CVIP 2025, IIT Ropar, India."
 sourceUrl: "https://arxiv.org/abs/2607.26043"
@@ -38,7 +38,7 @@ story:
   researchQuestion: "What if transfer learning adapted to the dataset before optimizing the task?"
   storyIntro: "DITL reads the geometry of a self-supervised feature space, converts local label purity and neighborhood structure into adaptive supervision, and uses those signals during mammography transfer learning."
   heroFigure:
-    src: "/home/research/dataset-informed-transfer-learning-framework/ditl-framework.webp"
+    src: "/research/dataset-informed-transfer-learning-framework/ditl-framework.webp"
     alt: "DITL framework showing mammography inputs, self-supervised feature space, nearest-neighbor analysis, extracted dataset properties, and dataset-informed transfer learning"
     caption: "The three-stage DITL framework: self-supervised representation learning, offline extraction of dataset properties, and downstream transfer learning with adaptive objectives."
     label: "FIG 01 / DITL FRAMEWORK"

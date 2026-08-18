@@ -22,7 +22,7 @@ relevance: "Many clinical AI systems are deployed under strict false-positive co
 links:
   paper: "https://www.nature.com/articles/s41598-023-48482-x"
   doi: "10.1038/s41598-023-48482-x"
-image: "/home/publication-figures/aucreshaping-roc.svg"
+image: "/publication-figures/aucreshaping-roc.svg"
 imageAlt: "Illustration of ROC curve reshaping toward higher sensitivity at high specificity"
 figureCaption: "Local visual summary of the high-specificity ROC operating point described in the Scientific Reports article."
 sourceUrl: "https://www.nature.com/articles/s41598-023-48482-x"

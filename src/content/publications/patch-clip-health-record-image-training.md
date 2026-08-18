@@ -22,7 +22,7 @@ links:
   paper: "https://www.nature.com/articles/s41598-026-52235-x"
   doi: "10.1038/s41598-026-52235-x"
   code: "https://github.com/Siemens-Healthineers/patch-clip"
-image: "/home/publication-figures/patchclip-diagram.svg"
+image: "/publication-figures/patchclip-diagram.svg"
 imageAlt: "Patch-based output and evaluation diagram for PatchCLIP"
 figureCaption: "Local visual summary of PatchCLIP patch-level contrastive learning."
 sourceUrl: "https://www.nature.com/articles/s41598-026-52235-x"

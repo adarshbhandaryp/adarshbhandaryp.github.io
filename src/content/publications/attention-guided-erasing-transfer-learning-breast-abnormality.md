@@ -23,7 +23,7 @@ relevance: "The work targets a practical transfer-learning limitation in medical
 links:
   paper: "https://pubmed.ncbi.nlm.nih.gov/39812891/"
   doi: "10.1007/s11548-024-03317-6"
-image: "/home/publication-figures/age-method-overview.jpg"
+image: "/publication-figures/age-method-overview.jpg"
 imageAlt: "Overview diagram of the Attention-Guided Erasing methodology"
 figureCaption: "Method overview from the open-access AGE journal article."
 sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11929719/"
@@ -39,7 +39,7 @@ story:
   researchQuestion: "Can a model learn what not to erase?"
   storyIntro: "AGE turns self-supervised attention into a task-aware augmentation: preserve the image regions a DINO-pretrained Vision Transformer considers relevant, erase background stochastically, and test whether the resulting representation transfers better."
   heroFigure:
-    src: "/home/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-method-overview.webp"
+    src: "/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-method-overview.webp"
     alt: "Three-stage Attention-Guided Erasing architecture showing DINO pretraining, attention-to-mask conversion, and downstream transfer learning"
     caption: "The AGE workflow: self-supervised DINO pretraining, conversion of attention heads into binary masks, and task-specific transfer learning with stochastic erasing."
     label: "FIG 01 / METHOD ARCHITECTURE"
@@ -142,7 +142,7 @@ story:
         - "These maps are not lesion annotations or clinical explanations. They are weak localizations used to shape augmentation. Their value is visible when the salient region is smaller than the input; when the ROI fills the patch, as in the mass task, guided erasing has less room to help."
         - "Head selection is performed through validation performance for each downstream task, which makes the policy task-aware without choosing a head from the test results. The visualizations should still be read as model evidence rather than biological truth: they show where the pretrained representation concentrates, not why a radiologist would make a diagnosis."
       figures:
-        - src: "/home/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-attention-heads.webp"
+        - src: "/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-attention-heads.webp"
           alt: "Five mammography tasks with six DINO attention maps per task and selected heads outlined in red"
           caption: "Attention heads across tasks T1–T5. Red outlines mark the head selected through validation performance for each downstream task."
           label: "FIG 02 / ATTENTION HEADS"
@@ -151,7 +151,7 @@ story:
           orientation: "landscape"
           width: 1260
           height: 882
-        - src: "/home/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-qualitative-comparison.webp"
+        - src: "/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-qualitative-comparison.webp"
           alt: "Paired examples for five tasks showing input mammogram, selected attention map, binary mask, and AGE output"
           caption: "Qualitative AGE examples: input → selected attention → binary mask → guided erasure, shown for two examples in each task."
           label: "FIG 03 / QUALITATIVE CHAIN"

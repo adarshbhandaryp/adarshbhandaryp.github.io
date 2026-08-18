@@ -23,7 +23,7 @@ relevance: "Breast density directly affects screening sensitivity, making robust
 links:
   paper: "https://www.springerprofessional.de/attention-guided-erasing/26751488"
   arxiv: "arXiv:2401.03912"
-image: "/home/bvm2024.jpeg"
+image: "/bvm2024.jpeg"
 imageAlt: "Oral presentation on Attention-Guided Erasing at BVM 2024"
 figureCaption: "Presentation photo from BVM 2024. Method details are linked via arXiv."
 sourceUrl: "https://arxiv.org/abs/2401.03912"

@@ -20,7 +20,7 @@ relevance: "CESM combines morphological and contrast-enhancement information, ma
 links:
   paper: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12927/129270F/Enhancing-downstream-classification-of-breast-abnormalities-in-contrast-enhanced-spectral/10.1117/12.3004102.full"
   doi: "10.1117/12.3004102"
-image: "/home/spie.jpeg"
+image: "/spie.jpeg"
 imageAlt: "Poster presentation at SPIE Medical Imaging 2024"
 figureCaption: "Poster presentation photo from SPIE Medical Imaging 2024."
 sourceUrl: "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12927/129270F/Enhancing-downstream-classification-of-breast-abnormalities-in-contrast-enhanced-spectral/10.1117/12.3004102.full"

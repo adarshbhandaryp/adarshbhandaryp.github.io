@@ -5,7 +5,7 @@ Astro + Tailwind CSS research website for Adarsh Bhandary Panambur, spanning med
 The site is configured for GitHub Pages at:
 
 ```text
-https://adarshbhandaryp.github.io/home/
+https://adarshbhandaryp.github.io/
 ```
 
 ## Project Structure
@@ -18,7 +18,7 @@ https://adarshbhandaryp.github.io/home/
 - `src/content/config.ts`: Publication content schema.
 - `src/components`: Reusable narrative, interaction, navigation, and publication components.
 - `src/data`: Shared profile, impact, current work, capability, experience, and research graph data.
-- `public`: Static assets served under the `/home/` base path.
+- `public`: Static assets served from the site root.
 
 ## Local Development
 
@@ -37,7 +37,7 @@ npm run dev
 Open:
 
 ```text
-http://localhost:4321/home/
+http://localhost:4321/
 ```
 
 Build for production:
@@ -80,7 +80,7 @@ npm run build
      code: "https://github.com/example/repo"
      doi: "10.xxxx/example"
      arxiv: "arXiv:0000.00000"
-   image: "/home/example-thumbnail.jpg"
+   image: "/example-thumbnail.jpg"
    imageAlt: "Thumbnail description"
    tags:
      - "Mammography"
@@ -97,7 +97,7 @@ npm run build
    Reference it with the GitHub Pages base path:
 
    ```yaml
-   image: "/home/thumbnail.jpg"
+   image: "/thumbnail.jpg"
    ```
 
 4. Run:
@@ -114,7 +114,7 @@ The repository uses GitHub Actions for GitHub Pages deployment. Push to `main`, 
 Settings > Pages > Build and deployment > GitHub Actions
 ```
 
-The Astro base path is configured in `astro.config.mjs` as `/home`.
+The repository must be named `adarshbhandaryp.github.io` so GitHub Pages serves this site at the account root. No Astro `base` is configured because the site deploys at `/`.
 
 ## Updating Current Work
 

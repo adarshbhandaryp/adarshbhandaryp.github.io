@@ -25,7 +25,7 @@ relevance: "External cohort validation is essential for assessing whether breast
 links:
   poster: "https://epos.myesr.org/poster/esr/ecr2025/C-21110"
   doi: "10.26044/ecr2025/C-21110"
-image: "/home/publication-figures/breast-mri-ai-interface.svg"
+image: "/publication-figures/breast-mri-ai-interface.svg"
 imageAlt: "Example AI interface with segmented breast MRI lesion from ECR 2025 poster"
 figureCaption: "Local visual summary of the breast MRI AI detection workflow described in the ECR EPOS poster."
 sourceUrl: "https://epos.myesr.org/poster/esr/ecr2025/C-21110"

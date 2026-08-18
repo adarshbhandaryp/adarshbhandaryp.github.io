@@ -26,7 +26,7 @@ relevance: "The study is clinically relevant because dense breast tissue can red
 links:
   poster: "https://epos.myesr.org/poster/esr/ecr2024/C-16214"
   doi: "10.26044/ecr2024/C-16214"
-image: "/home/publication-figures/mammography-ai-roc.svg"
+image: "/publication-figures/mammography-ai-roc.svg"
 imageAlt: "ROC comparison figure from ECR 2024 Vietnamese mammography cohort poster"
 figureCaption: "Local visual summary of the AI-assisted mammography screening comparison described in the ECR EPOS poster."
 sourceUrl: "https://epos.myesr.org/poster/esr/ecr2024/C-16214"

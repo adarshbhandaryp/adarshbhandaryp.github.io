@@ -11,11 +11,11 @@
 
 :root {
   color-scheme: dark;
-  --ink: #050810;
-  --surface: #09101d;
-  --surface-2: #0d1727;
-  --line: rgba(151, 178, 211, 0.15);
-  --line-bright: rgba(90, 214, 255, 0.36);
+  --ink: #08111f;
+  --surface: #0e1a2b;
+  --surface-2: #14243a;
+  --line: rgba(151, 178, 211, 0.2);
+  --line-bright: rgba(90, 214, 255, 0.46);
   --text: #f2f7ff;
   --muted: #9aabc2;
   --cyan: #32c7ff;
@@ -32,7 +32,10 @@ html { scroll-behavior: smooth; background: var(--ink); }
 body {
   margin: 0;
   overflow-x: hidden;
-  background: radial-gradient(circle at 80% -5%, rgba(36, 124, 255, 0.12), transparent 28rem), var(--ink);
+  background:
+    radial-gradient(circle at 82% -4%, rgba(36, 124, 255, 0.24), transparent 34rem),
+    radial-gradient(circle at 4% 44%, rgba(124, 245, 204, 0.07), transparent 30rem),
+    var(--ink);
   color: var(--text);
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -45,7 +48,7 @@ body::before {
   z-index: 999;
   pointer-events: none;
   content: "";
-  opacity: .025;
+  opacity: .035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
