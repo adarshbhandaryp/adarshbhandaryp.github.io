@@ -31,7 +31,16 @@ const stories = storySpecs.map((spec, index) => {
   let publication = all.find((entry) => entry.slug === spec.slug);
   if (!publication) return null;
   const links = externalPublicationLinks(publication);
-  return { ...spec, publication, links, image: publication.data.image || spec.fallbackImage };
+  return {
+    ...spec,
+    publication,
+    links,
+    image: publication.data.story?.heroFigure.src || publication.data.image || spec.fallbackImage,
+    imageAlt: publication.data.story?.heroFigure.alt || publication.data.imageAlt || publication.data.title,
+    imageWidth: publication.data.story?.heroFigure.width,
+    imageHeight: publication.data.story?.heroFigure.height,
+    hasVisualStory: Boolean(publication.data.story),
+  };
 }).filter(Boolean);
 ---
 
@@ -46,9 +55,9 @@ const stories = storySpecs.map((spec, index) => {
     <div class="story-list">
       {stories.map((story, index) => story && (
         <article class={`research-story reveal story-${index + 1}`}>
-          <div class="story-visual">
+          <div class:list={['story-visual', { 'is-research-figure': story.hasVisualStory }] }>
             {story.image ? (
-              <img src={story.image} alt={story.publication.data.imageAlt || story.publication.data.title} loading="lazy" />
+              <img src={story.image} alt={story.imageAlt} width={story.imageWidth} height={story.imageHeight} loading="lazy" />
             ) : (
               <div class="story-placeholder" aria-hidden="true"><span>∷</span><i></i><i></i><i></i></div>
             )}
@@ -62,7 +71,7 @@ const stories = storySpecs.map((spec, index) => {
             <p data-recruiter-copy data-nosnippet>{story.publication.data.relevance}</p>
             <div class="story-meta"><span>{story.publication.data.venue}</span><span>{story.publication.data.year}</span></div>
             <div class="story-links">
-              <a href={getPublicationUrl(story.publication.slug)} class="text-link">Explore project</a>
+              <a href={getPublicationUrl(story.publication.slug)} class="text-link">{story.hasVisualStory ? `${story.publication.data.story?.readTime} visual research brief` : 'Explore project'}</a>
               {story.links.slice(0, 2).map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-link">{link.label}</a>)}
             </div>
           </div>
@@ -83,6 +92,7 @@ const stories = storySpecs.map((spec, index) => {
   .story-visual { position: relative; aspect-ratio: 16/10; overflow: hidden; clip-path: polygon(0 0,96% 0,100% 8%,100% 100%,4% 100%,0 92%); background: #0b1422; }
   .story-visual::after { position: absolute; inset: 0; content: ''; border: 1px solid var(--line); background: linear-gradient(130deg,transparent 55%,rgba(50,199,255,.11)); }
   .story-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.04); transition: transform 1s ease,filter .8s ease; }
+  .story-visual.is-research-figure { background: #eef3f5; }.story-visual.is-research-figure img { object-fit: contain; padding: .8rem; filter: saturate(.9); }
   .research-story:hover img { transform: scale(1.025); filter: saturate(.95); }
   .story-number { position: absolute; z-index: 2; right: 1rem; top: .75rem; color: var(--cyan); font-family: ui-monospace,monospace; font-size: .65rem; }
   .story-scan { position: absolute; z-index: 2; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg,transparent,var(--mint),transparent); opacity: .6; animation: story-scan 8s ease-in-out infinite; }

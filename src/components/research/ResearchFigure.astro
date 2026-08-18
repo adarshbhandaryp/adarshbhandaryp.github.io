@@ -1,0 +1,64 @@
+---
+interface FigureData {
+  src: string;
+  alt: string;
+  caption: string;
+  label?: string;
+  sourceUrl?: string;
+  sourceLabel?: string;
+  orientation?: 'landscape' | 'portrait' | 'square';
+  width?: number;
+  height?: number;
+}
+
+interface Props {
+  figure: FigureData;
+  hero?: boolean;
+}
+
+const { figure, hero = false } = Astro.props;
+const orientation = figure.orientation || 'landscape';
+---
+
+<figure class:list={['research-figure', `is-${orientation}`, { 'is-hero': hero }] }>
+  {figure.label && <span class="figure-label">{figure.label}</span>}
+  <button
+    type="button"
+    class="figure-open"
+    data-figure-open
+    data-figure-src={figure.src}
+    data-figure-alt={figure.alt}
+    data-figure-caption={figure.caption}
+    aria-label={`Open figure fullscreen: ${figure.alt}`}
+  >
+    <img
+      src={figure.src}
+      alt={figure.alt}
+      width={figure.width}
+      height={figure.height}
+      loading={hero ? 'eager' : 'lazy'}
+      decoding="async"
+      fetchpriority={hero ? 'high' : 'auto'}
+    />
+    <span class="figure-expand" aria-hidden="true">EXPAND ↗</span>
+  </button>
+  <figcaption>
+    <span>{figure.caption}</span>
+    {figure.sourceUrl && <a href={figure.sourceUrl} target="_blank" rel="noopener noreferrer">{figure.sourceLabel || 'Figure source'} ↗</a>}
+  </figcaption>
+</figure>
+
+<style>
+  .research-figure { position: relative; margin: 0; border: 1px solid var(--line); background: #07101b; }
+  .research-figure.is-portrait { max-width: 55rem; margin-inline: auto; }
+  .figure-label { position: absolute; z-index: 3; left: .8rem; top: .8rem; border: 1px solid rgba(5,8,16,.2); background: rgba(242,247,255,.92); padding: .35rem .5rem; color: #10233b; font: 600 .5rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .figure-open { position: relative; display: grid; width: 100%; overflow: hidden; background: white; cursor: zoom-in; }
+  .figure-open img { display: block; width: 100%; height: auto; max-height: 78rem; object-fit: contain; }
+  .is-hero .figure-open img { max-height: 82vh; }
+  .figure-expand { position: absolute; right: .75rem; bottom: .75rem; border: 1px solid rgba(255,255,255,.34); background: rgba(5,8,16,.84); padding: .42rem .55rem; color: white; font: .5rem ui-monospace,monospace; letter-spacing: .08em; opacity: 0; transform: translateY(.25rem); transition: opacity .2s ease,transform .2s ease; }
+  .figure-open:hover .figure-expand,.figure-open:focus-visible .figure-expand { opacity: 1; transform: none; }
+  figcaption { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding: .85rem 1rem; color: var(--muted); font-size: .66rem; line-height: 1.65; }
+  figcaption a { flex: 0 0 auto; color: var(--cyan); }
+  @media (max-width: 640px) { .figure-expand { opacity: 1; transform: none; } figcaption { display: grid; } }
+  @media (prefers-reduced-motion: reduce) { .figure-expand { transition: none; } }
+</style>

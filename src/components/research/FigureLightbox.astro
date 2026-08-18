@@ -1,0 +1,25 @@
+<dialog id="figure-lightbox" class="figure-lightbox" aria-labelledby="figure-lightbox-caption">
+  <div class="lightbox-bar"><span>RESEARCH FIGURE / FULL VIEW</span><button type="button" data-figure-close>ESC / CLOSE</button></div>
+  <div class="lightbox-canvas"><img data-figure-image src="" alt="" /></div>
+  <p id="figure-lightbox-caption" data-figure-caption></p>
+</dialog>
+
+<script>
+  const figureDialog = document.getElementById('figure-lightbox') as HTMLDialogElement | null;
+  const figureImage = figureDialog?.querySelector<HTMLImageElement>('[data-figure-image]');
+  const figureCaption = figureDialog?.querySelector<HTMLElement>('[data-figure-caption]');
+  let figureTrigger: HTMLElement | null = null;
+  document.querySelectorAll<HTMLElement>('[data-figure-open]').forEach((button) => button.addEventListener('click', () => {
+    figureTrigger = button;
+    if (figureImage) { figureImage.src = button.dataset.figureSrc || ''; figureImage.alt = button.dataset.figureAlt || ''; }
+    if (figureCaption) figureCaption.textContent = button.dataset.figureCaption || '';
+    figureDialog?.showModal();
+  }));
+  figureDialog?.querySelector('[data-figure-close]')?.addEventListener('click', () => figureDialog.close());
+  figureDialog?.addEventListener('click', (event) => { if (event.target === figureDialog) figureDialog.close(); });
+  figureDialog?.addEventListener('close', () => { if (figureImage) figureImage.src = ''; figureTrigger?.focus(); });
+</script>
+
+<style>
+  .figure-lightbox { width: min(96vw,100rem); max-width: none; height: 94vh; max-height: none; margin: auto; border: 1px solid var(--line-bright); background: #050810; padding: 0; color: var(--text); }.figure-lightbox::backdrop { background: rgba(1,4,10,.88); backdrop-filter: blur(8px); }.lightbox-bar { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding: .8rem 1rem; color: var(--cyan); font: .52rem ui-monospace,monospace; letter-spacing: .1em; }.lightbox-bar button { border: 1px solid var(--line); padding: .4rem .55rem; color: #c8d6e6; }.lightbox-canvas { display: grid; height: calc(94vh - 7rem); place-items: center; overflow: auto; background: #eef3f5; }.lightbox-canvas img { max-width: 100%; max-height: 100%; object-fit: contain; }.figure-lightbox > p { min-height: 3rem; border-top: 1px solid var(--line); padding: .75rem 1rem; color: var(--muted); font-size: .65rem; line-height: 1.55; }
+</style>

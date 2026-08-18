@@ -13,6 +13,57 @@ const publicationLinks = z
   })
   .default({});
 
+const researchFigure = z.object({
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string(),
+  label: z.string().optional(),
+  sourceUrl: z.string().url().optional(),
+  sourceLabel: z.string().optional(),
+  orientation: z.enum(['landscape', 'portrait', 'square']).default('landscape'),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+});
+
+const storyMetric = z.object({
+  value: z.string(),
+  label: z.string(),
+  detail: z.string().optional(),
+  tone: z.enum(['default', 'positive', 'caution']).default('default'),
+});
+
+const storyCard = z.object({
+  label: z.string(),
+  title: z.string(),
+  body: z.string(),
+  tone: z.enum(['default', 'positive', 'caution']).default('default'),
+});
+
+const storySection = z.object({
+  id: z.string(),
+  label: z.string(),
+  title: z.string(),
+  duration: z.string().optional(),
+  body: z.array(z.string()).default([]),
+  pipeline: z.array(z.string()).optional(),
+  metrics: z.array(storyMetric).optional(),
+  comparisons: z.array(storyMetric).optional(),
+  figures: z.array(researchFigure).optional(),
+  cards: z.array(storyCard).optional(),
+});
+
+const visualStory = z.object({
+  readTime: z.string(),
+  shortTitle: z.string(),
+  researchQuestion: z.string(),
+  storyIntro: z.string(),
+  heroFigure: researchFigure,
+  signalStats: z.array(storyMetric).default([]),
+  sections: z.array(storySection),
+  personalContribution: z.string().optional(),
+  takeaway: z.array(storyCard),
+});
+
 const publications = defineCollection({
   type: 'content',
   schema: z.object({
@@ -38,6 +89,7 @@ const publications = defineCollection({
     featured: z.boolean().default(false),
     citation: z.string().optional(),
     bibtex: z.string().optional(),
+    story: visualStory.optional(),
   }),
 });
 
