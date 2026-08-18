@@ -1,6 +1,6 @@
-# Adarsh Bhandary Panambur - Portfolio Website - Testing Local
+# ADARSH // RESEARCH OS
 
-Astro + Tailwind CSS academic portfolio for a medical imaging and deep learning researcher.
+Astro + Tailwind CSS research website for Adarsh Bhandary Panambur, spanning medical AI, multimodal foundation models, clinical translation, and HPC systems.
 
 The site is configured for GitHub Pages at:
 
@@ -10,13 +10,14 @@ https://adarshbhandaryp.github.io/home/
 
 ## Project Structure
 
-- `src/pages/index.astro`: Homepage.
+- `src/pages/index.astro`: Cinematic research homepage.
+- `src/pages/cv/index.astro`: Fast, printable recruiter CV.
 - `src/pages/publications/index.astro`: Filterable publication archive.
 - `src/pages/publications/[slug].astro`: Publication mini-blog detail pages.
 - `src/content/publications`: Markdown publication entries.
 - `src/content/config.ts`: Publication content schema.
-- `src/components`: Reusable UI sections and cards.
-- `src/data`: Profile, project, experience, education, skill, and gallery data.
+- `src/components`: Reusable narrative, interaction, navigation, and publication components.
+- `src/data`: Shared profile, impact, current work, capability, experience, and research graph data.
 - `public`: Static assets served under the `/home/` base path.
 
 ## Local Development
@@ -114,3 +115,18 @@ Settings > Pages > Build and deployment > GitHub Actions
 ```
 
 The Astro base path is configured in `astro.config.mjs` as `/home`.
+
+## Updating Current Work
+
+Edit `src/data/current.json`. Each public item uses four fields:
+
+```json
+{
+  "title": "",
+  "description": "",
+  "type": "Research",
+  "status": "Active"
+}
+```
+
+`Ask Adarsh` is a static, privacy-preserving interface. Its current answer index lives in `src/components/AskAdarsh.astro` and can later be replaced by a backend without changing the dialog UI.

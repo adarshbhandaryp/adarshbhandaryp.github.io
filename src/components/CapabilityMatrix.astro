@@ -1,0 +1,31 @@
+---
+import capabilities from '../data/capabilities.json';
+---
+
+<section id="capabilities" class="section-shell capability-section section-rule" aria-labelledby="capability-title">
+  <div class="shell">
+    <div class="capability-head reveal"><div><p class="section-kicker">08 / CAPABILITY MATRIX</p><h2 id="capability-title" class="section-title">MODEL. SCALE. TRANSLATE.</h2></div><p class="section-copy">Capabilities organized by what the work needs to accomplish—not by an inventory of frameworks.</p></div>
+    <div class="capability-grid">
+      {capabilities.map((group) => (
+        <article class="capability-column reveal">
+          <div class="capability-title"><span>{group.index}</span><h3>{group.title}</h3></div>
+          <p>{group.summary}</p>
+          <ul>{group.items.map((item) => <li><i></i>{item}</li>)}</ul>
+          <div class="capability-tools">{group.tools.join(' · ')}</div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .capability-section { background: #050810; }
+  .capability-head { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 4rem; }
+  .capability-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 5rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .capability-column { min-width: 0; border-right: 1px solid var(--line); padding: 2rem clamp(1rem,3vw,2.5rem) 2.5rem; }.capability-column:last-child { border-right: 0; }
+  .capability-title { display: flex; align-items: baseline; gap: 1rem; }.capability-title span { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .58rem; }.capability-title h3 { font-size: clamp(2rem,4vw,3.8rem); font-weight: 500; letter-spacing: -.05em; }
+  .capability-column > p { min-height: 5.5rem; margin-top: 1.2rem; color: var(--muted); font-size: .78rem; line-height: 1.7; }
+  .capability-column ul { margin-top: 1.5rem; border-top: 1px solid var(--line); }.capability-column li { display: flex; align-items: center; gap: .75rem; border-bottom: 1px solid var(--line); padding: .8rem 0; color: #c8d4e2; font-size: .8rem; }.capability-column li i { width: .28rem; height: .28rem; border-radius: 50%; background: var(--mint); }
+  .capability-tools { margin-top: 1.5rem; color: #60758e; font-family: ui-monospace,monospace; font-size: .55rem; line-height: 1.8; text-transform: uppercase; }
+  @media (max-width: 800px) { .capability-head { grid-template-columns: 1fr; }.capability-grid { grid-template-columns: 1fr; }.capability-column { border-right: 0; border-bottom: 1px solid var(--line); padding-inline: 0; }.capability-column:last-child { border-bottom: 0; }.capability-column > p { min-height: 0; } }
+</style>

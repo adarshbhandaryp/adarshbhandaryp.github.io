@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import profile from '../../data/profile.json';
+import experience from '../../data/experience.json';
+import education from '../../data/education.json';
+import capabilities from '../../data/capabilities.json';
+import skills from '../../data/skills.json';
+import { getPublications, getPublicationUrl } from '../../utils/publications';
+import { sitePath } from '../../utils/site';
+
+const publications = (await getPublications()).filter((publication) => publication.data.featured).slice(0, 5);
+---
+
+<BaseLayout title={`CV | ${profile.name}`} description={`Recruiter-friendly CV for ${profile.name}, Research Scientist working in medical AI, multimodal AI, foundation models, and HPC.`}>
+  <div class="cv-nav no-print"><Nav /></div>
+  <main id="main-content" class="cv-page">
+    <div class="cv-sheet">
+      <header class="cv-header">
+        <div><p class="cv-kicker">RESEARCH SCIENTIST / MEDICAL AI / HPC</p><h1>{profile.name}</h1><p>{profile.title}</p></div>
+        <div class="cv-contact"><span>{profile.location}</span><a href={`mailto:${profile.email}`}>{profile.email}</a><a href={profile.github}>github.com/adarshbhandaryp</a><a href={profile.linkedin}>linkedin.com/in/adarshbhandaryp</a></div>
+      </header>
+
+      <div class="cv-actions no-print"><a href={sitePath('CV.pdf')} class="btn-primary">Download PDF CV ↘</a><button type="button" class="btn-secondary" id="print-cv">Print this page</button></div>
+
+      <section class="cv-summary"><h2>Profile</h2><p>{profile.tagline} Current work at NHR@FAU spans LLMs, VLMs, multimodal AI systems, GPU infrastructure, scalable training and inference, research software, and agentic workflows.</p></section>
+
+      <section><h2>Experience</h2><div class="cv-experience">{experience.map((role) => <article><div><h3>{role.role}</h3><p>{role.company}</p></div><time>{role.dates}<br/>{role.location}</time><ul>{role.description.map((item) => <li>{item}</li>)}</ul></article>)}</div></section>
+
+      <section><h2>Education</h2><div class="cv-education">{education.map((item) => <article><div><h3>{item.degree}</h3><p>{item.school}</p></div><time>{item.dates}</time></article>)}</div></section>
+
+      <section><h2>Capabilities</h2><div class="cv-capabilities">{capabilities.map((group) => <article><h3>{group.title}</h3><p>{group.items.join(' · ')}</p><small>{group.tools.join(' · ')}</small></article>)}</div><p class="cv-frameworks"><b>Additional tools:</b> {skills.flatMap((group) => group.items).filter((item) => !capabilities.flatMap((group) => [...group.items,...group.tools]).includes(item)).join(' · ')}</p></section>
+
+      <section><h2>Selected publications</h2><ol class="cv-publications">{publications.map((publication) => <li><a href={getPublicationUrl(publication.slug)}>{publication.data.title}</a><span>{publication.data.venue}, {publication.data.year}</span></li>)}</ol><a href={sitePath('publications/')} class="cv-more no-print">View full publication archive →</a></section>
+    </div>
+  </main>
+  <div class="no-print"><Footer /></div>
+  <script>document.getElementById('print-cv')?.addEventListener('click', () => window.print());</script>
+</BaseLayout>
+
+<style>
+  :global(.cv-page) { min-height: 100vh; padding: 8rem 1rem 5rem; background: #e8edf2; color: #172033; }.cv-sheet { width: min(100%,72rem); margin: 0 auto; background: white; padding: clamp(1.5rem,5vw,4.5rem); box-shadow: 0 1.5rem 5rem rgba(5,12,24,.12); }.cv-header { display: grid; grid-template-columns: 1fr auto; gap: 2rem; border-bottom: 3px solid #142238; padding-bottom: 2rem; }.cv-kicker { color: #256a89; font: 600 .62rem ui-monospace,monospace; letter-spacing: .12em; }.cv-header h1 { margin-top: .65rem; font-size: clamp(2.7rem,6vw,5rem); font-weight: 600; letter-spacing: -.055em; line-height: .9; }.cv-header > div > p:last-child { margin-top: 1rem; color: #4e5d71; font-size: .9rem; }.cv-contact { display: grid; align-content: end; gap: .35rem; text-align: right; color: #4e5d71; font-size: .68rem; }.cv-contact a:hover { color: #087ca8; }.cv-actions { display: flex; gap: .7rem; margin: 1.5rem 0 2rem; }.cv-actions .btn-primary { background: #142238; color: white; }.cv-actions .btn-secondary { border-color: #aebbc9; color: #142238; }.cv-sheet section { border-top: 1px solid #d9e0e7; padding: 2.2rem 0; }.cv-sheet section > h2 { margin-bottom: 1.4rem; color: #256a89; font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }.cv-summary { border-top: 0 !important; }.cv-summary p { max-width: 60rem; color: #465568; font-size: .88rem; line-height: 1.75; }.cv-experience { display: grid; gap: 2rem; }.cv-experience article { display: grid; grid-template-columns: 1fr auto; gap: .25rem 2rem; break-inside: avoid; }.cv-experience h3,.cv-education h3 { font-size: 1rem; font-weight: 700; }.cv-experience article > div p,.cv-education p { margin-top: .15rem; color: #256a89; font-size: .76rem; }.cv-experience time,.cv-education time { color: #607085; font: .62rem/1.5 ui-monospace,monospace; text-align: right; }.cv-experience ul { grid-column: 1/-1; margin-top: .65rem; }.cv-experience li { position: relative; margin-top: .28rem; padding-left: 1rem; color: #465568; font-size: .72rem; line-height: 1.55; }.cv-experience li::before { position: absolute; left: 0; content: '—'; color: #2c7d9e; }.cv-education { display: grid; gap: 1rem; }.cv-education article { display: grid; grid-template-columns: 1fr auto; gap: 1rem; break-inside: avoid; }.cv-capabilities { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }.cv-capabilities h3 { color: #142238; font-size: 1.2rem; }.cv-capabilities p { margin-top: .6rem; color: #465568; font-size: .7rem; line-height: 1.65; }.cv-capabilities small { display: block; margin-top: .7rem; color: #758397; font-size: .6rem; line-height: 1.55; }.cv-frameworks { margin-top: 1.4rem; border-top: 1px solid #e2e7ec; padding-top: 1rem; color: #607085; font-size: .65rem; line-height: 1.6; }.cv-publications { display: grid; gap: .8rem; counter-reset: papers; }.cv-publications li { display: grid; grid-template-columns: 1fr auto; gap: 1rem; border-bottom: 1px solid #e2e7ec; padding-bottom: .8rem; font-size: .75rem; }.cv-publications a { font-weight: 600; }.cv-publications span { color: #607085; font-size: .65rem; text-align: right; }.cv-more { display: inline-block; margin-top: 1.2rem; color: #256a89; font-size: .7rem; font-weight: 700; }
+  @media (max-width: 700px) { .cv-page { padding-inline: 0; }.cv-sheet { padding: 1.2rem; }.cv-header { grid-template-columns: 1fr; }.cv-contact { text-align: left; }.cv-experience article,.cv-education article,.cv-publications li { grid-template-columns: 1fr; }.cv-experience time,.cv-education time,.cv-publications span { text-align: left; }.cv-capabilities { grid-template-columns: 1fr; } }
+  @media print { @page { size: A4; margin: 13mm; } :global(.cv-page) { padding: 0; background: white; }.cv-sheet { width: 100%; padding: 0; box-shadow: none; }.cv-header h1 { font-size: 35pt; }.cv-sheet section { padding: 12pt 0; }.cv-experience { gap: 12pt; }.cv-experience li { font-size: 7.5pt; }.cv-capabilities p,.cv-publications li { font-size: 7.5pt; } }
+</style>

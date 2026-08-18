@@ -1,0 +1,26 @@
+[
+  {
+    "id": "model",
+    "index": "01",
+    "title": "MODEL",
+    "summary": "Learn representations that connect pixels, language, and clinical context.",
+    "items": ["Foundation Models", "Vision-Language Models", "Self-Supervised Learning", "Classification", "Detection", "Segmentation"],
+    "tools": ["PyTorch", "Hugging Face", "MONAI", "MMDetection"]
+  },
+  {
+    "id": "scale",
+    "index": "02",
+    "title": "SCALE",
+    "summary": "Move experiments onto reproducible, distributed compute infrastructure.",
+    "items": ["GPU Computing", "SLURM", "Distributed Training", "DeepSpeed", "Docker", "Model Serving"],
+    "tools": ["Linux", "Axolotl", "SGLang", "WandB"]
+  },
+  {
+    "id": "translate",
+    "index": "03",
+    "title": "TRANSLATE",
+    "summary": "Design research around clinical workflows, external validation, and usable software.",
+    "items": ["Medical Imaging", "Clinical Validation", "Radiology Workflows", "Research Software", "Reproducible AI"],
+    "tools": ["Mammography", "Breast MRI", "Low-dose CT", "Hematology"]
+  }
+]

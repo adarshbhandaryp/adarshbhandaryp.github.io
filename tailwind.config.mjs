@@ -4,19 +4,21 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "#ffffff",
-                secondary: "#f8fafc",
-                accent: "#1d4ed8",
-                "accent-glow": "#60a5fa",
-                text: "#0f172a",
-                "text-muted": "#475569",
+                primary: "#050810",
+                secondary: "#09101d",
+                accent: "#32c7ff",
+                "accent-glow": "#247cff",
+                mint: "#7cf5cc",
+                amber: "#f6c86e",
+                text: "#f2f7ff",
+                "text-muted": "#9aabc2",
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
                 heading: ['Outfit', 'sans-serif'],
             },
             animation: {
-                'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                'fade-in-up': 'fadeInUp 0.8s cubic-bezier(.2,.8,.2,1) forwards',
             },
             keyframes: {
                 fadeInUp: {

@@ -1,69 +1,227 @@
 ---
+import profile from '../data/profile.json';
 import { sitePath } from '../utils/site';
+import AskAdarsh from './AskAdarsh.astro';
 
 const links = [
-  { name: "Research", href: "work" },
-  { name: "Publications", href: "publications" },
-  { name: "Experience", href: "experience" },
-  { name: "Skills", href: "skills" },
-  { name: "Contact", href: "contact" },
+  { name: 'Work', href: sitePath('#work') },
+  { name: 'Research', href: sitePath('#research') },
+  { name: 'Publications', href: sitePath('publications/') },
+  { name: 'About', href: sitePath('#experience') },
+];
+
+const commands = [
+  { label: 'Explore research', meta: 'Medical AI · projects', href: sitePath('#research'), keywords: 'research medical ai mammography' },
+  { label: 'Ask Adarsh', meta: 'Static research assistant', action: 'ask', keywords: 'ask assistant chat' },
+  { label: 'Publication archive', meta: 'Papers · preprints · studies', href: sitePath('publications/'), keywords: 'publication papers archive' },
+  { label: 'Medical AI', meta: 'Mammography · MRI · clinical AI', href: sitePath('#research'), keywords: 'medical ai breast mammography MRI' },
+  { label: 'HPC & AI systems', meta: 'GPU clusters · SLURM · inference', href: sitePath('#scale'), keywords: 'hpc gpu slurm distributed compute llm' },
+  { label: 'Experience journey', meta: 'FAU · Siemens · WCH · NHR', href: sitePath('#experience'), keywords: 'experience siemens west china nhr fau' },
+  { label: 'MammoBLIP', meta: 'Vision-language report generation', href: sitePath('publications/mammoblip-mammography-report-generation/'), keywords: 'vlm vision language mammoblip report' },
+  { label: 'Breast MRI research', meta: 'BE-WISE · clinical validation', href: sitePath('#research'), keywords: 'mri breast be-wise odelia' },
+  { label: 'Download CV', meta: 'PDF · 219 KB', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
+  { label: 'Recruiter CV', meta: 'Web · print-friendly', href: sitePath('cv/'), keywords: 'cv resume recruiter experience' },
+  { label: 'GitHub', meta: '@adarshbhandaryp', href: profile.github, external: true, keywords: 'github code' },
+  { label: 'LinkedIn', meta: 'Professional profile', href: profile.linkedin, external: true, keywords: 'linkedin social' },
+  { label: 'Contact', meta: profile.email, href: `mailto:${profile.email}`, keywords: 'contact email' },
 ];
 ---
 
-<nav class="fixed left-0 top-0 z-50 w-full transition-all duration-300" id="navbar">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
-    <a href={sitePath()} class="text-base font-heading font-bold tracking-tight text-white transition-colors hover:text-blue-100" aria-label="Adarsh Bhandary Panambur home">
-      ABP<span class="text-blue-300">.</span>
+<nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+  <div class="shell nav-inner">
+    <a href={sitePath()} class="nav-mark" aria-label={`${profile.name} home`}>
+      <span>ABP</span><i aria-hidden="true"></i><small>RESEARCH OS</small>
     </a>
 
-    <div class="hidden items-center gap-7 md:flex">
-      {links.map((link) => (
-        <a href={sitePath(`#${link.href}`)} class="relative text-sm font-medium text-blue-100/80 transition-colors hover:text-white">
-          {link.name}
-        </a>
-      ))}
-      <a href={sitePath('publications/')} class="rounded-md border border-white/15 px-3.5 py-2 text-sm font-semibold text-white transition hover:border-blue-200 hover:bg-white/10">
-        Archive
-      </a>
+    <div class="nav-links" aria-label="Main links">
+      {links.map((link) => <a href={link.href}>{link.name}</a>)}
     </div>
 
-    <button class="rounded-md p-2 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 md:hidden" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-      </svg>
-    </button>
+    <div class="nav-actions">
+      <div class="mode-switch" role="group" aria-label="Content mode">
+        <button type="button" data-mode-button="research" aria-pressed="true">Research</button>
+        <button type="button" data-mode-button="recruiter" aria-pressed="false">Recruiter</button>
+      </div>
+      <button type="button" class="nav-command" data-open-command aria-label="Open command palette"><span>⌘</span>K</button>
+      <button type="button" class="nav-ask" data-open-ask>Ask Adarsh</button>
+      <button type="button" class="mobile-trigger" id="mobile-trigger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button>
+    </div>
   </div>
 
-  <div class="absolute left-0 top-full hidden w-full border-y border-white/10 bg-slate-950/95 backdrop-blur-xl md:hidden" id="mobile-menu">
-    <div class="flex flex-col gap-4 p-6">
-      {links.map((link) => (
-        <a href={sitePath(`#${link.href}`)} class="text-base font-medium text-blue-100/80 transition-colors hover:text-white">
-          {link.name}
-        </a>
-      ))}
-      <a href={sitePath('publications/')} class="text-base font-medium text-blue-100/80 transition-colors hover:text-white">
-        Publication Archive
-      </a>
+  <div id="mobile-nav" class="mobile-nav" hidden>
+    <div class="shell">
+      {links.map((link, index) => <a href={link.href}><span>0{index + 1}</span>{link.name}</a>)}
+      <a href={sitePath('cv/')}><span>05</span>CV</a>
+      <button type="button" data-open-ask><span>06</span>Ask Adarsh</button>
     </div>
   </div>
 </nav>
 
-<script>
-  const navbar = document.getElementById('navbar');
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+<div class="dialog-backdrop" id="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title" hidden>
+  <div class="dialog-panel command-panel">
+    <div class="command-search">
+      <span aria-hidden="true">⌕</span>
+      <label id="command-title" class="sr-only" for="command-input">Search the site</label>
+      <input id="command-input" type="search" placeholder="Search MRI, VLM, HPC…" autocomplete="off" aria-controls="command-results" />
+      <button type="button" data-close-command aria-label="Close command palette">ESC</button>
+    </div>
+    <div class="command-list" id="command-results" role="listbox" aria-label="Commands">
+      {commands.map((command) => (
+        command.action ? (
+          <button type="button" class="command-item" role="option" aria-selected="false" data-command-item data-keywords={command.keywords} data-command-action={command.action}>
+            <span>{command.label}<small>{command.meta}</small></span><b>↗</b>
+          </button>
+        ) : (
+          <a class="command-item" role="option" aria-selected="false" data-command-item data-keywords={command.keywords} href={command.href} target={command.external ? '_blank' : undefined} rel={command.external ? 'noopener noreferrer' : undefined}>
+            <span>{command.label}<small>{command.meta}</small></span><b>↗</b>
+          </a>
+        )
+      ))}
+      <p class="command-empty" id="command-empty" hidden>No matching research node.</p>
+    </div>
+    <div class="command-footer"><span>↑↓ Navigate</span><span>Enter Open</span><span>Esc Close</span></div>
+  </div>
+</div>
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar?.classList.add('bg-slate-950/90', 'backdrop-blur-md', 'border-b', 'border-white/10');
-    } else {
-      navbar?.classList.remove('bg-slate-950/90', 'backdrop-blur-md', 'border-b', 'border-white/10');
+<AskAdarsh />
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const progress = document.getElementById('scroll-progress');
+  const mobileTrigger = document.getElementById('mobile-trigger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const commandDialog = document.getElementById('command-dialog');
+  const commandInput = document.getElementById('command-input') as HTMLInputElement | null;
+  const commandItems = Array.from(document.querySelectorAll<HTMLElement>('[data-command-item]'));
+  const commandEmpty = document.getElementById('command-empty');
+  let activeCommand = 0;
+
+  const setMode = (mode: 'research' | 'recruiter') => {
+    document.body.dataset.mode = mode;
+    document.querySelectorAll<HTMLButtonElement>('[data-mode-button]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.modeButton === mode)));
+    try { localStorage.setItem('adarsh-mode', mode); } catch {}
+  };
+  const storedMode = (() => { try { return localStorage.getItem('adarsh-mode'); } catch { return null; } })();
+  setMode(storedMode === 'recruiter' ? 'recruiter' : 'research');
+  document.querySelectorAll<HTMLButtonElement>('[data-mode-button]').forEach((button) => button.addEventListener('click', () => setMode(button.dataset.modeButton === 'recruiter' ? 'recruiter' : 'research')));
+
+  const updateScroll = () => {
+    nav?.classList.toggle('is-scrolled', window.scrollY > 24);
+    if (progress) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    }
+  };
+  updateScroll();
+  window.addEventListener('scroll', updateScroll, { passive: true });
+
+  mobileTrigger?.addEventListener('click', () => {
+    const open = mobileNav?.hasAttribute('hidden') ?? true;
+    mobileNav?.toggleAttribute('hidden', !open);
+    mobileTrigger.setAttribute('aria-expanded', String(open));
+    nav?.classList.toggle('menu-open', open);
+  });
+  mobileNav?.querySelectorAll('a, button').forEach((item) => item.addEventListener('click', () => {
+    mobileNav.setAttribute('hidden', '');
+    mobileTrigger?.setAttribute('aria-expanded', 'false');
+    nav?.classList.remove('menu-open');
+  }));
+
+  const visibleCommands = () => commandItems.filter((item) => !item.hasAttribute('hidden'));
+  const highlightCommand = (index: number) => {
+    const visible = visibleCommands();
+    if (!visible.length) return;
+    activeCommand = (index + visible.length) % visible.length;
+    visible.forEach((item, itemIndex) => {
+      item.classList.toggle('is-active', itemIndex === activeCommand);
+      item.setAttribute('aria-selected', String(itemIndex === activeCommand));
+    });
+    visible[activeCommand]?.scrollIntoView({ block: 'nearest' });
+  };
+  const filterCommands = () => {
+    const query = commandInput?.value.trim().toLowerCase() || '';
+    commandItems.forEach((item) => item.toggleAttribute('hidden', !`${item.textContent} ${item.dataset.keywords}`.toLowerCase().includes(query)));
+    commandEmpty?.toggleAttribute('hidden', visibleCommands().length > 0);
+    highlightCommand(0);
+  };
+  const openCommand = () => {
+    commandDialog?.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    commandInput?.focus();
+    highlightCommand(0);
+  };
+  const closeCommand = () => {
+    commandDialog?.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+    if (commandInput) commandInput.value = '';
+    filterCommands();
+  };
+
+  document.querySelectorAll('[data-open-command]').forEach((button) => button.addEventListener('click', openCommand));
+  document.querySelectorAll('[data-close-command]').forEach((button) => button.addEventListener('click', closeCommand));
+  commandDialog?.addEventListener('click', (event) => { if (event.target === commandDialog) closeCommand(); });
+  commandInput?.addEventListener('input', filterCommands);
+  commandItems.forEach((item) => item.addEventListener('click', () => {
+    if (item.dataset.commandAction === 'ask') window.dispatchEvent(new CustomEvent('open-ask-adarsh'));
+    closeCommand();
+  }));
+  document.querySelectorAll('[data-open-ask]').forEach((button) => button.addEventListener('click', () => window.dispatchEvent(new CustomEvent('open-ask-adarsh'))));
+  document.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openCommand(); return; }
+    if (event.key === 'Escape' && commandDialog && !commandDialog.hasAttribute('hidden')) closeCommand();
+    if (!commandDialog?.hasAttribute('hidden')) {
+      if (event.key === 'Tab') {
+        const focusable = Array.from(commandDialog.querySelectorAll<HTMLElement>('input,button,a[href]')).filter((item) => !item.hasAttribute('hidden'));
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+      if (event.key === 'ArrowDown') { event.preventDefault(); highlightCommand(activeCommand + 1); }
+      if (event.key === 'ArrowUp') { event.preventDefault(); highlightCommand(activeCommand - 1); }
+      if (event.key === 'Enter' && document.activeElement === commandInput) { event.preventDefault(); visibleCommands()[activeCommand]?.click(); }
     }
   });
-
-  mobileBtn?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
-    const isOpen = !mobileMenu?.classList.contains('hidden');
-    mobileBtn.setAttribute('aria-expanded', String(isOpen));
-  });
 </script>
+
+<style>
+  .site-nav { position: fixed; inset: 0 0 auto; z-index: 100; border-bottom: 1px solid transparent; transition: background .3s ease, border-color .3s ease; }
+  .site-nav.is-scrolled, .site-nav.menu-open { border-color: var(--line); background: rgba(5,8,16,.86); backdrop-filter: blur(18px); }
+  .scroll-progress { position: absolute; inset: auto 0 0; height: 1px; transform: scaleX(0); transform-origin: left; background: linear-gradient(90deg,var(--cyan),var(--mint)); }
+  .nav-inner { display: flex; height: 4.6rem; align-items: center; justify-content: space-between; gap: 1rem; }
+  .nav-mark { display: flex; align-items: center; gap: .6rem; font-family: Outfit,sans-serif; font-weight: 700; letter-spacing: -.03em; }
+  .nav-mark i { width: .3rem; height: .3rem; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 1rem var(--cyan); }
+  .nav-mark small { color: var(--muted); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .14em; }
+  .nav-links { display: flex; gap: 2rem; margin-left: auto; }
+  .nav-links a { position: relative; color: #bdc9d9; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .nav-links a::after { position: absolute; inset: auto 100% -.5rem 0; height: 1px; content: ''; background: var(--cyan); transition: right .2s ease; }
+  .nav-links a:hover::after { right: 0; }
+  .nav-actions { display: flex; align-items: center; gap: .55rem; }
+  .mode-switch { display: flex; border: 1px solid var(--line); padding: .18rem; border-radius: .25rem; }
+  .mode-switch button { border: 0; border-radius: .18rem; background: transparent; color: var(--muted); padding: .42rem .55rem; font-size: .58rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .mode-switch button[aria-pressed='true'] { background: #172336; color: var(--text); }
+  .nav-command { border: 1px solid var(--line); border-radius: .25rem; color: var(--muted); padding: .46rem .6rem; font-family: ui-monospace,monospace; font-size: .66rem; }
+  .nav-command span { color: var(--cyan); margin-right: .2rem; }
+  .nav-ask { border: 1px solid var(--line-bright); border-radius: .25rem; color: var(--text); padding: .55rem .75rem; font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .mobile-trigger { display: none; width: 2.5rem; height: 2.5rem; place-content: center; gap: .4rem; }
+  .mobile-trigger span { display: block; width: 1.25rem; height: 1px; background: white; }
+  .mobile-nav { border-top: 1px solid var(--line); background: rgba(5,8,16,.98); }
+  .mobile-nav .shell { display: grid; padding-block: 1rem 1.6rem; }
+  .mobile-nav a, .mobile-nav button { display: flex; gap: 1rem; border-bottom: 1px solid var(--line); padding: .85rem 0; text-align: left; font-family: Outfit,sans-serif; font-size: 1.35rem; }
+  .mobile-nav span { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .58rem; }
+  .command-search { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem; border-bottom: 1px solid var(--line); padding: .9rem 1rem; }
+  .command-search > span { color: var(--cyan); font-size: 1.5rem; }
+  .command-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--text); font-size: 1.05rem; }
+  .command-search input::placeholder { color: #687b94; }
+  .command-search button { border: 1px solid var(--line); border-radius: .2rem; color: var(--muted); padding: .3rem .45rem; font-family: ui-monospace,monospace; font-size: .58rem; }
+  .command-list { max-height: 31rem; overflow-y: auto; padding: .5rem; }
+  .command-item { display: flex; width: 100%; align-items: center; justify-content: space-between; border-radius: .3rem; padding: .78rem .9rem; text-align: left; }
+  .command-item:hover, .command-item.is-active { background: #111e31; }
+  .command-item span { display: grid; gap: .18rem; color: var(--text); font-size: .86rem; font-weight: 600; }
+  .command-item small { color: var(--muted); font-size: .7rem; font-weight: 400; }
+  .command-item b { color: var(--cyan); font-weight: 400; }
+  .command-empty { padding: 2rem; text-align: center; color: var(--muted); }
+  .command-footer { display: flex; gap: 1.2rem; border-top: 1px solid var(--line); padding: .65rem 1rem; color: #687b94; font-family: ui-monospace,monospace; font-size: .58rem; text-transform: uppercase; }
+  @media (max-width: 960px) { .nav-links, .mode-switch, .nav-ask { display: none; } .mobile-trigger { display: grid; } }
+  @media (max-width: 520px) { .nav-mark small, .nav-command { display: none; } }
+</style>

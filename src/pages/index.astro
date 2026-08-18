@@ -2,108 +2,48 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Section from '../components/Section.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import Timeline from '../components/Timeline.astro';
-import FeaturedPublications from '../components/FeaturedPublications.astro';
-import SkillsGrid from '../components/SkillsGrid.astro';
+import DataPipeline from '../components/DataPipeline.astro';
+import FeaturedResearch from '../components/FeaturedResearch.astro';
+import ScaleSection from '../components/ScaleSection.astro';
+import ResearchConstellation from '../components/ResearchConstellation.astro';
+import ExperienceJourney from '../components/ExperienceJourney.astro';
+import Gallery from '../components/Gallery.astro';
+import CurrentWork from '../components/CurrentWork.astro';
+import CapabilityMatrix from '../components/CapabilityMatrix.astro';
+import FlagshipPublications from '../components/FlagshipPublications.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import Gallery from '../components/Gallery.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import { sitePath } from '../utils/site';
-
-import projects from '../data/projects.json';
-import education from '../data/education.json';
 ---
 
 <BaseLayout
-  title="Adarsh Bhandary Panambur | Deep Learning and Medical Imaging"
-  description="Academic portfolio of Adarsh Bhandary Panambur, focused on deep learning, mammography, breast MRI, and medical vision-language models."
+  title="Adarsh Bhandary Panambur | Medical AI, Multimodal AI & HPC"
+  description="Research Scientist at NHR@FAU building medical AI, vision-language models, multimodal systems, GPU infrastructure, and clinically grounded research software."
 >
   <Nav />
-
-  <main>
+  <main id="main-content">
     <Hero />
-
-    <Section id="work" className="bg-white">
-      <SectionHeading
-        eyebrow="Research Focus"
-        title="Medical AI systems for breast imaging workflows"
-        description="Current work spans mammography transfer learning, breast MRI evaluation, clinical validation, and multimodal models that connect images with radiology language."
-      />
-      <div class="grid gap-6 md:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard
-            title={project.title}
-            description={project.description}
-            tags={project.tags}
-            link={project.link}
-          />
-        ))}
-      </div>
-    </Section>
-
-    <Section id="publications" className="bg-slate-50">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <SectionHeading
-          eyebrow="Selected Publications"
-          title="Recent papers, preprints, and clinical studies"
-          description="Each publication now has a dedicated mini-blog style page with summary fields, links, and room for verified notes."
-        />
-        <a href={sitePath('publications/')} class="mb-12 inline-flex w-fit rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 md:mb-14">
-          Full archive
-        </a>
-      </div>
-      <FeaturedPublications />
-    </Section>
-
-    <Section id="experience" className="bg-white">
-      <SectionHeading
-        eyebrow="Experience"
-        title="Research shaped by clinical and engineering settings"
-        description="Academic research at FAU with medical imaging collaborations across Siemens Healthineers and hospital partners."
-      />
-      <Timeline />
-    </Section>
-
-    <Section id="gallery" className="bg-slate-950 text-white">
-      <SectionHeading
-        eyebrow="Talks"
-        title="Conference presentations"
-        description="Selected presentation moments from medical imaging and pattern recognition venues."
-        inverse
-      />
-      <Gallery />
-    </Section>
-
-    <Section id="skills" className="bg-white">
-      <SectionHeading
-        eyebrow="Technical Stack"
-        title="Deep learning, imaging, and scalable experimentation"
-      />
-      <SkillsGrid />
-    </Section>
-
-    <Section id="education" className="bg-slate-50">
-      <SectionHeading eyebrow="Education" title="Academic training" />
-      <div class="space-y-6">
-        {education.map((edu) => (
-          <div class="flex flex-col items-start justify-between gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-900/5 md:flex-row md:items-center">
-            <div>
-              <h3 class="text-xl font-bold text-slate-950">{edu.degree}</h3>
-              <p class="font-medium text-blue-700">{edu.school}</p>
-            </div>
-            <span class="rounded-full bg-slate-100 px-4 py-2 font-mono text-sm text-slate-600">{edu.dates}</span>
-          </div>
-        ))}
-      </div>
-    </Section>
-
-    <Section id="contact" className="bg-white">
-      <Contact />
-    </Section>
+    <DataPipeline />
+    <FeaturedResearch />
+    <ScaleSection />
+    <ResearchConstellation />
+    <ExperienceJourney />
+    <Gallery />
+    <CurrentWork />
+    <CapabilityMatrix />
+    <FlagshipPublications />
+    <Contact />
   </main>
-
   <Footer />
+
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealElements = document.querySelectorAll<HTMLElement>('.reveal');
+    if (reducedMotion || !('IntersectionObserver' in window)) revealElements.forEach((element) => element.classList.add('is-visible'));
+    else {
+      const revealObserver = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+      }), { rootMargin: '0px 0px -8%', threshold: .08 });
+      revealElements.forEach((element) => revealObserver.observe(element));
+    }
+  </script>
 </BaseLayout>

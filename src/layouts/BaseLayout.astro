@@ -7,15 +7,32 @@ interface Props {
 	title?: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = `${profile.name} | Medical AI Researcher`,
   description = profile.tagline,
   image = sitePath('profile_photo.jpg'),
+  type = 'website',
+  jsonLd,
 } = Astro.props;
-const canonicalUrl = Astro.url.href;
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(canonicalPath, Astro.site || Astro.url).toString();
 const absoluteImage = new URL(image, Astro.site || Astro.url).toString();
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  url: new URL(sitePath(), Astro.site || Astro.url).toString(),
+  image: new URL(sitePath('profile_photo.jpg'), Astro.site || Astro.url).toString(),
+  jobTitle: 'Research Scientist',
+  affiliation: { '@type': 'Organization', name: 'National High Performance Computing Center (NHR@FAU)' },
+  homeLocation: { '@type': 'Place', name: profile.location },
+  sameAs: [profile.github, profile.linkedin],
+};
+const structuredData = jsonLd ? [personJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])] : [personJsonLd];
 ---
 
 <!doctype html>
@@ -24,11 +41,12 @@ const absoluteImage = new URL(image, Astro.site || Astro.url).toString();
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#050810" />
 		<link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
     <link rel="canonical" href={canonicalUrl} />
 		<meta name="generator" content={Astro.generator} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -42,8 +60,10 @@ const absoluteImage = new URL(image, Astro.site || Astro.url).toString();
     <meta name="twitter:image" content={absoluteImage} />
 
 		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</head>
-	<body class="bg-primary text-slate-900">
+	<body class="bg-primary text-text">
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <slot />
 	</body>
 </html>

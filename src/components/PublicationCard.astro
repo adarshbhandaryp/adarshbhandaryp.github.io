@@ -2,69 +2,29 @@
 import type { PublicationEntry } from '../utils/publications';
 import { externalPublicationLinks, getPublicationSummary, getPublicationUrl } from '../utils/publications';
 
-interface Props {
-  publication: PublicationEntry;
-  compact?: boolean;
-}
-
+interface Props { publication: PublicationEntry; compact?: boolean; }
 const { publication, compact = false } = Astro.props;
 const { data, slug } = publication;
 const links = externalPublicationLinks(publication);
-const codeLink = links.find((link) => link.label === 'Code');
-const paperLink = links.find((link) => ['Paper', 'PDF', 'DOI', 'arXiv'].includes(link.label));
-const summary = getPublicationSummary(publication);
+const primaryLink = links.find((link) => ['Paper', 'PDF', 'DOI', 'arXiv'].includes(link.label));
 ---
 
-<article class="group h-full rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-900/5 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-950/10">
-  {data.image ? (
-    <div class="aspect-[16/9] overflow-hidden rounded-t-lg bg-slate-100">
-      <img src={data.image} alt={data.imageAlt || data.title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
-    </div>
-  ) : (
-    <div class="aspect-[16/9] rounded-t-lg bg-gradient-to-br from-slate-950 via-blue-950 to-slate-800 p-5 text-white">
-      <div class="flex h-full flex-col justify-between rounded-md border border-white/15 bg-white/10 p-4">
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-100">{data.type} / {data.year}</p>
-        <p class={compact ? 'max-w-sm text-base font-bold leading-tight' : 'max-w-sm text-xl font-bold leading-tight'}>{data.tags.slice(0, 2).join(' + ') || 'Medical AI'}</p>
-      </div>
-    </div>
-  )}
-
-  <div class={compact ? 'flex h-full flex-col p-5' : 'flex h-full flex-col p-6'}>
-    <div class="mb-4 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-blue-700">
-      <span>{data.venue}</span>
-      <span aria-hidden="true">/</span>
-      <span>{data.year}</span>
-      <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[0.68rem] text-slate-700">{data.type}</span>
-    </div>
-
-    <h3 class="text-lg font-bold leading-snug text-slate-950 md:text-xl">
-      <a href={getPublicationUrl(slug)} class="outline-none transition hover:text-blue-700 focus-visible:text-blue-700">
-        {data.title}
-      </a>
-    </h3>
-
-    <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{summary}</p>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-      {data.tags.slice(0, compact ? 3 : 5).map((tag) => (
-        <span class="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-800">{tag}</span>
-      ))}
-    </div>
-
-    <div class="mt-6 flex flex-wrap gap-3 pt-1">
-      <a href={getPublicationUrl(slug)} class="inline-flex items-center rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-        Read summary
-      </a>
-      {paperLink && (
-        <a href={paperLink.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-          {paperLink.label}
-        </a>
-      )}
-      {codeLink && (
-        <a href={codeLink.href} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-blue-300 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
-          Code
-        </a>
-      )}
-    </div>
+<article class:list={['publication-card', { compact }]}>
+  <a href={getPublicationUrl(slug)} class="publication-visual" aria-label={`Read ${data.title}`}>
+    {data.image ? <img src={data.image} alt={data.imageAlt || data.title} loading="lazy" /> : <div><span>{data.type}</span><strong>{data.tags.slice(0, 2).join(' × ') || 'Medical AI'}</strong><i>∷</i></div>}
+    <b>{data.year}</b>
+  </a>
+  <div class="publication-card-body">
+    <p>{data.venue} / {data.type}</p>
+    <h2><a href={getPublicationUrl(slug)}>{data.title}</a></h2>
+    <small>{getPublicationSummary(publication)}</small>
+    <div class="card-tags">{data.tags.slice(0, 3).map((tag) => <span>{tag}</span>)}</div>
+    <div class="card-actions"><a href={getPublicationUrl(slug)}>Read summary →</a>{primaryLink && <a href={primaryLink.href} target="_blank" rel="noopener noreferrer">{primaryLink.label} ↗</a>}</div>
   </div>
 </article>
+
+<style>
+  .publication-card { height: 100%; border: 1px solid var(--line); background: #08111e; transition: border-color .3s ease,transform .3s ease; }.publication-card:hover { border-color: var(--line-bright); transform: translateY(-3px); }
+  .publication-visual { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; background: #0b1625; }.publication-visual::after { position: absolute; inset: 0; content: ''; background: linear-gradient(135deg,transparent,rgba(50,199,255,.1)); }.publication-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.75); transition: transform .6s ease; }.publication-card:hover img { transform: scale(1.025); }.publication-visual > b { position: absolute; z-index: 2; right: .8rem; top: .7rem; color: var(--cyan); font: .55rem ui-monospace,monospace; }.publication-visual > div { display: grid; height: 100%; place-content: center; gap: 1rem; padding: 2rem; }.publication-visual > div span { color: var(--cyan); font: .55rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }.publication-visual > div strong { max-width: 17rem; font: 500 1.4rem Outfit,sans-serif; }.publication-visual > div i { position: absolute; right: 1rem; bottom: .5rem; color: rgba(124,245,204,.2); font-size: 4rem; font-style: normal; }
+  .publication-card-body { padding: 1.3rem; }.publication-card-body > p { color: var(--cyan); font: .54rem ui-monospace,monospace; letter-spacing: .08em; text-transform: uppercase; }.publication-card h2 { margin-top: .75rem; font-size: 1.2rem; font-weight: 500; line-height: 1.25; }.publication-card h2 a:hover { color: var(--cyan); }.publication-card-body > small { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; margin-top: .9rem; color: var(--muted); font-size: .72rem; line-height: 1.65; }.card-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.2rem; }.card-tags span { color: #788da7; font: .5rem ui-monospace,monospace; text-transform: uppercase; }.card-actions { display: flex; gap: 1rem; margin-top: 1.3rem; border-top: 1px solid var(--line); padding-top: .9rem; }.card-actions a { color: #cbd7e5; font-size: .65rem; font-weight: 600; }.card-actions a:hover { color: var(--cyan); }
+</style>

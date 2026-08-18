@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Scalable multimodal AI systems",
+    "description": "Developing and optimizing LLM, VLM, and multimodal AI workflows on GPU clusters and supercomputing infrastructure at NHR@FAU.",
+    "type": "Research",
+    "status": "Active"
+  },
+  {
+    "title": "Medical image-text foundation models",
+    "description": "Advancing multimodal representation learning and radiological reasoning for mammography and breast imaging.",
+    "type": "Research",
+    "status": "Ongoing"
+  },
+  {
+    "title": "AI-powered research applications",
+    "description": "Building research software and agentic workflows with foundation model APIs and open-source AI frameworks.",
+    "type": "Software",
+    "status": "Building"
+  }
+]

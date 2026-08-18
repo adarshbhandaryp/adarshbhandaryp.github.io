@@ -1,0 +1,106 @@
+---
+import { externalPublicationLinks, getPublications, getPublicationUrl } from '../utils/publications';
+import { sitePath } from '../utils/site';
+
+const all = await getPublications();
+const storySpecs = [
+  {
+    slug: 'attention-guided-erasing-transfer-learning-breast-abnormality',
+    label: 'MAMMOGRAPHY REPRESENTATION LEARNING',
+    number: 'A',
+    fallbackImage: sitePath('publication-figures/age-method-overview.jpg'),
+  },
+  {
+    slug: 'mammoblip-mammography-report-generation',
+    label: 'VISION–LANGUAGE RESEARCH',
+    number: 'B',
+  },
+  {
+    slug: 'be-wise-breast-mri-explanation',
+    label: 'BREAST MRI / EXPLAINABILITY',
+    number: 'C',
+  },
+  {
+    slug: 'ai-performance-breast-lesions-mri-chinese-cohort',
+    label: 'CLINICAL AI VALIDATION',
+    number: 'D',
+  },
+];
+
+const stories = storySpecs.map((spec, index) => {
+  let publication = all.find((entry) => entry.slug === spec.slug);
+  if (!publication) return null;
+  const links = externalPublicationLinks(publication);
+  return { ...spec, publication, links, image: publication.data.image || spec.fallbackImage };
+}).filter(Boolean);
+---
+
+<section id="research" class="section-shell research-stories section-rule" aria-labelledby="research-title">
+  <div class="shell">
+    <div class="story-intro reveal">
+      <p class="section-kicker">02 / FEATURED RESEARCH</p>
+      <h2 id="research-title" class="section-title">FLAGSHIP RESEARCH STORIES</h2>
+      <p class="section-copy">Selected systems and studies where representation learning meets the realities of medical data, radiology language, and clinical validation.</p>
+    </div>
+
+    <div class="story-list">
+      {stories.map((story, index) => story && (
+        <article class={`research-story reveal story-${index + 1}`}>
+          <div class="story-visual">
+            {story.image ? (
+              <img src={story.image} alt={story.publication.data.imageAlt || story.publication.data.title} loading="lazy" />
+            ) : (
+              <div class="story-placeholder" aria-hidden="true"><span>∷</span><i></i><i></i><i></i></div>
+            )}
+            <span class="story-number">{story.number}</span>
+            <div class="story-scan" aria-hidden="true"></div>
+          </div>
+          <div class="story-content">
+            <p class="mono-label">{story.label}</p>
+            <h3>{story.publication.data.title}</h3>
+            <p data-research-copy>{story.publication.data.contribution.replace(/^TODO:\s*/i, '') || story.publication.data.plainLanguageSummary}</p>
+            <p data-recruiter-copy>{story.publication.data.relevance}</p>
+            <div class="story-meta"><span>{story.publication.data.venue}</span><span>{story.publication.data.year}</span></div>
+            <div class="story-links">
+              <a href={getPublicationUrl(story.publication.slug)} class="text-link">Explore project</a>
+              {story.links.slice(0, 2).map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-link">{link.label}</a>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .research-stories { background: #050810; }
+  .story-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 3rem; }
+  .story-intro .section-kicker { grid-column: 1/-1; }
+  .story-list { display: grid; gap: clamp(5rem,10vw,10rem); margin-top: clamp(5rem,10vw,9rem); }
+  .research-story { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(19rem,.85fr); align-items: center; gap: clamp(2rem,7vw,7rem); }
+  .research-story:nth-child(even) .story-visual { grid-column: 2; grid-row: 1; }
+  .research-story:nth-child(even) .story-content { grid-column: 1; grid-row: 1; }
+  .story-visual { position: relative; aspect-ratio: 16/10; overflow: hidden; clip-path: polygon(0 0,96% 0,100% 8%,100% 100%,4% 100%,0 92%); background: #0b1422; }
+  .story-visual::after { position: absolute; inset: 0; content: ''; border: 1px solid var(--line); background: linear-gradient(130deg,transparent 55%,rgba(50,199,255,.11)); }
+  .story-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.04); transition: transform 1s ease,filter .8s ease; }
+  .research-story:hover img { transform: scale(1.025); filter: saturate(.95); }
+  .story-number { position: absolute; z-index: 2; right: 1rem; top: .75rem; color: var(--cyan); font-family: ui-monospace,monospace; font-size: .65rem; }
+  .story-scan { position: absolute; z-index: 2; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg,transparent,var(--mint),transparent); opacity: .6; animation: story-scan 8s ease-in-out infinite; }
+  .story-placeholder { display: grid; height: 100%; place-items: center; background: radial-gradient(circle,rgba(36,124,255,.22),transparent 40%); }
+  .story-placeholder span { color: var(--mint); font-size: 5rem; }.story-placeholder i { position: absolute; width: 45%; height: 1px; background: var(--line); transform: rotate(25deg); }
+  .story-content h3 { margin-top: 1.2rem; font-size: clamp(2rem,4vw,4.5rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
+  .story-content > p:not(.mono-label) { margin-top: 1.5rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+  [data-recruiter-copy] { display: none; }
+  :global(body[data-mode='recruiter']) [data-research-copy] { display: none; }
+  :global(body[data-mode='recruiter']) [data-recruiter-copy] { display: block; }
+  .story-meta { display: flex; gap: 1rem; margin-top: 1.6rem; color: #70849c; font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
+  .story-meta span + span::before { content: '/'; margin-right: 1rem; color: #3a4a5e; }
+  .story-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+  @keyframes story-scan { 0%,15% { top: 0; } 65%,100% { top: 100%; } }
+  @media (max-width: 800px) {
+    .story-intro, .research-story { grid-template-columns: 1fr; }
+    .story-intro .section-kicker { grid-column: auto; }
+    .research-story:nth-child(even) .story-visual, .research-story:nth-child(even) .story-content { grid-column: 1; grid-row: auto; }
+    .story-content { padding-inline: .35rem; }
+  }
+</style>

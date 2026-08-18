@@ -1,9 +1,24 @@
 [
   {
+    "role": "Research Scientist",
+    "company": "National High Performance Computing Center (NHR@FAU), FAU",
+    "location": "Erlangen, Germany",
+    "dates": "June 2026 - Present",
+    "phase": "AI systems + HPC",
+    "description": [
+      "Conduct research in artificial intelligence and high-performance computing.",
+      "Develop, deploy, and optimize LLMs, VLMs, and multimodal AI systems.",
+      "Design scalable training and inference pipelines on GPU clusters and supercomputing infrastructure.",
+      "Build AI-powered applications, agentic workflows, and research software with foundation model APIs and open-source frameworks.",
+      "Collaborate with academic and industrial partners to translate AI research into practical solutions."
+    ]
+  },
+  {
     "role": "PhD Researcher",
     "company": "Pattern Recognition Lab, FAU",
     "location": "Erlangen, Germany",
     "dates": "May 2020 - Present",
+    "phase": "Foundation models",
     "description": [
       "Developed self-supervised learning methods improving classification and lesion detection in mammography.",
       "Built a multi-country mammography dataset repository of approximately 100,000 images for large-scale experimentation.",
@@ -17,6 +32,7 @@
     "company": "West China Hospital, Sichuan University",
     "location": "Chengdu, China",
     "dates": "July 2024 - September 2024",
+    "phase": "Clinical validation",
     "description": [
       "Conducted clinical validation of a Siemens Healthineers breast MRI AI prototype.",
       "Initiated research projects aimed at improving clinical screening workflows.",
@@ -27,7 +43,8 @@
     "role": "Doctoral Researcher",
     "company": "Siemens Healthineers",
     "location": "Erlangen, Germany",
-    "dates": "May 2020 - March 2024",
+    "dates": "May 2020 - February 2024",
+    "phase": "Medical AI",
     "description": [
       "Performed clinical validation of mammography AI algorithms in international collaborations (Vietnam cohort).",
       "Contributed to workflow optimization under regulatory and clinical constraints.",
@@ -39,6 +56,7 @@
     "company": "Siemens Healthineers",
     "location": "Erlangen, Germany",
     "dates": "October 2017 - March 2020",
+    "phase": "Deep learning",
     "description": [
       "Developed MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
       "Evaluated IoT technologies for healthcare workflow optimization.",
@@ -50,6 +68,7 @@
     "company": "Transcaal Engineers India Pvt. Ltd.",
     "location": "Bangalore, India",
     "dates": "March 2015 - February 2016",
+    "phase": "Medical devices",
     "description": [
       "Generated approximately 25% annual company revenue through QA services across five Indian states.",
       "Led and mentored a biomedical engineering team."
@@ -60,6 +79,7 @@
     "company": "Transcaal Engineers India Pvt. Ltd.",
     "location": "Bangalore, India",
     "dates": "September 2014 - February 2015",
+    "phase": "Medical devices",
     "description": [
       "Performed preventive maintenance and compliance testing of medical devices using Fluke biomedical equipment."
     ]

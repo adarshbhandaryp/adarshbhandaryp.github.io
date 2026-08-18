@@ -1,80 +1,66 @@
 ---
 import { talkPhotos } from '../data/gallery';
+
+const meta = [
+  { title: 'Attention-Guided Erasing', event: 'BVM', city: 'Erlangen', year: '2024' },
+  { title: 'Dataset-Informed Transfer Learning', event: 'CVIP', city: 'Rupnagar', year: '2025' },
+  { title: 'MammoBLIP', event: 'IEEE MIC', city: 'Yokohama', year: '2025' },
+  { title: 'Representation Learning for CESM', event: 'SPIE Medical Imaging', city: 'San Diego', year: '2024' },
+  { title: 'Pattern Recognition Symposium', event: 'PRS', city: 'Austria', year: '2025' },
+];
 ---
 
-<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  {talkPhotos.map((photo, index) => (
-    <button class="group relative aspect-video overflow-hidden rounded-lg border border-white/10 bg-white/5 text-left shadow-lg shadow-slate-950/20" data-gallery-index={index} aria-label={`Open image: ${photo.caption}`}>
-      <img
-        src={photo.src}
-        alt={photo.alt}
-        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-        loading="lazy"
-      />
+<section id="recognition" class="section-shell gallery-section section-rule" aria-labelledby="gallery-title">
+  <div class="shell">
+    <div class="gallery-head reveal"><div><p class="section-kicker">06 / FIELD NOTES</p><h2 id="gallery-title" class="section-title">TALKS / RECOGNITION</h2></div><p class="section-copy">Research shared in the rooms where medical imaging, pattern recognition, and engineering communities meet.</p></div>
+    <div class="editorial-gallery reveal">
+      {talkPhotos.map((photo, index) => (
+        <button type="button" class="gallery-item" data-gallery-index={index} aria-label={`Open image: ${photo.caption}`}>
+          <img src={photo.src} alt={photo.alt} loading="lazy" width="1200" height="1600" />
+          <span class="gallery-overlay"><small>{meta[index]?.event} / {meta[index]?.year}</small><strong>{meta[index]?.title}</strong><i>{meta[index]?.city}</i></span>
+          <b>0{index + 1}</b>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
 
-      <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 to-transparent p-4 text-sm font-semibold text-white opacity-100">
-        {photo.caption}
-      </span>
-    </button>
-  ))}
-</div>
-
-<div id="lightbox" class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 opacity-0 transition-opacity duration-300">
-  <button id="close-lightbox-btn" class="absolute right-5 top-5 rounded-md p-2 text-white/70 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300" aria-label="Close image">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
-
-  <div class="flex max-h-screen max-w-7xl flex-col items-center p-4">
-    <img id="lightbox-img" src="" alt="" class="max-h-[80vh] max-w-full rounded-lg shadow-2xl" />
-    <p id="lightbox-caption" class="mt-4 text-center text-lg font-medium text-white"></p>
+<div id="lightbox" class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="lightbox-caption" hidden>
+  <div class="gallery-lightbox">
+    <button id="close-lightbox" type="button" aria-label="Close image">ESC / CLOSE</button>
+    <img id="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption"></p>
   </div>
 </div>
 
 <script>
   import { talkPhotos } from '../data/gallery';
-
-  function openLightbox(src: string, caption: string, alt: string) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
-    const lightboxCaption = document.getElementById('lightbox-caption');
-
-    if (lightbox && lightboxImg && lightboxCaption) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt;
-      lightboxCaption.textContent = caption;
-      lightbox.classList.remove('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    if (lightbox) {
-      lightbox.classList.add('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function setupGallery() {
-    document.querySelectorAll<HTMLElement>('[data-gallery-index]').forEach((item) => {
-      item.addEventListener('click', () => {
-        const index = Number(item.dataset.galleryIndex);
-        const photo = talkPhotos[index];
-        if (photo) openLightbox(photo.src, photo.caption, photo.alt);
-      });
-    });
-
-    document.getElementById('close-lightbox-btn')?.addEventListener('click', closeLightbox);
-    document.getElementById('lightbox')?.addEventListener('click', (event) => {
-      if (event.target instanceof HTMLElement && event.target.id === 'lightbox') closeLightbox();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
-    });
-  }
-
-  setupGallery();
-  document.addEventListener('astro:page-load', setupGallery);
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const caption = document.getElementById('lightbox-caption');
+  const closeButton = document.getElementById('close-lightbox');
+  const close = () => { lightbox?.setAttribute('hidden',''); document.body.style.overflow = ''; };
+  document.querySelectorAll<HTMLElement>('[data-gallery-index]').forEach((item) => item.addEventListener('click', () => {
+    const photo = talkPhotos[Number(item.dataset.galleryIndex)];
+    if (!photo || !lightboxImage || !caption) return;
+    lightboxImage.src = photo.src; lightboxImage.alt = photo.alt; caption.textContent = photo.caption;
+    lightbox?.removeAttribute('hidden'); document.body.style.overflow = 'hidden'; closeButton?.focus();
+  }));
+  closeButton?.addEventListener('click', close);
+  lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) close(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !lightbox?.hasAttribute('hidden')) close(); });
 </script>
+
+<style>
+  .gallery-section { overflow: hidden; background: #050810; }
+  .gallery-head { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 4rem; }
+  .editorial-gallery { display: grid; grid-auto-columns: minmax(22rem,32rem); grid-auto-flow: column; gap: 1rem; margin-top: 5rem; overflow-x: auto; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
+  .gallery-item { position: relative; aspect-ratio: 4/5; overflow: hidden; scroll-snap-align: start; text-align: left; background: #0b1422; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.72) saturate(.7) brightness(.72); transition: transform 1s ease,filter .6s ease; }
+  .gallery-item:hover img, .gallery-item:focus-visible img { transform: scale(1.035); filter: grayscale(.12) saturate(.9) brightness(.78); }
+  .gallery-item::after { position: absolute; inset: 0; content: ''; background: linear-gradient(to top,rgba(3,6,12,.95),transparent 60%); }
+  .gallery-overlay { position: absolute; z-index: 2; inset: auto 1.4rem 1.4rem; display: grid; gap: .45rem; }.gallery-overlay small { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .12em; }.gallery-overlay strong { font: 500 clamp(1.5rem,3vw,2.5rem) Outfit,sans-serif; line-height: 1; }.gallery-overlay i { color: var(--muted); font-size: .7rem; font-style: normal; }
+  .gallery-item > b { position: absolute; z-index: 2; right: 1rem; top: 1rem; color: white; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .gallery-lightbox { display: grid; max-height: 92vh; width: min(100%,65rem); grid-template-columns: 1fr auto; gap: .8rem; }.gallery-lightbox button { grid-column: 2; color: var(--cyan); font-family: ui-monospace,monospace; font-size: .6rem; }.gallery-lightbox img { grid-column: 1/-1; max-height: 78vh; width: 100%; object-fit: contain; background: #050810; }.gallery-lightbox p { grid-column: 1/-1; color: var(--muted); font-size: .8rem; }
+  @media (max-width: 720px) { .gallery-head { grid-template-columns: 1fr; }.editorial-gallery { grid-auto-columns: 82vw; margin-inline: -.65rem; padding-inline: .65rem; } }
+</style>

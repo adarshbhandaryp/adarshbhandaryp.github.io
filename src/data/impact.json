@@ -1,0 +1,22 @@
+[
+  {
+    "value": "~100K",
+    "label": "Medical images curated",
+    "detail": "Multi-country mammography repository"
+  },
+  {
+    "value": "#4",
+    "label": "MICCAI ODELIA 2025",
+    "detail": "Breast MRI malignancy classification"
+  },
+  {
+    "value": "FAU × Siemens × WCH",
+    "label": "Research ecosystem",
+    "detail": "Academic, industrial, and clinical settings"
+  },
+  {
+    "value": "MEDICAL AI",
+    "label": "Primary domain",
+    "detail": "Mammography and breast MRI"
+  }
+]

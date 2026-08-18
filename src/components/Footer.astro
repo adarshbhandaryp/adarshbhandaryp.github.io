@@ -1,7 +1,13 @@
 ---
+import { sitePath } from '../utils/site';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-slate-200 bg-white py-8 text-center text-sm text-slate-500">
-  <p>&copy; {currentYear} Adarsh Bhandary Panambur. Built with Astro and Tailwind CSS.</p>
+<footer class="site-footer">
+  <div class="shell footer-inner"><a href={sitePath()} class="footer-mark">ABP<span>·</span>RESEARCH OS</a><p>© {currentYear} Adarsh Bhandary Panambur</p><a href="#main-content">BACK TO TOP ↑</a></div>
 </footer>
+
+<style>
+  .footer-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; min-height: 6rem; font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .08em; text-transform: uppercase; }.footer-mark { color: white; font-weight: 700; }.footer-mark span { margin-inline: .4rem; color: var(--cyan); }.footer-inner > a:last-child { justify-self: end; }.footer-inner a:hover { color: var(--cyan); }
+  @media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr auto; }.footer-inner p { grid-column: 1/-1; grid-row: 2; padding-bottom: 1rem; } }
+</style>

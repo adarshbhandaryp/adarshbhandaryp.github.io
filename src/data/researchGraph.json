@@ -1,0 +1,19 @@
+{
+  "topics": [
+    { "id": "medical-ai", "label": "Medical AI", "x": 20, "y": 25, "size": "large", "related": ["mammography", "breast-mri", "clinical-ai", "ssl", "vlm"] },
+    { "id": "mammography", "label": "Mammography", "x": 11, "y": 54, "size": "medium", "related": ["medical-ai", "ssl", "vlm", "clinical-ai", "siemens"] },
+    { "id": "breast-mri", "label": "Breast MRI", "x": 28, "y": 78, "size": "medium", "related": ["medical-ai", "clinical-ai", "wch"] },
+    { "id": "vlm", "label": "Vision-Language Models", "x": 72, "y": 20, "size": "large", "related": ["foundation-models", "mammography", "llms", "medical-ai"] },
+    { "id": "foundation-models", "label": "Foundation Models", "x": 87, "y": 49, "size": "medium", "related": ["vlm", "llms", "hpc", "ssl"] },
+    { "id": "ssl", "label": "SSL", "x": 56, "y": 76, "size": "small", "related": ["mammography", "foundation-models", "medical-ai"] },
+    { "id": "clinical-ai", "label": "Clinical AI", "x": 40, "y": 18, "size": "medium", "related": ["medical-ai", "mammography", "breast-mri", "siemens", "wch"] },
+    { "id": "hpc", "label": "HPC", "x": 83, "y": 77, "size": "large", "related": ["foundation-models", "llms", "research-software", "nhr"] },
+    { "id": "llms", "label": "LLMs", "x": 64, "y": 48, "size": "small", "related": ["vlm", "hpc", "foundation-models", "research-software"] },
+    { "id": "research-software", "label": "Research Software", "x": 47, "y": 86, "size": "medium", "related": ["hpc", "llms", "nhr"] }
+  ],
+  "institutions": [
+    { "id": "nhr", "label": "NHR@FAU", "x": 73, "y": 91, "related": ["hpc", "llms", "research-software"] },
+    { "id": "siemens", "label": "Siemens", "x": 8, "y": 84, "related": ["clinical-ai", "mammography"] },
+    { "id": "wch", "label": "West China Hospital", "x": 17, "y": 9, "related": ["breast-mri", "clinical-ai"] }
+  ]
+}

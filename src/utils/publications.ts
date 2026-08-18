@@ -17,8 +17,12 @@ export function getPublicationUrl(slug: string) {
 }
 
 export function getPublicationSummary(publication: PublicationEntry) {
-  const summary = publication.data.plainLanguageSummary || publication.data.contribution;
-  return summary.replace(/^TODO:\s*/i, 'TODO: ');
+  const candidates = [publication.data.plainLanguageSummary, publication.data.contribution, publication.data.relevance, publication.data.abstract];
+  return candidates.find((value) => value && !/^TODO:/i.test(value)) || 'Publication details are available in the research archive.';
+}
+
+export function isVerifiedPublicationText(value?: string) {
+  return Boolean(value && !/^TODO:/i.test(value));
 }
 
 export function externalPublicationLinks(publication: PublicationEntry) {

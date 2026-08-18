@@ -1,7 +1,9 @@
 {
   "name": "Adarsh Bhandary Panambur",
-  "title": "Deep Learning Expert",
-  "tagline": "Specializing in medical imaging, mammography, breast MRI, and multimodal vision-language models.",
+  "shortName": "Adarsh",
+  "title": "Medical AI Researcher · Multimodal AI · Foundation Models · HPC",
+  "role": "Research Scientist · Medical AI Researcher · AI Systems Builder",
+  "tagline": "I build AI systems that move from research datasets to foundation models, GPU infrastructure, and clinical applications.",
   "location": "Erlangen, Germany",
   "email": "adarshbhandaryp@gmail.com",
   "linkedin": "https://linkedin.com/in/adarshbhandaryp",

@@ -1,59 +1,198 @@
 ---
 import profile from '../data/profile.json';
+import impact from '../data/impact.json';
 import { sitePath } from '../utils/site';
 ---
 
-<section class="relative overflow-hidden bg-hero pt-28 text-white md:pt-32">
-  <div class="mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-12 px-5 pb-16 md:grid-cols-[1.15fr_0.85fr] md:px-8 md:pb-24">
-    <div class="max-w-4xl animate-fade-in-up">
-      <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-100 backdrop-blur">
-        <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
-        Deep learning for breast imaging
-      </div>
+<section class="hero" aria-labelledby="hero-title">
+  <canvas id="research-field" class="research-field" aria-hidden="true"></canvas>
+  <div class="hero-grid grid-field" aria-hidden="true"></div>
+  <div class="hero-orbit orbit-a" aria-hidden="true"></div>
+  <div class="hero-orbit orbit-b" aria-hidden="true"></div>
 
-      <h1 class="text-5xl font-bold tracking-tight text-white md:text-7xl lg:text-8xl">
-        {profile.name}
+  <div class="shell hero-layout">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">MEDICAL AI · FOUNDATION MODELS · HPC · CLINICAL TRANSLATION</p>
+      <h1 id="hero-title">
+        <span>ADARSH</span>
+        <span>BHANDARY</span>
+        <span>PANAMBUR</span>
       </h1>
-
-      <p class="mt-7 max-w-3xl text-lg leading-8 text-blue-50/85 md:text-2xl md:leading-10">
-        {profile.title.trim()} specializing in medical imaging, mammography, breast MRI, and multimodal vision-language models.
-      </p>
-
-      <div class="mt-8 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {profile.proof.map((item) => (
-          <div class="rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-medium text-blue-50/90 backdrop-blur">
-            {item}
-          </div>
-        ))}
+      <p class="hero-role">{profile.role}</p>
+      <p class="hero-statement" data-research-copy>{profile.tagline}</p>
+      <p class="hero-statement" data-recruiter-copy>Research scientist building multimodal AI products, scalable GPU workflows, and reproducible systems from prototype to real-world application.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary magnetic">Explore my work <span aria-hidden="true">↓</span></a>
+        <button type="button" class="btn-secondary magnetic" data-open-ask>Ask Adarsh <span aria-hidden="true">⌁</span></button>
+        <a href={sitePath('CV.pdf')} class="btn-ghost">Download CV <span aria-hidden="true">↘</span></a>
       </div>
-
-      <div class="mt-10 flex flex-wrap gap-4">
-        <a href={sitePath('publications/')} class="rounded-md bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
-          View publications
-        </a>
-        <a href={sitePath('#contact')} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
-          Contact
-        </a>
-        <a href={sitePath('CV.pdf')} class="rounded-md border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:border-blue-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
-          CV
-        </a>
+      <div class="hero-social">
+        <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={`mailto:${profile.email}`}>Email</a>
       </div>
     </div>
 
-    <div class="relative mx-auto w-full max-w-sm pb-8 md:max-w-md md:pb-0">
-      <div class="rounded-lg border border-white/15 bg-white/10 p-3 shadow-2xl shadow-slate-950/40 backdrop-blur">
-        <img
-          src={sitePath('profile_photo.jpg')}
-          alt={profile.name}
-          class="aspect-[4/5] w-full rounded-md object-cover object-top"
-          loading="eager"
-        />
-        <div class="mt-3 rounded-md bg-slate-950/80 p-4 text-sm text-blue-50/85">
-          <p class="font-semibold text-white">PhD Researcher, FAU Pattern Recognition Lab</p>
-          <p class="mt-1">{profile.location}</p>
-        </div>
+    <div class="portrait-stage" aria-label="Portrait of Adarsh Bhandary Panambur">
+      <div class="portrait-meta portrait-meta-top"><span>SUBJECT / ABP</span><span>SCAN 06.2026</span></div>
+      <div class="portrait-frame">
+        <img src={sitePath('profile_photo.jpg')} alt={profile.name} width="1200" height="1800" fetchpriority="high" />
+        <div class="portrait-scan" aria-hidden="true"></div>
+        <div class="portrait-reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       </div>
+      <div class="portrait-meta portrait-meta-bottom"><span>NHR@FAU / RESEARCH SCIENTIST</span><span>{profile.location}</span></div>
     </div>
   </div>
+
+  <div class="shell impact-hud" aria-label="Research impact">
+    {impact.map((item, index) => (
+      <div class="impact-cell">
+        <span class="impact-index">0{index + 1}</span>
+        <strong>{item.value}</strong>
+        <div><b>{item.label}</b><small>{item.detail}</small></div>
+      </div>
+    ))}
+  </div>
+  <div class="hero-scroll" aria-hidden="true"><span></span>SCROLL TO INITIALIZE</div>
 </section>
 
+<script>
+  const canvas = document.getElementById('research-field') as HTMLCanvasElement | null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canvas) {
+    const context = canvas.getContext('2d');
+    const pointer = { x: .7, y: .35 };
+    const nodes = Array.from({ length: 46 }, (_, index) => ({
+      x: ((index * 47) % 101) / 100,
+      y: ((index * 73) % 97) / 100,
+      r: index % 9 === 0 ? 2.1 : .9,
+      speed: .00008 + (index % 5) * .000018,
+      phase: index * .83,
+    }));
+    let frame = 0;
+    const resize = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.floor(canvas.clientWidth * ratio);
+      canvas.height = Math.floor(canvas.clientHeight * ratio);
+      context?.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+    const draw = (time = 0) => {
+      if (!context) return;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      context.clearRect(0, 0, width, height);
+      const positions = nodes.map((node) => ({
+        x: node.x * width + Math.sin(time * node.speed + node.phase) * 14 + (pointer.x - .5) * (node.r * 5),
+        y: node.y * height + Math.cos(time * node.speed + node.phase) * 10 + (pointer.y - .5) * (node.r * 5),
+        r: node.r,
+      }));
+      positions.forEach((node, index) => {
+        positions.slice(index + 1).forEach((other) => {
+          const distance = Math.hypot(node.x - other.x, node.y - other.y);
+          if (distance < 135) {
+            context.beginPath();
+            context.moveTo(node.x, node.y);
+            context.lineTo(other.x, other.y);
+            context.strokeStyle = `rgba(74, 178, 255, ${.1 * (1 - distance / 135)})`;
+            context.lineWidth = .6;
+            context.stroke();
+          }
+        });
+        context.beginPath();
+        context.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+        context.fillStyle = node.r > 2 ? 'rgba(124,245,204,.7)' : 'rgba(80,190,255,.42)';
+        context.fill();
+      });
+      if (!reduceMotion) frame = requestAnimationFrame(draw);
+    };
+    resize();
+    draw();
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('pointermove', (event) => { pointer.x = event.clientX / window.innerWidth; pointer.y = event.clientY / window.innerHeight; }, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(frame);
+      else if (!reduceMotion) frame = requestAnimationFrame(draw);
+    });
+  }
+
+  if (!reduceMotion) {
+    document.querySelectorAll<HTMLElement>('.magnetic').forEach((button) => {
+      button.addEventListener('pointermove', (event) => {
+        const rect = button.getBoundingClientRect();
+        button.style.transform = `translate(${(event.clientX - rect.left - rect.width / 2) * .08}px, ${(event.clientY - rect.top - rect.height / 2) * .12}px)`;
+      });
+      button.addEventListener('pointerleave', () => button.style.transform = '');
+    });
+  }
+</script>
+
+<style>
+  .hero { position: relative; min-height: 100svh; overflow: hidden; padding-top: 6.5rem; background: radial-gradient(circle at 72% 35%,rgba(23,93,167,.18),transparent 25rem),linear-gradient(180deg,#050810,#060b14 82%,#050810); }
+  .research-field, .hero-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .research-field { opacity: .8; }
+  .hero-grid { opacity: .38; }
+  .hero-orbit { position: absolute; border: 1px solid rgba(71,167,225,.12); border-radius: 50%; }
+  .orbit-a { width: 43rem; height: 43rem; right: -8rem; top: 4rem; }
+  .orbit-b { width: 26rem; height: 26rem; right: .5rem; top: 12.5rem; border-style: dashed; animation: spin 50s linear infinite; }
+  .hero-layout { position: relative; z-index: 2; display: grid; min-height: calc(100svh - 12rem); grid-template-columns: minmax(0,1.35fr) minmax(20rem,.65fr); align-items: center; gap: clamp(2rem,6vw,7rem); }
+  .hero-copy { padding-block: 2rem 3.5rem; }
+  .hero-eyebrow { margin-bottom: clamp(2rem,5vh,4.5rem); color: var(--cyan); font-family: ui-monospace,monospace; font-size: clamp(.57rem,.85vw,.7rem); font-weight: 600; letter-spacing: .16em; }
+  h1 { display: grid; margin: 0; font-size: clamp(4.2rem,10.4vw,10.5rem); font-weight: 600; letter-spacing: -.075em; line-height: .72; }
+  h1 span:nth-child(2) { color: transparent; -webkit-text-stroke: 1px rgba(224,239,255,.5); }
+  h1 span:nth-child(3) { color: #b8c6d9; font-size: .52em; letter-spacing: .18em; line-height: 1.5; }
+  .hero-role { margin-top: clamp(2rem,5vh,3.8rem); color: #d8e3f1; font-size: clamp(.92rem,1.5vw,1.15rem); font-weight: 500; }
+  .hero-statement { max-width: 42rem; margin-top: 1rem; color: var(--muted); font-size: clamp(1rem,1.4vw,1.2rem); line-height: 1.75; }
+  [data-recruiter-copy] { display: none; }
+  :global(body[data-mode='recruiter']) [data-research-copy] { display: none; }
+  :global(body[data-mode='recruiter']) [data-recruiter-copy] { display: block; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2.2rem; }
+  .hero-social { display: flex; gap: 1.4rem; margin-top: 2rem; }
+  .hero-social a { color: #8091a8; font-family: ui-monospace,monospace; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; transition: color .2s ease; }
+  .hero-social a:hover { color: var(--cyan); }
+  .portrait-stage { position: relative; align-self: center; width: min(100%,24rem); justify-self: end; }
+  .portrait-frame { position: relative; aspect-ratio: 4/5.6; overflow: hidden; clip-path: polygon(8% 0,100% 0,100% 92%,92% 100%,0 100%,0 8%); background: #111a27; }
+  .portrait-frame::after { position: absolute; inset: 0; content: ''; background: linear-gradient(130deg,transparent 50%,rgba(50,199,255,.09)),linear-gradient(to top,rgba(5,8,16,.55),transparent 35%); }
+  .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; filter: grayscale(.9) contrast(1.05) saturate(.65); transition: filter .8s ease, transform 1.2s ease; }
+  .portrait-stage:hover img { filter: grayscale(0) contrast(1.02) saturate(.85); transform: scale(1.015); }
+  .portrait-scan { position: absolute; z-index: 3; inset: 0; height: 18%; border-bottom: 1px solid rgba(124,245,204,.75); background: linear-gradient(to bottom,transparent,rgba(50,199,255,.07)); animation: scan 6s cubic-bezier(.4,0,.6,1) infinite alternate; }
+  .portrait-reticle { position: absolute; z-index: 4; inset: 1rem; }
+  .portrait-reticle i { position: absolute; width: 1.1rem; height: 1.1rem; border-color: rgba(124,245,204,.55); }
+  .portrait-reticle i:nth-child(1) { top: 0; left: 0; border-top: 1px solid; border-left: 1px solid; }
+  .portrait-reticle i:nth-child(2) { top: 0; right: 0; border-top: 1px solid; border-right: 1px solid; }
+  .portrait-reticle i:nth-child(3) { bottom: 0; left: 0; border-bottom: 1px solid; border-left: 1px solid; }
+  .portrait-reticle i:nth-child(4) { bottom: 0; right: 0; border-bottom: 1px solid; border-right: 1px solid; }
+  .portrait-meta { display: flex; justify-content: space-between; gap: 1rem; color: #7890aa; font-family: ui-monospace,monospace; font-size: .52rem; letter-spacing: .1em; }
+  .portrait-meta-top { margin-bottom: .55rem; }
+  .portrait-meta-bottom { margin-top: .55rem; }
+  .impact-hud { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .impact-cell { display: grid; min-height: 7.3rem; grid-template-columns: auto 1fr; align-content: center; column-gap: .8rem; border-right: 1px solid var(--line); padding: 1.2rem; }
+  .impact-cell:last-child { border-right: 0; }
+  .impact-index { grid-row: span 2; color: #51647c; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .impact-cell strong { color: var(--mint); font-family: Outfit,sans-serif; font-size: clamp(1rem,2vw,1.5rem); letter-spacing: -.02em; }
+  .impact-cell div { display: grid; gap: .2rem; }
+  .impact-cell b { font-size: .68rem; font-weight: 600; }
+  .impact-cell small { color: #6d8098; font-size: .58rem; line-height: 1.4; }
+  .hero-scroll { display: flex; align-items: center; justify-content: center; gap: .7rem; margin: 1.1rem 0; color: #566a82; font-family: ui-monospace,monospace; font-size: .51rem; letter-spacing: .13em; }
+  .hero-scroll span { width: 2.4rem; height: 1px; background: linear-gradient(90deg,transparent,var(--cyan)); }
+  @keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(460%); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 900px) {
+    .hero { padding-top: 7rem; }
+    .hero-layout { min-height: auto; grid-template-columns: 1fr; gap: 2rem; }
+    .hero-copy { padding-bottom: 0; }
+    .portrait-stage { width: min(80vw,25rem); justify-self: center; margin-bottom: 3rem; }
+    .impact-hud { grid-template-columns: repeat(2,1fr); }
+    .impact-cell:nth-child(2) { border-right: 0; }
+    .impact-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 520px) {
+    h1 { font-size: clamp(3.7rem,18vw,5.5rem); line-height: .76; }
+    .hero-eyebrow { line-height: 1.8; }
+    .hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
+    .hero-actions .btn-ghost { grid-column: span 2; }
+    .portrait-stage { width: 92%; }
+    .impact-cell { min-height: 8rem; padding: .9rem .7rem; }
+    .impact-cell:nth-child(odd) { padding-left: 0; }
+    .impact-cell strong { font-size: .95rem; }
+  }
+</style>
