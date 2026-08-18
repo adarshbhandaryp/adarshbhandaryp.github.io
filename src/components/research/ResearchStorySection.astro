@@ -57,7 +57,7 @@ const { section } = Astro.props;
 </section>
 
 <style>
-  .research-story-section { scroll-margin-top: 6.5rem; border-top: 1px solid var(--line); padding-block: clamp(4.5rem,8vw,8rem); }
+  .research-story-section { scroll-margin-top: calc(6.5rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(4.5rem,8vw,8rem); }
   .story-section-head { display: grid; grid-template-columns: minmax(11rem,.35fr) 1fr; gap: 2rem; align-items: start; }
   .story-section-head p { color: var(--cyan); font: .55rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
   .story-section-head p span { color: #6f829a; }

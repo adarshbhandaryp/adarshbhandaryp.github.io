@@ -11,18 +11,19 @@
 
 :root {
   color-scheme: dark;
-  --ink: #08111f;
-  --surface: #0e1a2b;
-  --surface-2: #14243a;
-  --line: rgba(151, 178, 211, 0.2);
+  --ink: #0a1424;
+  --surface: #111f33;
+  --surface-2: #172a43;
+  --line: rgba(151, 178, 211, 0.23);
   --line-bright: rgba(90, 214, 255, 0.46);
   --text: #f2f7ff;
-  --muted: #9aabc2;
+  --muted: #a7b7cb;
   --cyan: #32c7ff;
   --blue: #247cff;
   --mint: #7cf5cc;
   --amber: #f6c86e;
   --section-pad: clamp(5.5rem, 10vw, 10rem);
+  --notice-height: 1.9rem;
 }
 
 * { box-sizing: border-box; }
@@ -32,6 +33,7 @@ html { scroll-behavior: smooth; background: var(--ink); }
 body {
   margin: 0;
   overflow-x: hidden;
+  padding-top: var(--notice-height);
   background:
     radial-gradient(circle at 82% -4%, rgba(36, 124, 255, 0.24), transparent 34rem),
     radial-gradient(circle at 4% 44%, rgba(124, 245, 204, 0.07), transparent 30rem),
@@ -74,7 +76,7 @@ button, input { font: inherit; }
   font-weight: 700;
   transition: top .2s ease;
 }
-.skip-link:focus { top: 1rem; }
+.skip-link:focus { top: calc(var(--notice-height) + .75rem); }
 
 .shell { width: min(100% - 2rem, 86rem); margin-inline: auto; }
 .section-shell { position: relative; padding-block: var(--section-pad); }
@@ -147,6 +149,10 @@ button, input { font: inherit; }
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 5rem 5rem;
   mask-image: linear-gradient(to bottom, black, transparent 95%);
+}
+
+@media (max-width: 420px) {
+  :root { --notice-height: 2.65rem; }
 }
 
 .sr-only {

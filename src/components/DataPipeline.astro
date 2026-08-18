@@ -64,7 +64,7 @@ const stages = [
 </script>
 
 <style>
-  .pipeline-section { overflow: hidden; background: linear-gradient(180deg,#050810,#07101b 55%,#050810); }
+  .pipeline-section { overflow: hidden; background: linear-gradient(180deg,var(--ink),var(--surface) 55%,var(--ink)); }
   .pipeline-heading { display: grid; grid-template-columns: 1.25fr .75fr; align-items: end; gap: 3rem; }
   .pipeline-canvas { --pipeline-progress: 0%; position: relative; display: grid; grid-template-columns: repeat(6,1fr); margin-top: clamp(4rem,9vw,8rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .pipeline-canvas::after { position: absolute; z-index: 0; left: 0; top: -.5px; width: var(--pipeline-progress); height: 1px; content: ''; background: var(--cyan); box-shadow: 0 0 1.2rem var(--cyan); transition: width .8s cubic-bezier(.2,.8,.2,1); }

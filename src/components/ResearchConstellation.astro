@@ -105,14 +105,14 @@ const nodes = [...graph.topics, ...graph.institutions];
 </script>
 
 <style>
-  .constellation-section { background: #050810; }
+  .constellation-section { background: var(--ink); }
   .constellation-head { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 4rem; }
   .constellation-wrap { display: grid; grid-template-columns: minmax(0,1fr) 20rem; gap: 2rem; margin-top: 5rem; }
   .constellation-map { position: relative; aspect-ratio: 16/9.5; min-height: 35rem; border: 1px solid var(--line); overflow: hidden; background: radial-gradient(circle at 50% 50%,rgba(36,124,255,.14),transparent 30%),linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size: auto,4rem 4rem,4rem 4rem; }
   .constellation-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
   .constellation-lines line { vector-effect: non-scaling-stroke; stroke: rgba(87,125,166,.16); stroke-width: .65; transition: stroke .25s ease,stroke-width .25s ease; }
   .constellation-lines line.is-active { stroke: rgba(50,199,255,.65); stroke-width: 1.2; }
-  .constellation-core, .constellation-node { position: absolute; z-index: 2; transform: translate(-50%,-50%); border: 1px solid var(--line); border-radius: 50%; background: rgba(7,14,25,.92); color: #b4c4d7; text-align: center; box-shadow: 0 0 2rem rgba(0,0,0,.4); transition: opacity .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease,transform .25s ease; }
+  .constellation-core, .constellation-node { position: absolute; z-index: 2; transform: translate(-50%,-50%); border: 1px solid var(--line); border-radius: 50%; background: rgba(17,31,51,.94); color: #c0cde0; text-align: center; box-shadow: 0 0 2rem rgba(0,0,0,.32); transition: opacity .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease,transform .25s ease; }
   .constellation-core { left: 50%; top: 50%; display: grid; width: 8.5rem; aspect-ratio: 1; place-content: center; border-color: rgba(124,245,204,.55); color: var(--text); box-shadow: 0 0 3rem rgba(124,245,204,.09); }
   .constellation-core span { font: 600 1.1rem Outfit,sans-serif; }.constellation-core small { color: var(--mint); font: .46rem ui-monospace,monospace; letter-spacing: .14em; }
   .constellation-node { left: var(--x); top: var(--y); width: 6rem; aspect-ratio: 1; padding: .45rem; font-size: .57rem; line-height: 1.3; }

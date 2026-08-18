@@ -54,7 +54,7 @@ const workload = [
 </section>
 
 <style>
-  .scale-section { overflow: hidden; background: radial-gradient(circle at 50% 58%,rgba(30,99,182,.16),transparent 36rem),#060b14; }
+  .scale-section { overflow: hidden; background: radial-gradient(circle at 50% 58%,rgba(30,99,182,.16),transparent 36rem),var(--ink); }
   .scale-grid { position: absolute; inset: 0; opacity: .3; }
   .scale-head { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: 4rem; }
   [data-recruiter-copy] { display: none; }
@@ -64,11 +64,11 @@ const workload = [
   .compute-rail { position: absolute; z-index: 0; left: 11%; right: 11%; top: 50%; height: 1px; background: linear-gradient(90deg,var(--cyan),var(--blue),var(--mint)); box-shadow: 0 0 1rem rgba(50,199,255,.4); }
   .compute-rail i { position: absolute; width: .45rem; height: .45rem; margin-top: -.2rem; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 1rem var(--cyan); animation: packet 4s linear infinite; }
   .compute-rail i:nth-child(2) { animation-delay: -1.3s; }.compute-rail i:nth-child(3) { animation-delay: -2.6s; }
-  .compute-origin, .model-endpoint { position: relative; z-index: 1; border: 1px solid var(--line-bright); background: rgba(5,8,16,.9); padding: 1.25rem; box-shadow: 0 0 2rem rgba(36,124,255,.1); }
+  .compute-origin, .model-endpoint { position: relative; z-index: 1; border: 1px solid var(--line-bright); background: rgba(17,31,51,.92); padding: 1.25rem; box-shadow: 0 0 2rem rgba(36,124,255,.1); }
   .compute-origin { display: grid; gap: .6rem; }
   .compute-origin strong { font-family: Outfit,sans-serif; font-size: 2rem; }
   .compute-origin small, .model-endpoint small { color: var(--muted); font-family: ui-monospace,monospace; font-size: .56rem; }
-  .gpu-cluster { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); gap: .7rem; padding: 2.5rem; border: 1px solid var(--line); background: rgba(6,12,22,.9); }
+  .gpu-cluster { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); gap: .7rem; padding: 2.5rem; border: 1px solid var(--line); background: rgba(17,31,51,.9); }
   .gpu-cluster::before { position: absolute; left: 1rem; top: .8rem; content: 'NHR@FAU / DISTRIBUTED COMPUTE FABRIC'; color: #61758e; font-family: ui-monospace,monospace; font-size: .52rem; letter-spacing: .12em; }
   .gpu-node { min-width: 0; border: 1px solid #253750; background: #0b1524; padding: .6rem; transition: border-color .3s ease,transform .3s ease; }
   .gpu-node:hover { border-color: var(--cyan); transform: translateY(-3px); }
