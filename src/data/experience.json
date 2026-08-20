@@ -62,10 +62,12 @@
     "location": "Erlangen, Germany",
     "dates": "October 2017 — March 2020",
     "phase": "Deep learning",
-    "summary": "Clinical-workflow prototyping, deep learning for CT lung nodules, and co-invented medical-device IP.",
+    "summary": "Clinical-workflow prototyping, patent and prior-art analysis, and blockchain-in-healthcare specifications.",
     "description": [
       "Built MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
+      "Prepared software specifications and use-case survey reports for blockchain applications in healthcare.",
       "Evaluated IoT technologies for healthcare workflow optimization.",
+      "Identified potential patent infringements, prepared claim charts and conducted prior-art searches.",
       "Co-inventor on a European patent application for unlocking a medical device (EP 3644550 A1)."
     ]
   },
