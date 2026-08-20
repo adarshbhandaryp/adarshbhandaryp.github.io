@@ -5,7 +5,7 @@
     "location": "Erlangen, Germany",
     "dates": "June 2026 — Present",
     "phase": "AI systems + applied GenAI",
-    "summary": "Builds AI solutions on locally deployed LLMs and VLMs, foundation-model APIs, retrieval, and GPU inference at cluster scale.",
+    "summary": "Turns research models into things people can use — and keeps them running at cluster scale.",
     "description": [
       "Develop AI solutions built on locally deployed LLMs and VLMs, foundation-model APIs, embeddings and retrieval.",
       "Build tool-using agent workflows and research software on open-source AI frameworks.",

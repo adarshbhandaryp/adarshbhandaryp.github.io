@@ -44,7 +44,7 @@ const concepts = [
 
     <div class="portrait-stage">
       <div class="portrait-frame">
-        <img src={sitePath('profile_photo.jpg')} alt={`Portrait of ${profile.name}`} width="1200" height="1800" fetchpriority="high" />
+        <img src={sitePath('profile_photo.webp')} alt={`Portrait of ${profile.name}`} width="1200" height="1800" fetchpriority="high" />
         <div class="portrait-mind" aria-hidden="true">
           <svg class="mind-map" viewBox="0 0 400 560" preserveAspectRatio="none">
             <path class="mind-path mind-path-a" d="M19 191 C63 163 72 100 124 73 S230 23 286 61 S350 120 378 88" />
@@ -172,9 +172,9 @@ const concepts = [
   .orbit-a { width: 43rem; height: 43rem; right: -8rem; top: 4rem; }
   .hero-layout { position: relative; z-index: 2; display: grid; min-height: calc(100svh - 18rem); grid-template-columns: minmax(0,1.35fr) minmax(19rem,.65fr); align-items: center; gap: clamp(2rem,6vw,7rem); }
   .hero-copy { padding-block: 2rem 3rem; }
-  .hero-eyebrow { margin-bottom: clamp(1.8rem,4.5vh,3.8rem); color: var(--muted); font-family: ui-monospace,monospace; font-size: clamp(.58rem,.85vw,.7rem); line-height: 1.9; letter-spacing: .04em; }
+  .hero-eyebrow { margin-bottom: clamp(1.8rem,4.5vh,3.8rem); color: var(--muted); font-family: ui-monospace,monospace; font-size: clamp(.62rem,.85vw,.7rem); line-height: 1.9; letter-spacing: .04em; }
   h1 { display: grid; margin: 0; font-size: clamp(4.2rem,10.4vw,10.5rem); font-weight: 600; letter-spacing: -.075em; line-height: .72; }
-  h1 span:nth-child(2) { color: transparent; -webkit-text-stroke: 1px rgba(224,239,255,.5); }
+  h1 span:nth-child(2) { color: transparent; -webkit-text-stroke: 1.2px rgba(230,242,255,.72); }
   h1 span:nth-child(3) { color: #b8c6d9; font-size: .52em; letter-spacing: .18em; line-height: 1.5; }
   .hero-role { margin-top: clamp(1.8rem,4.5vh,3.4rem); color: #d8e3f1; font-size: clamp(.92rem,1.5vw,1.15rem); font-weight: 500; }
   .hero-statement { max-width: 44rem; margin-top: 1rem; color: var(--muted); font-size: clamp(1rem,1.4vw,1.2rem); line-height: 1.75; }
@@ -200,14 +200,14 @@ const concepts = [
   .node-core { fill: var(--mint); filter: drop-shadow(0 0 3px rgba(124,245,204,.6)); }
   .node-b .node-core, .node-c .node-core { fill: var(--cyan); filter: drop-shadow(0 0 3px rgba(50,199,255,.6)); }
   .mind-dot { fill: rgba(213,239,255,.5); }
-  .mind-label { position: absolute; right: 5%; top: 17%; display: inline-flex; align-items: center; gap: .35rem; border: 1px solid rgba(130,197,232,.18); padding: .34rem .48rem; background: rgba(8,19,33,.55); color: #bcd2e5; font-family: ui-monospace,monospace; font-size: .44rem; letter-spacing: .12em; line-height: 1; white-space: nowrap; backdrop-filter: blur(5px); transition: opacity .4s ease, transform .4s ease; }
+  .mind-label { position: absolute; right: 5%; top: 17%; display: inline-flex; align-items: center; gap: .35rem; border: 1px solid rgba(130,197,232,.18); padding: .34rem .48rem; background: rgba(8,19,33,.55); color: #bcd2e5; font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .12em; line-height: 1; white-space: nowrap; backdrop-filter: blur(5px); transition: opacity .4s ease, transform .4s ease; }
   .mind-label::before { width: .25rem; height: .25rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 .4rem rgba(124,245,204,.55); content: ''; }
   .mind-label.is-swapping { opacity: 0; transform: translateY(-.25rem); }
-  .portrait-caption { margin-top: .6rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .1em; text-align: right; }
+  .portrait-caption { margin-top: .6rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .1em; text-align: right; }
   .expertise-strip { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5,1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: clamp(2rem,5vh,4rem); }
   .expertise-cell { min-height: 9.5rem; border-right: 1px solid var(--line); padding: 1.15rem 1.1rem 1.4rem; }
   .expertise-cell:last-child { border-right: 0; }
-  .expertise-title { color: var(--mint); font-family: ui-monospace,monospace; font-size: clamp(.56rem,.72vw,.66rem); font-weight: 600; letter-spacing: .09em; line-height: 1.6; }
+  .expertise-title { color: var(--mint); font-family: ui-monospace,monospace; font-size: clamp(.62rem,.72vw,.66rem); font-weight: 600; letter-spacing: .09em; line-height: 1.6; }
   .expertise-detail { margin-top: .8rem; color: var(--muted); font-size: clamp(.68rem,.82vw,.76rem); line-height: 1.62; }
   @keyframes concept-flow { to { stroke-dashoffset: -66; } }
   @keyframes idea-breathe { 0%,100% { opacity: .45; transform: scale(.75); } 50% { opacity: 1; transform: scale(1.14); } }

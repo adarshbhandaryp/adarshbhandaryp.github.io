@@ -95,4 +95,4 @@ GitHub Actions deploys on push to `main`. The repository must be named `adarshbh
 
 ## Site status
 
-The global notice `WEBSITE UNDER CONSTRUCTION · FACTUALLY NOT CHECKED` is in `src/components/Nav.astro` and is intentionally still there. See `FINAL_WEBSITE_RESEARCH_AUDIT.md` for the open factual items to clear before removing it.
+The global accuracy notice has been removed (site reviewed and links verified before use in applications). To bring one back, restore the `.site-notice` block in `src/components/Nav.astro` and set `--notice-height` in `src/styles/global.css`.

@@ -38,7 +38,7 @@ story:
   readTime: "1 min read"
   shortTitle: "Attention-Guided Erasing"
   researchQuestion: "Can a model decide what not to erase?"
-  storyIntro: "Use a self-supervised model's own attention to choose which pixels an augmentation is allowed to destroy — then check the five tasks where that helps and the one where it does not."
+  storyIntro: "Use a self-supervised model's own attention to choose which pixels an augmentation is allowed to destroy — then check the four tasks where that helps and the one where it does not."
   heroFigure:
     src: "/research/attention-guided-erasing-transfer-learning-breast-abnormality/age-method-overview.webp"
     alt: "Three-panel diagram: DINO self-supervised pretraining with a student and teacher ViT-S, conversion of six attention heads into binary masks and erased images, and transfer learning with attention-head selection by validation F1"

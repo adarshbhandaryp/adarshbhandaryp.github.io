@@ -66,7 +66,7 @@ story:
       title: "Self-supervision wants data this domain does not have."
       body:
         - "Contrast-enhanced spectral mammography is used when a mammogram is not enough — dense tissue, suspicious lesion management. The public data amount to about a thousand images."
-        - "SimCLR pretraining helps, but not by much at that scale. The question was whether the loss function could extract more from the same features."
+        - "SimCLR pretraining helps, but not by much at that scale — which left the loss function as the remaining place to find leverage."
     - id: "idea"
       label: "02 / THE IDEA"
       title: "Ask the feature space which samples are hard."

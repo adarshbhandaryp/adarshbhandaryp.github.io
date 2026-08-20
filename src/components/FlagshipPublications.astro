@@ -49,13 +49,13 @@ const total = (await getPublications()).length;
   .publication-ledger { margin-top: clamp(3rem,6vw,4.5rem); border-top: 1px solid var(--line); }
   .publication-row { display: grid; grid-template-columns: 2.6rem minmax(0,1fr) 11rem 8rem; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--line); padding: 1.6rem 0; transition: background .25s ease; }
   .publication-row:hover { background: linear-gradient(90deg,rgba(50,199,255,.03),transparent); }
-  .publication-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .56rem; }
-  .publication-primary p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .06em; }
+  .publication-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .publication-primary p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .06em; }
   .publication-primary h3 { max-width: 46rem; margin-top: .6rem; font-size: clamp(1.1rem,1.8vw,1.5rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.24; }
   .publication-primary h3 a:hover { color: var(--cyan); }
   .publication-primary small { display: block; max-width: 46rem; margin-top: .75rem; color: var(--muted); font-size: .74rem; line-height: 1.68; }
-  .publication-tags { display: grid; gap: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .52rem; text-transform: uppercase; }
-  .publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .publication-tags { display: grid; gap: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
+  .publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .62rem; }
   .publication-actions a:hover { color: var(--cyan); }
   @media (max-width: 900px) { .publications-head { grid-template-columns: 1fr; } .publication-row { grid-template-columns: 2rem 1fr auto; } .publication-tags { display: none; } .publication-actions { grid-column: 2/-1; grid-row: 2; display: flex; gap: 1.2rem; justify-self: start; } }
   @media (max-width: 520px) { .publication-row { grid-template-columns: 1.5rem 1fr; gap: .8rem; } .publication-actions { grid-column: 2; } }

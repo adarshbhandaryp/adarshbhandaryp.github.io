@@ -12,9 +12,9 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} | AI Research Scientist`,
+  title = `${profile.name} | Research Scientist`,
   description = profile.tagline,
-  image = sitePath('profile_photo.jpg'),
+  image = sitePath('profile_photo.webp'),
   type = 'website',
   jsonLd,
 } = Astro.props;
@@ -27,8 +27,8 @@ const personJsonLd = {
   name: profile.name,
   alternateName: 'Adarsh Panambur',
   url: new URL(sitePath(), Astro.site || Astro.url).toString(),
-  image: new URL(sitePath('profile_photo.jpg'), Astro.site || Astro.url).toString(),
-  jobTitle: 'AI Research Scientist',
+  image: new URL(sitePath('profile_photo.webp'), Astro.site || Astro.url).toString(),
+  jobTitle: 'Research Scientist',
   description: profile.title,
   affiliation: [
     { '@type': 'Organization', name: 'Erlangen National High Performance Computing Center (NHR@FAU)' },

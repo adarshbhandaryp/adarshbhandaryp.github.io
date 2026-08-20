@@ -23,7 +23,8 @@
   --mint: #7cf5cc;
   --amber: #f6c86e;
   --section-pad: clamp(5.5rem, 10vw, 10rem);
-  --notice-height: 1.9rem;
+  /* Height of the top notice bar; 0 while no notice is shown. */
+  --notice-height: 0rem;
 }
 
 * { box-sizing: border-box; }
@@ -149,10 +150,6 @@ button, input { font: inherit; }
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 5rem 5rem;
   mask-image: linear-gradient(to bottom, black, transparent 95%);
-}
-
-@media (max-width: 420px) {
-  :root { --notice-height: 2.65rem; }
 }
 
 .sr-only {

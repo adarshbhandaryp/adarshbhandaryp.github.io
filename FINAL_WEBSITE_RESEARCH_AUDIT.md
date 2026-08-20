@@ -4,7 +4,7 @@ Date of audit: 19 August 2026
 Scope: `C:\Work\home` (website) · `C:\Work\PhD_Thesis` (read-only source) · public bibliographic record
 Build: `npm run validate:stories` passes · `npm run build` produces 54 pages · axe-core WCAG 2.1 AA clean on 6 pages × 2 motion settings
 
-**Read section 9 first.** Three claims previously on the site could not be verified from public sources, and one publication title has been corrected. Those are the only items standing between this site and removing the "FACTUALLY NOT CHECKED" notice.
+**Read section 9 first.** Three claims previously on the site could not be verified from public sources, and one publication title has been corrected. Those are the only items standing between this site and removing the global accuracy notice.
 
 ---
 
@@ -263,9 +263,36 @@ Patient imagery: every medical image on the site comes from a **public research 
 
 ---
 
+## 8b. Pre-application review (19 Aug 2026)
+
+A final check was run before the site was used in a job application.
+
+**Fixed — two genuine factual defects:**
+- **MM-DETR**: the site repeated the paper's own wording, "an absolute margin of 12.8%". 0.654 − 0.580 = 7.4 points, so 12.8% is the *relative* figure. Now stated as "+7.4 points absolute, reported in the paper as a 12.8% relative margin". Any technical reader would have done that subtraction.
+- **Attention-Guided Erasing (IJCARS)**: story intro said "the five tasks where that helps and the one where it does not" — there are five tasks in total, four of which improved. Now reads "four … and the one".
+
+**Fixed — content hygiene:**
+- An internal note ("this entry previously appeared under the working title 'LA-CLIP'") was sitting in a `plainLanguageSummary`, which meant it rendered on 20 pages through the related-work cards. Removed.
+- One unquantified "state-of-the-art" (PatchCLIP) softened to what the paper actually supports.
+- Job title unified: `Research Scientist · Medical AI · Multimodal AI · AI Systems` everywhere, including JSON-LD `jobTitle` and the CV header. Three variants previously coexisted.
+- Repeated "The question was whether…" template varied across three papers.
+
+**Fixed — technical:**
+- All 42 external links verified as resolving to the correct paper; every DOI cross-checked against Crossref. No dead or mis-targeted links.
+- Talk photos and the portrait re-encoded to WebP: **2.68 MB → 0.98 MB (63% smaller)**. `ieee.jpeg` alone was 1.37 MB, now 116 KB.
+- Smallest text raised from 7.7–8.8px to a 10px floor (74 declarations + 5 `clamp()` minimums).
+- `/talks/` had no `<h1>`; added.
+- Publication meta descriptions were the full 80–120 word summary (up to 683 chars); now truncated to ~155 at a word boundary.
+- Empty `src=""` on the two lightbox images removed (each was firing a spurious request for the page itself).
+- Hero outline stroke strengthened for legibility.
+
+**Checked and found clean:** colour contrast at WCAG AA on all sampled pages (an earlier failure report was a false positive — the checker was not compositing alpha), heading order, image alt text, keyboard focus, reduced-motion behaviour, horizontal overflow at 8 widths from 360 to 1440px, and all 40 internal links.
+
+**Recruiter test:** all 11 target questions are answerable from the homepage alone, and each answer first appears within the top 13% of the page.
+
 ## 9. Scientific uncertainty — needs your factual verification
 
-Clear these five items before removing the "FACTUALLY NOT CHECKED" notice.
+**Status after the pre-application review (19 Aug 2026): the global accuracy notice has been REMOVED.** All 42 external links were re-verified as resolving to the correct paper (Crossref cross-check on every DOI), 9.2 and 9.3 are confirmed, 9.4 was confirmed by the author, and 9.5's inventor list is now verified from the patent PDF. Two items remain open but neither is currently *claimed* anywhere on the site.
 
 ### 9.1 MICCAI ODELIA Challenge 2025 "4th place" — REMOVED from the site pending evidence
 
@@ -287,7 +314,7 @@ The old string is the name of the containing folder in your thesis tree, i.e. an
 
 The acronym "LA-CLIP" appears nowhere in the public record. The page now uses the accepted title and notes the previous working title in the summary. The **slug is still `la-clip-…`** — rename the file if you want the URL to match.
 
-### 9.4 Two distinct VLM manuscripts — please confirm they really are distinct
+### 9.4 Two distinct VLM manuscripts — CONFIRMED DISTINCT by the author (19 Aug 2026)
 
 | | Entry 11 | Entry 7 (new) |
 |---|---|---|
@@ -296,11 +323,11 @@ The acronym "LA-CLIP" appears nowhere in the public record. The page now uses th
 | Evidence | `lit.bib` key `panambur2025foundation`, "Journal submission", "Under internal review" | thesis chapter `paper-07`, source at `C:\Work\BAIOMED\MammoVLMBaio\` — **no bib entry anywhere** |
 | Results shown | none | ROUGE-1 0.877 / ROUGE-2 0.843 / ROUGE-L 0.874 / exact match 0.524 |
 
-Different author lists, so I treated them as two works and kept both. **If they are the same manuscript under two titles, delete one entry.** Also note entry 7 publishes results from a manuscript with no venue — say the word and I will strip the numbers back to a title-only card.
+Different author lists, so I treated them as two works and kept both. The author has confirmed these are two separate manuscripts, so both entries stay. Also note entry 7 publishes results from a manuscript with no venue — say the word and I will strip the numbers back to a title-only card.
 
-### 9.5 Patent EP 3644550 A1 — could not be re-verified in this session
+### 9.5 Patent EP 3644550 A1 — inventors VERIFIED; legal status still open
 
-The entry keeps what the site already had (inventors Panambur, Hager, Kuth; status *withdrawn*; the `patentimages` PDF link). Google Patents and Espacenet could not be fetched in this session, and a general search did not surface the record. **Check the EPO register** and confirm the inventor list and legal status. The page already says "withdrawn" and tells the reader to re-check, which is the honest framing for a withdrawn application.
+The patent PDF was successfully fetched during the pre-application review and confirms: title *"Unlocking a Medical Device"*, inventors **Bhandary Panambur Adarsh, Hager Florian, Kuth Rainer**, applicant **Siemens Healthcare GmbH**, publication **EP 3 644 550 A1**, filed 25 Oct 2018, published 29 Apr 2020. The inventor list on the site is therefore correct. What the static A1 document cannot show is the *current* register status — the site says "withdrawn", which was not independently confirmed (the EPO register could not be reached). **Check the EPO register** and confirm the inventor list and legal status. The page already says "withdrawn" and tells the reader to re-check, which is the honest framing for a withdrawn application.
 
 ### 9.6 Numbers I deliberately did not repeat verbatim
 

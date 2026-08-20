@@ -65,7 +65,7 @@ story:
       title: "Standard pre-processing, applied to the wrong scale."
       body:
         - "Histogram equalization is routine for whole mammograms. But a calcification is a small bright spot, and a crop around it is mostly that spot — equalize it and the morphology and distribution that define the class get flattened into noise."
-        - "The question was whether the operation should be dropped, or just used differently."
+        - "So should the operation be dropped altogether, or just used differently?"
     - id: "idea"
       label: "02 / THE IDEA"
       title: "Make it stochastic, and training-only."

@@ -57,7 +57,7 @@ import current from '../data/current.json';
   .system-heading { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: clamp(2rem,7vw,7rem); }
   .system-heading .section-title { max-width: 12ch; }
   .system-statement { max-width: 44rem; color: #d7e3f1; font-size: clamp(1.05rem,1.7vw,1.4rem); line-height: 1.7; }
-  .system-note { display: flex; align-items: center; gap: .55rem; margin-top: 1.3rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .06em; }
+  .system-note { display: flex; align-items: center; gap: .55rem; margin-top: 1.3rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .06em; }
   .system-note span { flex: 0 0 auto; width: .4rem; height: .4rem; border-radius: 50%; background: var(--mint); }
 
   .system-chain { position: relative; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); margin-top: clamp(3.5rem,7vw,6rem); border: 1px solid var(--line); background: rgba(17,31,51,.7); }
@@ -66,14 +66,14 @@ import current from '../data/current.json';
   .system-chain li:nth-child(n+5) { border-bottom: 0; }
   .system-chain li::before { position: absolute; left: 0; top: 0; width: 0; height: 2px; content: ''; background: linear-gradient(90deg,var(--cyan),var(--mint)); transition: width .5s cubic-bezier(.2,.8,.2,1); }
   .system-chain li:hover::before { width: 100%; }
-  .chain-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .52rem; }
-  .system-chain strong { display: block; margin-top: 1.9rem; color: #e3ecf7; font-family: ui-monospace,monospace; font-size: clamp(.6rem,.8vw,.7rem); font-weight: 600; letter-spacing: .07em; line-height: 1.5; }
+  .chain-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .system-chain strong { display: block; margin-top: 1.9rem; color: #e3ecf7; font-family: ui-monospace,monospace; font-size: clamp(.62rem,.8vw,.7rem); font-weight: 600; letter-spacing: .07em; line-height: 1.5; }
   .system-chain small { display: block; margin-top: .55rem; color: var(--muted); font-size: .68rem; line-height: 1.6; }
-  .system-chain li:not(:nth-child(4n)):not(:last-child)::after { position: absolute; z-index: 2; right: -.62rem; top: 50%; display: grid; width: 1.24rem; height: 1.24rem; place-items: center; border: 1px solid var(--line); border-radius: 50%; content: '→'; background: var(--ink); color: var(--cyan); font-size: .6rem; }
+  .system-chain li:not(:nth-child(4n)):not(:last-child)::after { position: absolute; z-index: 2; right: -.62rem; top: 50%; display: grid; width: 1.24rem; height: 1.24rem; place-items: center; border: 1px solid var(--line); border-radius: 50%; content: '→'; background: var(--ink); color: var(--cyan); font-size: .62rem; }
 
   .system-stack { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 2rem; border: 1px solid var(--line); background: var(--line); }
   .system-stack article { background: rgba(17,31,51,.7); padding: 1.15rem; }
-  .system-stack h3 { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .5rem; font-weight: 600; letter-spacing: .12em; }
+  .system-stack h3 { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .62rem; font-weight: 600; letter-spacing: .12em; }
   .system-stack ul { display: grid; gap: .4rem; margin-top: 1rem; }
   .system-stack li { color: #c6d3e3; font-size: .7rem; line-height: 1.5; }
 
@@ -81,7 +81,7 @@ import current from '../data/current.json';
   .system-proof > div { display: grid; grid-template-columns: repeat(4,1fr); margin-top: 1rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .system-proof article { border-right: 1px solid var(--line); padding: 1.3rem; }
   .system-proof article:last-child { border-right: 0; }
-  .system-proof article > span { color: var(--mint); font-family: ui-monospace,monospace; font-size: .5rem; text-transform: uppercase; }
+  .system-proof article > span { color: var(--mint); font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
   .system-proof h3 { margin-top: .65rem; font-size: 1rem; font-weight: 500; }
   .system-proof article p { margin-top: .7rem; color: var(--muted); font-size: .7rem; line-height: 1.65; }
 
