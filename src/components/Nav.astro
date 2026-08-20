@@ -9,6 +9,7 @@ const links = [
   { name: 'Publications', href: sitePath('publications/') },
   { name: 'Skills', href: sitePath('#skills') },
   { name: 'Experience', href: sitePath('#experience') },
+  { name: 'Talks', href: sitePath('talks/') },
 ];
 
 const commands = [
@@ -26,8 +27,9 @@ const commands = [
   { label: 'Talks & conferences', meta: 'Presentation photos', href: sitePath('talks/'), keywords: 'talks conference presentations gallery photos' },
   { label: 'CV (web)', meta: 'Print-friendly page', href: sitePath('cv/'), keywords: 'cv resume experience print' },
   { label: 'CV (PDF)', meta: 'Download', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
+  { label: 'Google Scholar', meta: 'Citations · full publication list', href: profile.scholar, external: true, keywords: 'scholar google citations publications bibliography' },
   { label: 'GitHub', meta: '@adarshbhandaryp', href: profile.github, external: true, keywords: 'github code' },
-  { label: 'LinkedIn', meta: 'Professional profile', href: profile.linkedin, external: true, keywords: 'linkedin social' },
+  { label: 'LinkedIn', meta: 'in/adarsh-bhandary', href: profile.linkedin, external: true, keywords: 'linkedin social' },
   { label: 'Email', meta: profile.email, href: `mailto:${profile.email}`, keywords: 'contact email' },
 ];
 ---
@@ -57,8 +59,8 @@ const commands = [
   <div id="mobile-nav" class="mobile-nav" hidden>
     <div class="shell">
       {links.map((link, index) => <a href={link.href}><span>0{index + 1}</span>{link.name}</a>)}
-      <a href={sitePath('cv/')}><span>06</span>CV</a>
-      <button type="button" data-open-ask><span>07</span>Ask Adarsh</button>
+      <a href={sitePath('cv/')}><span>07</span>CV</a>
+      <button type="button" data-open-ask><span>08</span>Ask Adarsh</button>
     </div>
   </div>
 </nav>
@@ -188,7 +190,7 @@ const commands = [
   .nav-inner { display: flex; height: 4.6rem; align-items: center; justify-content: space-between; gap: 1rem; }
   .nav-mark { display: flex; align-items: center; font-family: Outfit,sans-serif; font-size: .84rem; font-weight: 600; letter-spacing: .04em; }
   .nav-mark:hover { color: var(--cyan); }
-  .nav-links { display: flex; gap: 2rem; margin-left: auto; }
+  .nav-links { display: flex; gap: clamp(1.1rem,2vw,1.9rem); margin-left: auto; }
   .nav-links a { position: relative; color: #bdc9d9; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
   .nav-links a::after { position: absolute; inset: auto 100% -.5rem 0; height: 1px; content: ''; background: var(--cyan); transition: right .2s ease; }
   .nav-links a:hover::after { right: 0; }

@@ -35,6 +35,7 @@ const concepts = [
         <a href={sitePath('CV.pdf')} class="btn-ghost">CV (PDF) <span aria-hidden="true">↘</span></a>
       </div>
       <div class="hero-social">
+        <a href={profile.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a>
         <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href={`mailto:${profile.email}`}>Email</a>
@@ -178,7 +179,7 @@ const concepts = [
   .hero-role { margin-top: clamp(1.8rem,4.5vh,3.4rem); color: #d8e3f1; font-size: clamp(.92rem,1.5vw,1.15rem); font-weight: 500; }
   .hero-statement { max-width: 44rem; margin-top: 1rem; color: var(--muted); font-size: clamp(1rem,1.4vw,1.2rem); line-height: 1.75; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2.2rem; }
-  .hero-social { display: flex; gap: 1.4rem; margin-top: 2rem; }
+  .hero-social { display: flex; flex-wrap: wrap; gap: .9rem 1.3rem; margin-top: 2rem; }
   .hero-social a { color: #8091a8; font-family: ui-monospace,monospace; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; transition: color .2s ease; }
   .hero-social a:hover { color: var(--cyan); }
   .portrait-stage { position: relative; align-self: center; width: min(100%,23rem); justify-self: end; }
