@@ -2,78 +2,128 @@
 import MetricStrip from './MetricStrip.astro';
 import ResearchFigure from './ResearchFigure.astro';
 
-interface FigureData { src: string; alt: string; caption: string; label?: string; sourceUrl?: string; sourceLabel?: string; orientation?: 'landscape' | 'portrait' | 'square'; width?: number; height?: number; }
+interface FigureData { src: string; alt: string; caption: string; label?: string; sourceLabel?: string; sourceUrl?: string; orientation?: 'landscape' | 'portrait' | 'square'; width?: number; height?: number; }
 interface Metric { value: string; label: string; detail?: string; tone?: 'default' | 'positive' | 'caution'; }
-interface Card { label: string; title: string; body: string; tone?: 'default' | 'positive' | 'caution'; }
+interface TableRow { cells: string[]; highlight?: boolean; }
+interface TableData { caption: string; columns: string[]; rows: TableRow[]; footnote?: string; }
 interface SectionData {
-  id: string; label: string; title: string; duration?: string; body: string[];
-  pipeline?: string[]; metrics?: Metric[]; comparisons?: Metric[]; figures?: FigureData[]; cards?: Card[];
+  id: string; label: string; title: string; body: string[];
+  pipeline?: string[]; metrics?: Metric[]; comparisons?: Metric[]; table?: TableData; figures?: FigureData[];
 }
 interface Props { section: SectionData; }
 const { section } = Astro.props;
 ---
 
 <section id={section.id} class="research-story-section" aria-labelledby={`${section.id}-title`}>
-  <header class="story-section-head">
-    <p>{section.label}{section.duration && <span> / {section.duration}</span>}</p>
-    <h2 id={`${section.id}-title`}>{section.title}</h2>
-  </header>
+  <div class="section-inner">
+    <p class="section-label">{section.label}</p>
 
-  {section.body.length > 0 && <div class="story-prose">{section.body.map((paragraph) => <p>{paragraph}</p>)}</div>}
+    <div class="section-body">
+      <h2 id={`${section.id}-title`}>{section.title}</h2>
 
-  {section.pipeline && section.pipeline.length > 0 && (
-    <ol class="research-pipeline" aria-label="Method pipeline">
-      {section.pipeline.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}
-    </ol>
-  )}
+      {section.body.length > 0 && <div class="story-prose">{section.body.map((paragraph) => <p>{paragraph}</p>)}</div>}
 
-  {section.metrics && section.metrics.length > 0 && <MetricStrip metrics={section.metrics} />}
+      {section.pipeline && section.pipeline.length > 0 && (
+        <ol class="research-pipeline" aria-label="Method pipeline">
+          {section.pipeline.map((step, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><strong>{step}</strong></li>)}
+        </ol>
+      )}
 
-  {section.comparisons && section.comparisons.length > 0 && (
-    <div class="comparison-grid" aria-label="Research result comparison">
-      {section.comparisons.map((item) => (
-        <article class:list={[`tone-${item.tone || 'default'}`]}>
-          <span>{item.label}</span><strong>{item.value}</strong>{item.detail && <p>{item.detail}</p>}
-        </article>
-      ))}
+      {section.metrics && section.metrics.length > 0 && <MetricStrip metrics={section.metrics} />}
+
+      {section.comparisons && section.comparisons.length > 0 && (
+        <div class="comparison-grid" aria-label="Reported result comparison">
+          {section.comparisons.map((item) => (
+            <article class:list={[`tone-${item.tone || 'default'}`]}>
+              <span>{item.label}</span><strong>{item.value}</strong>{item.detail && <p>{item.detail}</p>}
+            </article>
+          ))}
+        </div>
+      )}
+
+      {section.table && (
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <caption>{section.table.caption}</caption>
+            <thead><tr>{section.table.columns.map((column, index) => <th scope="col" class:list={[{ numeric: index > 0 }]}>{column}</th>)}</tr></thead>
+            <tbody>
+              {section.table.rows.map((row) => (
+                <tr class:list={[{ 'is-highlight': row.highlight }]}>
+                  {row.cells.map((cell, index) => index === 0
+                    ? <th scope="row">{cell}</th>
+                    : <td class="numeric">{cell}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {section.table.footnote && <p class="table-footnote">{section.table.footnote}</p>}
+        </div>
+      )}
+
+      {section.figures && section.figures.length > 0 && (
+        <div class:list={['story-figures', { single: section.figures.length === 1 }]}>
+          {section.figures.map((figure) => <ResearchFigure figure={figure} />)}
+        </div>
+      )}
     </div>
-  )}
-
-  {section.figures && section.figures.length > 0 && (
-    <div class:list={['story-figures', { single: section.figures.length === 1 }] }>
-      {section.figures.map((figure) => <ResearchFigure figure={figure} />)}
-    </div>
-  )}
-
-  {section.cards && section.cards.length > 0 && (
-    <div class="learning-grid">
-      {section.cards.map((card) => (
-        <article class:list={[`tone-${card.tone || 'default'}`]}>
-          <span>{card.label}</span><h3>{card.title}</h3><p>{card.body}</p>
-        </article>
-      ))}
-    </div>
-  )}
+  </div>
 </section>
 
 <style>
-  .research-story-section { scroll-margin-top: calc(6.5rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(4.5rem,8vw,8rem); }
-  .story-section-head { display: grid; grid-template-columns: minmax(11rem,.35fr) 1fr; gap: 2rem; align-items: start; }
-  .story-section-head p { color: var(--cyan); font: .55rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
-  .story-section-head p span { color: #6f829a; }
-  .story-section-head h2 { max-width: 16ch; font-size: clamp(2.4rem,5.5vw,5.5rem); font-weight: 500; letter-spacing: -.055em; line-height: .95; }
-  .story-prose { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem 3rem; margin: 3rem 0 0 auto; max-width: 62rem; }
-  .story-prose p { color: #b8c6d7; font-size: clamp(.9rem,1.2vw,1.02rem); line-height: 1.85; }
-  .research-pipeline { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); margin-top: 3.5rem; border: 1px solid var(--line); background: var(--surface); }
-  .research-pipeline li { position: relative; min-height: 8rem; border-right: 1px solid var(--line); padding: 1rem; }
-  .research-pipeline li:not(:last-child)::after { position: absolute; z-index: 2; right: -.65rem; top: 50%; display: grid; width: 1.3rem; height: 1.3rem; place-items: center; border: 1px solid var(--line-bright); border-radius: 50%; content: '→'; background: var(--surface); color: var(--cyan); font-size: .65rem; }
-  .research-pipeline span { color: #68809b; font: .5rem ui-monospace,monospace; }.research-pipeline strong { display: block; margin-top: 2.2rem; color: #d9e6f3; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
-  :global(.research-story-section .metric-strip) { margin-top: 3.5rem; }
-  .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(11rem,1fr)); gap: 1px; margin-top: 3.5rem; border: 1px solid var(--line); background: var(--line); }
-  .comparison-grid article { background: var(--surface); padding: 1.25rem; }.comparison-grid article::before { display: block; width: 1.5rem; height: 2px; margin-bottom: 1.5rem; content: ''; background: var(--cyan); }.comparison-grid .tone-positive::before { background: var(--mint); }.comparison-grid .tone-caution::before { background: var(--amber); }
-  .comparison-grid span { color: #7f94ad; font: .52rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }.comparison-grid strong { display: block; margin-top: .55rem; font: 600 2rem Outfit,sans-serif; }.comparison-grid p { margin-top: .55rem; color: var(--muted); font-size: .66rem; line-height: 1.55; }
-  .story-figures { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 3.5rem; }.story-figures.single { grid-template-columns: 1fr; }
-  .learning-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3.5rem; }.learning-grid article { border: 1px solid var(--line); border-top: 2px solid var(--cyan); background: var(--surface); padding: 1.4rem; }.learning-grid .tone-positive { border-top-color: var(--mint); }.learning-grid .tone-caution { border-top-color: var(--amber); }.learning-grid span { color: var(--cyan); font: .52rem ui-monospace,monospace; letter-spacing: .1em; }.learning-grid h3 { margin-top: 1.2rem; font-size: 1.35rem; font-weight: 500; }.learning-grid p { margin-top: .8rem; color: var(--muted); font-size: .76rem; line-height: 1.7; }
-  @media (max-width: 760px) { .story-section-head,.story-prose { grid-template-columns: 1fr; }.story-prose { margin-top: 2rem; }.story-figures,.learning-grid { grid-template-columns: 1fr; }.research-pipeline { grid-template-columns: 1fr 1fr; }.research-pipeline li:nth-child(even) { border-right: 0; }.research-pipeline li::after { display: none !important; } }
-  @media (max-width: 440px) { .research-pipeline { grid-template-columns: 1fr; }.research-pipeline li { border-right: 0; border-bottom: 1px solid var(--line); } }
+  .research-story-section { scroll-margin-top: calc(6rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(2.6rem,5vw,4rem); }
+  .section-inner { display: grid; grid-template-columns: minmax(8rem,.24fr) minmax(0,1fr); gap: clamp(1rem,3vw,2.5rem); }
+  .section-label { padding-top: .35rem; color: var(--cyan); font: 600 .55rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .section-body { min-width: 0; }
+  .section-body h2 { max-width: 30ch; font-size: clamp(1.45rem,2.6vw,2.2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.16; }
+
+  .story-prose { display: grid; gap: .95rem; max-width: 46rem; margin-top: 1.3rem; }
+  .story-prose p { color: #b8c6d7; font-size: clamp(.9rem,1.15vw,1rem); line-height: 1.82; }
+
+  .research-pipeline { display: grid; grid-template-columns: repeat(auto-fit,minmax(7.5rem,1fr)); margin-top: 1.8rem; border: 1px solid var(--line); background: var(--surface); }
+  .research-pipeline li { position: relative; min-height: 5.2rem; border-right: 1px solid var(--line); padding: .75rem .8rem; }
+  .research-pipeline li:last-child { border-right: 0; }
+  .research-pipeline span { color: #8ba0b8; font: .5rem ui-monospace,monospace; }
+  .research-pipeline strong { display: block; margin-top: 1rem; color: #d9e6f3; font-size: .64rem; font-weight: 600; letter-spacing: .04em; line-height: 1.45; text-transform: uppercase; }
+
+  :global(.section-body .metric-strip) { margin-top: 1.8rem; }
+
+  .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); gap: 1px; margin-top: 1.8rem; border: 1px solid var(--line); background: var(--line); }
+  .comparison-grid article { background: var(--surface); padding: 1.05rem; }
+  .comparison-grid article::before { display: block; width: 1.4rem; height: 2px; margin-bottom: 1rem; content: ''; background: var(--cyan); }
+  .comparison-grid .tone-positive::before { background: var(--mint); }
+  .comparison-grid .tone-caution::before { background: var(--amber); }
+  .comparison-grid span { color: #7f94ad; font: .5rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .comparison-grid strong { display: block; margin-top: .5rem; font: 600 1.25rem/1.15 Outfit,sans-serif; letter-spacing: -.02em; }
+  .comparison-grid p { margin-top: .5rem; color: var(--muted); font-size: .64rem; line-height: 1.55; }
+
+  .result-table-wrap { margin-top: 1.8rem; overflow-x: auto; }
+  .result-table { width: 100%; min-width: 22rem; border: 1px solid var(--line); border-collapse: collapse; background: var(--surface); }
+  .result-table caption { padding-bottom: .65rem; color: #8ba0b8; font: .58rem/1.6 ui-monospace,monospace; letter-spacing: .04em; text-align: left; }
+  .result-table th, .result-table td { border-bottom: 1px solid var(--line); padding: .65rem .8rem; font-size: .73rem; }
+  .result-table thead th { color: var(--cyan); font: 600 .52rem ui-monospace,monospace; letter-spacing: .1em; text-align: left; text-transform: uppercase; }
+  .result-table thead th.numeric { text-align: right; }
+  .result-table .numeric { font-variant-numeric: tabular-nums; text-align: right; }
+  .result-table tbody th { color: #cfdcec; font-weight: 500; text-align: left; }
+  .result-table tbody td { color: var(--muted); }
+  .result-table tbody tr:last-child th, .result-table tbody tr:last-child td { border-bottom: 0; }
+  .result-table .is-highlight { background: rgba(124,245,204,.06); }
+  .result-table .is-highlight th, .result-table .is-highlight td { color: var(--text); font-weight: 600; }
+  .table-footnote { max-width: 46rem; margin-top: .7rem; color: #7f94ad; font-size: .64rem; line-height: 1.6; }
+
+  .story-figures { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 1.8rem; align-items: start; }
+  .story-figures.single { grid-template-columns: 1fr; }
+  .story-figures:not(.single) :global(.figure-open img) { max-height: 20rem; }
+
+  @media (max-width: 780px) {
+    .section-inner { grid-template-columns: 1fr; gap: .8rem; }
+    .section-label { padding-top: 0; }
+    .story-figures { grid-template-columns: 1fr; }
+    .research-pipeline { grid-template-columns: 1fr 1fr; }
+    .research-pipeline li:nth-child(even) { border-right: 0; }
+  }
+  @media (max-width: 440px) {
+    .research-pipeline { grid-template-columns: 1fr; }
+    .research-pipeline li { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+    .research-pipeline li:last-child { border-bottom: 0; }
+  }
 </style>

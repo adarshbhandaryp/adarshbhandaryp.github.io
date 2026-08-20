@@ -1,36 +1,63 @@
 ---
 import type { PublicationEntry } from '../utils/publications';
-import { externalPublicationLinks, getPublicationSummary, getPublicationUrl } from '../utils/publications';
+import { externalPublicationLinks, getPublicationUrl } from '../utils/publications';
 
-interface Props { publication: PublicationEntry; compact?: boolean; }
-const { publication, compact = false } = Astro.props;
+interface Props { publication: PublicationEntry; }
+const { publication } = Astro.props;
 const { data, slug } = publication;
 const links = externalPublicationLinks(publication);
-const primaryLink = links.find((link) => ['Paper', 'PDF', 'DOI', 'arXiv'].includes(link.label));
-const hasVisualStory = Boolean(data.story);
-const visual = data.story?.heroFigure.src || data.image;
-const visualAlt = data.story?.heroFigure.alt || data.imageAlt || data.title;
-const visualWidth = data.story?.heroFigure.width;
-const visualHeight = data.story?.heroFigure.height;
+const primaryLink = links.find((link) => ['Paper', 'DOI', 'arXiv', 'PDF', 'Poster'].includes(link.label));
+const hasStory = Boolean(data.story);
+const figure = data.story?.heroFigure;
 ---
 
-<article class:list={['publication-card', { compact, 'has-visual-story': hasVisualStory }]}>
-  <a href={getPublicationUrl(slug)} class:list={['publication-visual', { 'is-research-figure': hasVisualStory }]} aria-label={`Read ${data.title}`}>
-    {visual ? <img src={visual} alt={visualAlt} width={visualWidth} height={visualHeight} loading="lazy" /> : <div><span>{data.type}</span><strong>{data.tags.slice(0, 2).join(' × ') || 'Medical AI'}</strong><i>∷</i></div>}
-    {hasVisualStory && <span class="story-badge">{data.story?.readTime} visual story</span>}
-    <b>{data.year}</b>
-  </a>
+<article class:list={['publication-card', { 'is-text-only': !figure }]}>
+  {figure ? (
+    <a href={getPublicationUrl(slug)} class="publication-visual" aria-label={`Read the brief for ${data.title}`}>
+      <img src={figure.src} alt={figure.alt} width={figure.width} height={figure.height} loading="lazy" decoding="async" />
+    </a>
+  ) : (
+    <a href={getPublicationUrl(slug)} class="publication-plate" aria-label={`Read the brief for ${data.title}`}>
+      <span>{data.type}</span>
+      <strong>{data.year}</strong>
+      <small>{data.tags.slice(0, 2).join(' · ')}</small>
+    </a>
+  )}
+
   <div class="publication-card-body">
-    <p>{data.venue} / {data.type}</p>
+    <p class="card-venue">{data.venue}</p>
     <h2><a href={getPublicationUrl(slug)}>{data.title}</a></h2>
-    <small>{getPublicationSummary(publication)}</small>
+    {data.status && <p class="card-status">{data.status}</p>}
+    <p class="card-summary">{data.plainLanguageSummary}</p>
     <div class="card-tags">{data.tags.slice(0, 3).map((tag) => <span>{tag}</span>)}</div>
-    <div class="card-actions"><a href={getPublicationUrl(slug)}>{hasVisualStory ? '4 min visual story →' : 'Read summary →'}</a>{primaryLink && <a href={primaryLink.href} target="_blank" rel="noopener noreferrer">{primaryLink.label} ↗</a>}</div>
+    <div class="card-actions">
+      <a href={getPublicationUrl(slug)}>{hasStory ? '1 min read →' : 'Details →'}</a>
+      {primaryLink && <a href={primaryLink.href} target="_blank" rel="noopener noreferrer">{primaryLink.label} ↗</a>}
+    </div>
   </div>
 </article>
 
 <style>
-  .publication-card { height: 100%; border: 1px solid var(--line); background: var(--surface); transition: border-color .3s ease,transform .3s ease; }.publication-card:hover { border-color: var(--line-bright); transform: translateY(-3px); }
-  .publication-visual { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; background: #0b1625; }.publication-visual::after { position: absolute; inset: 0; content: ''; background: linear-gradient(135deg,transparent,rgba(50,199,255,.1)); }.publication-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.75); transition: transform .6s ease; }.publication-visual.is-research-figure { background: #eef3f5; }.publication-visual.is-research-figure img { object-fit: contain; padding: .55rem; filter: saturate(.9); }.publication-card:hover img { transform: scale(1.025); }.publication-visual > b { position: absolute; z-index: 2; right: .8rem; top: .7rem; color: var(--cyan); font: .55rem ui-monospace,monospace; }.publication-visual > div { display: grid; height: 100%; place-content: center; gap: 1rem; padding: 2rem; }.publication-visual > div span { color: var(--cyan); font: .55rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }.publication-visual > div strong { max-width: 17rem; font: 500 1.4rem Outfit,sans-serif; }.publication-visual > div i { position: absolute; right: 1rem; bottom: .5rem; color: rgba(124,245,204,.2); font-size: 4rem; font-style: normal; }.story-badge { position: absolute; z-index: 3; left: .7rem; bottom: .7rem; border: 1px solid rgba(255,255,255,.25); background: rgba(5,8,16,.88); padding: .42rem .55rem; color: var(--mint); font: 600 .48rem ui-monospace,monospace; letter-spacing: .08em; text-transform: uppercase; }
-  .publication-card-body { padding: 1.3rem; }.publication-card-body > p { color: var(--cyan); font: .54rem ui-monospace,monospace; letter-spacing: .08em; text-transform: uppercase; }.publication-card h2 { margin-top: .75rem; font-size: 1.2rem; font-weight: 500; line-height: 1.25; }.publication-card h2 a:hover { color: var(--cyan); }.publication-card-body > small { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; margin-top: .9rem; color: var(--muted); font-size: .72rem; line-height: 1.65; }.card-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.2rem; }.card-tags span { color: #788da7; font: .5rem ui-monospace,monospace; text-transform: uppercase; }.card-actions { display: flex; gap: 1rem; margin-top: 1.3rem; border-top: 1px solid var(--line); padding-top: .9rem; }.card-actions a { color: #cbd7e5; font-size: .65rem; font-weight: 600; }.card-actions a:hover { color: var(--cyan); }
+  .publication-card { display: grid; grid-template-rows: auto 1fr; height: 100%; border: 1px solid var(--line); background: var(--surface); transition: border-color .3s ease, transform .3s ease; }
+  .publication-card:hover { border-color: var(--line-bright); transform: translateY(-2px); }
+
+  .publication-visual { display: flex; height: 10.5rem; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--line); background: #eef3f5; padding: .6rem; }
+  .publication-visual img { max-width: 100%; max-height: 9.3rem; width: auto; height: auto; }
+
+  .publication-plate { display: grid; align-content: center; gap: .5rem; height: 10.5rem; border-bottom: 1px solid var(--line); padding: 1.4rem; background: linear-gradient(135deg,rgba(50,199,255,.07),transparent 60%),var(--surface-2); }
+  .publication-plate span { color: var(--cyan); font: 600 .5rem ui-monospace,monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .publication-plate strong { font: 600 2.4rem/1 Outfit,sans-serif; letter-spacing: -.04em; }
+  .publication-plate small { color: #8ba0b8; font: .55rem ui-monospace,monospace; letter-spacing: .07em; text-transform: uppercase; }
+
+  .publication-card-body { display: grid; align-content: start; padding: 1.2rem 1.25rem 1.4rem; }
+  .card-venue { color: var(--cyan); font: .53rem ui-monospace,monospace; letter-spacing: .07em; line-height: 1.5; }
+  .publication-card h2 { margin-top: .7rem; font-size: 1.02rem; font-weight: 500; line-height: 1.3; }
+  .publication-card h2 a:hover { color: var(--cyan); }
+  .card-status { margin-top: .5rem; color: #8ba0b8; font: .52rem ui-monospace,monospace; letter-spacing: .06em; text-transform: uppercase; }
+  .card-summary { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; margin-top: .85rem; color: var(--muted); font-size: .74rem; line-height: 1.66; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: .4rem .7rem; margin-top: 1.1rem; }
+  .card-tags span { color: #8ba0b8; font: .5rem ui-monospace,monospace; text-transform: uppercase; }
+  .card-actions { display: flex; gap: 1.1rem; margin-top: 1.2rem; border-top: 1px solid var(--line); padding-top: .85rem; }
+  .card-actions a { color: #cbd7e5; font-size: .67rem; font-weight: 600; }
+  .card-actions a:hover { color: var(--cyan); }
 </style>

@@ -4,8 +4,8 @@ interface FigureData {
   alt: string;
   caption: string;
   label?: string;
-  sourceUrl?: string;
   sourceLabel?: string;
+  sourceUrl?: string;
   orientation?: 'landscape' | 'portrait' | 'square';
   width?: number;
   height?: number;
@@ -20,7 +20,7 @@ const { figure, hero = false } = Astro.props;
 const orientation = figure.orientation || 'landscape';
 ---
 
-<figure class:list={['research-figure', `is-${orientation}`, { 'is-hero': hero }] }>
+<figure class:list={['research-figure', `is-${orientation}`, { 'is-hero': hero }]}>
   {figure.label && <span class="figure-label">{figure.label}</span>}
   <button
     type="button"
@@ -29,7 +29,7 @@ const orientation = figure.orientation || 'landscape';
     data-figure-src={figure.src}
     data-figure-alt={figure.alt}
     data-figure-caption={figure.caption}
-    aria-label={`Open figure fullscreen: ${figure.alt}`}
+    aria-label={`Enlarge figure: ${figure.alt}`}
   >
     <img
       src={figure.src}
@@ -40,25 +40,28 @@ const orientation = figure.orientation || 'landscape';
       decoding="async"
       fetchpriority={hero ? 'high' : 'auto'}
     />
-    <span class="figure-expand" aria-hidden="true">EXPAND ↗</span>
+    <span class="figure-expand" aria-hidden="true">ENLARGE ↗</span>
   </button>
   <figcaption>
     <span>{figure.caption}</span>
-    {figure.sourceUrl && <a href={figure.sourceUrl} target="_blank" rel="noopener noreferrer">{figure.sourceLabel || 'Figure source'} ↗</a>}
+    {figure.sourceUrl
+      ? <a href={figure.sourceUrl} target="_blank" rel="noopener noreferrer">{figure.sourceLabel || 'Figure source'} ↗</a>
+      : figure.sourceLabel && <em>{figure.sourceLabel}</em>}
   </figcaption>
 </figure>
 
 <style>
-  .research-figure { position: relative; margin: 0; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 2rem 7rem rgba(1,6,14,.2); }
-  .research-figure.is-portrait { max-width: 55rem; margin-inline: auto; }
-  .figure-label { position: absolute; z-index: 3; left: .8rem; top: .8rem; border: 1px solid rgba(5,8,16,.2); background: rgba(242,247,255,.92); padding: .35rem .5rem; color: #10233b; font: 600 .5rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .research-figure { position: relative; margin: 0; border: 1px solid var(--line); background: var(--surface); }
+  .research-figure.is-portrait { max-width: 44rem; margin-inline: auto; }
+  .figure-label { position: absolute; z-index: 3; left: .8rem; top: .8rem; border: 1px solid rgba(5,8,16,.16); background: rgba(242,247,255,.9); padding: .32rem .48rem; color: #10233b; font: 600 .48rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
   .figure-open { position: relative; display: grid; width: 100%; overflow: hidden; background: white; cursor: zoom-in; }
-  .figure-open img { display: block; width: 100%; height: auto; max-height: 78rem; object-fit: contain; }
-  .is-hero .figure-open img { max-height: 82vh; }
-  .figure-expand { position: absolute; right: .75rem; bottom: .75rem; border: 1px solid rgba(255,255,255,.34); background: rgba(5,8,16,.84); padding: .42rem .55rem; color: white; font: .5rem ui-monospace,monospace; letter-spacing: .08em; opacity: 0; transform: translateY(.25rem); transition: opacity .2s ease,transform .2s ease; }
-  .figure-open:hover .figure-expand,.figure-open:focus-visible .figure-expand { opacity: 1; transform: none; }
-  figcaption { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding: .85rem 1rem; color: var(--muted); font-size: .66rem; line-height: 1.65; }
-  figcaption a { flex: 0 0 auto; color: var(--cyan); }
-  @media (max-width: 640px) { .figure-expand { opacity: 1; transform: none; } figcaption { display: grid; } }
+  .figure-open img { display: block; width: 100%; height: auto; max-height: 60rem; object-fit: contain; }
+  .is-hero .figure-open img { max-height: 68vh; }
+  .figure-expand { position: absolute; right: .75rem; bottom: .75rem; border: 1px solid rgba(255,255,255,.32); background: rgba(5,8,16,.82); padding: .38rem .5rem; color: white; font: .48rem ui-monospace,monospace; letter-spacing: .08em; opacity: 0; transform: translateY(.25rem); transition: opacity .2s ease, transform .2s ease; }
+  .figure-open:hover .figure-expand, .figure-open:focus-visible .figure-expand { opacity: 1; transform: none; }
+  figcaption { display: grid; gap: .45rem; border-top: 1px solid var(--line); padding: .8rem 1rem; color: var(--muted); font-size: .68rem; line-height: 1.62; }
+  figcaption a, figcaption em { color: var(--cyan); font-style: normal; font-size: .6rem; }
+  figcaption em { color: #7f94ad; }
+  @media (max-width: 640px) { .figure-expand { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .figure-expand { transition: none; } }
 </style>

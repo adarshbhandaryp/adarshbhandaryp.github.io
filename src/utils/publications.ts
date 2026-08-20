@@ -17,12 +17,7 @@ export function getPublicationUrl(slug: string) {
 }
 
 export function getPublicationSummary(publication: PublicationEntry) {
-  const candidates = [publication.data.plainLanguageSummary, publication.data.contribution, publication.data.relevance, publication.data.abstract];
-  return candidates.find(Boolean) || 'Publication details are available in the research archive.';
-}
-
-export function isVerifiedPublicationText(value?: string) {
-  return Boolean(value);
+  return publication.data.plainLanguageSummary;
 }
 
 export function externalPublicationLinks(publication: PublicationEntry) {
@@ -30,9 +25,9 @@ export function externalPublicationLinks(publication: PublicationEntry) {
 
   return [
     links.paper && { label: 'Paper', href: links.paper },
-    links.pdf && { label: 'PDF', href: links.pdf },
     links.doi && { label: 'DOI', href: links.doi.startsWith('http') ? links.doi : `https://doi.org/${links.doi}` },
     links.arxiv && { label: 'arXiv', href: links.arxiv.startsWith('http') ? links.arxiv : `https://arxiv.org/abs/${links.arxiv.replace(/^arXiv:/i, '')}` },
+    links.pdf && { label: 'PDF', href: links.pdf },
     links.code && { label: 'Code', href: links.code },
     links.project && { label: 'Project', href: links.project },
     links.slides && { label: 'Slides', href: links.slides },

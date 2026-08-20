@@ -1,54 +1,21 @@
 {
   "title": "AI SYSTEMS / APPLIED GENAI",
-  "statement": "Designed and prototyped AI applications using locally deployed LLMs, foundation-model APIs, retrieval pipelines, agent workflows, and scalable GPU inference infrastructure.",
-  "privacyNote": "Public system architecture only. Project and partner details remain confidential.",
-  "stages": [
-    {
-      "id": "runtime",
-      "label": "LOCAL MODELS",
-      "detail": "LLM · VLM runtimes"
-    },
-    {
-      "id": "retrieval",
-      "label": "RETRIEVAL",
-      "detail": "Grounded context"
-    },
-    {
-      "id": "agents",
-      "label": "AGENTS",
-      "detail": "Tools · workflows"
-    },
-    {
-      "id": "inference",
-      "label": "GPU INFERENCE",
-      "detail": "Cluster · serving"
-    },
-    {
-      "id": "application",
-      "label": "APPLICATION",
-      "detail": "Research software"
-    }
+  "statement": "I build the layer between a model and something people can actually use: local LLM and VLM runtimes, embeddings and retrieval, RAG, agent workflows, foundation-model APIs, and GPU inference on HPC infrastructure.",
+  "privacyNote": "Architecture and capabilities only — project and partner details stay confidential.",
+  "chain": [
+    { "label": "LOCAL MODELS", "detail": "Self-hosted LLM and VLM runtimes" },
+    { "label": "EMBEDDINGS / RETRIEVAL", "detail": "Vector search over domain corpora" },
+    { "label": "RAG", "detail": "Grounded, citable generation" },
+    { "label": "LLMs / VLMs", "detail": "Open-weight and API-backed models" },
+    { "label": "AGENTS / WORKFLOWS", "detail": "Tool use, multi-step orchestration" },
+    { "label": "MODEL APIs", "detail": "Foundation-model services" },
+    { "label": "GPU INFERENCE", "detail": "Batching, serving, throughput" },
+    { "label": "APPLICATIONS", "detail": "Research software people use" }
   ],
-  "evidence": [
-    {
-      "label": "RUNTIME",
-      "value": "Local + API-backed models"
-    },
-    {
-      "label": "CONTEXT",
-      "value": "Retrieval pipelines"
-    },
-    {
-      "label": "ORCHESTRATION",
-      "value": "Tool-using agents"
-    },
-    {
-      "label": "SCALE",
-      "value": "GPU clusters + SLURM"
-    },
-    {
-      "label": "DELIVERY",
-      "value": "AI applications"
-    }
+  "stack": [
+    { "group": "MODELING", "items": ["PyTorch", "Hugging Face", "Transformers", "PEFT / LoRA"] },
+    { "group": "GENAI", "items": ["Local LLM deployment", "RAG", "Vector retrieval", "Agentic workflows", "LLM evaluation"] },
+    { "group": "SERVING", "items": ["GPU inference", "Model serving", "SGLang", "Quantized runtimes"] },
+    { "group": "INFRASTRUCTURE", "items": ["SLURM", "HPC clusters", "Distributed training", "Containers", "Reproducible environments"] }
   ]
 }

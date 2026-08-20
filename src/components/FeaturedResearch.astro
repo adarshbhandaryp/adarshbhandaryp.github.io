@@ -1,45 +1,37 @@
 ---
-import { externalPublicationLinks, getPublications, getPublicationSummary, getPublicationUrl } from '../utils/publications';
+import { externalPublicationLinks, getPublications, getPublicationUrl } from '../utils/publications';
 import { sitePath } from '../utils/site';
 
 const all = await getPublications();
+
 const storySpecs = [
   {
     slug: 'attention-guided-erasing-transfer-learning-breast-abnormality',
-    label: 'MAMMOGRAPHY REPRESENTATION LEARNING',
-    number: 'A',
-    fallbackImage: sitePath('publication-figures/age-method-overview.jpg'),
+    label: 'SELF-SUPERVISED REPRESENTATION LEARNING',
   },
   {
     slug: 'mammoblip-mammography-report-generation',
-    label: 'VISION–LANGUAGE RESEARCH',
-    number: 'B',
+    label: 'VISION-LANGUAGE MODELS',
   },
   {
     slug: 'be-wise-breast-mri-explanation',
-    label: 'BREAST MRI / EXPLAINABILITY',
-    number: 'C',
+    label: 'WEAK SUPERVISION + EXPLAINABILITY',
   },
   {
-    slug: 'ai-performance-breast-lesions-mri-chinese-cohort',
-    label: 'CLINICAL AI VALIDATION',
-    number: 'D',
+    slug: 'dataset-informed-transfer-learning-framework',
+    label: 'ADAPTIVE TRAINING OBJECTIVES',
   },
 ];
 
-const stories = storySpecs.map((spec, index) => {
-  let publication = all.find((entry) => entry.slug === spec.slug);
+const stories = storySpecs.map((spec) => {
+  const publication = all.find((entry) => entry.slug === spec.slug);
   if (!publication) return null;
-  const links = externalPublicationLinks(publication);
   return {
     ...spec,
     publication,
-    links,
-    image: publication.data.story?.heroFigure.src || publication.data.image || spec.fallbackImage,
-    imageAlt: publication.data.story?.heroFigure.alt || publication.data.imageAlt || publication.data.title,
-    imageWidth: publication.data.story?.heroFigure.width,
-    imageHeight: publication.data.story?.heroFigure.height,
-    hasVisualStory: Boolean(publication.data.story),
+    links: externalPublicationLinks(publication),
+    figure: publication.data.story?.heroFigure ?? null,
+    summary: publication.data.plainLanguageSummary,
   };
 }).filter(Boolean);
 ---
@@ -47,71 +39,75 @@ const stories = storySpecs.map((spec, index) => {
 <section id="research" class="section-shell research-stories section-rule" aria-labelledby="research-title">
   <div class="shell">
     <div class="story-intro reveal">
-      <p class="section-kicker">03 / FEATURED RESEARCH</p>
-      <h2 id="research-title" class="section-title">FLAGSHIP RESEARCH STORIES</h2>
-      <p class="section-copy">Selected systems and studies where representation learning meets the realities of medical data, radiology language, and clinical validation.</p>
+      <div>
+        <p class="section-kicker">03 / FEATURED RESEARCH</p>
+        <h2 id="research-title" class="section-title">FOUR PIECES OF WORK</h2>
+      </div>
+      <p class="section-copy">Chosen because they demonstrate different things: learning representations without labels, generating language from images, supervising a 3D model from one annotated slice, and letting a dataset shape its own training objective. The full record is in the archive.</p>
     </div>
 
     <div class="story-list">
       {stories.map((story, index) => story && (
-        <article class={`research-story reveal story-${index + 1}`}>
-          <div class:list={['story-visual', { 'is-research-figure': story.hasVisualStory }] }>
-            {story.image ? (
-              <img src={story.image} alt={story.imageAlt} width={story.imageWidth} height={story.imageHeight} loading="lazy" />
+        <article class="research-story reveal">
+          <div class="story-visual">
+            {story.figure ? (
+              <img
+                src={story.figure.src}
+                alt={story.figure.alt}
+                width={story.figure.width}
+                height={story.figure.height}
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
-              <div class="story-placeholder" aria-hidden="true"><span>∷</span><i></i><i></i><i></i></div>
+              <p class="story-textonly">{story.publication.data.tags.slice(0, 2).join(' · ')}</p>
             )}
-            <span class="story-number">{story.number}</span>
-            <div class="story-scan" aria-hidden="true"></div>
           </div>
           <div class="story-content">
-            <p class="mono-label">{story.label}</p>
-            <h3>{story.publication.data.title}</h3>
-            <p data-research-copy>{getPublicationSummary(story.publication)}</p>
-            <p data-recruiter-copy data-nosnippet>{story.publication.data.relevance}</p>
-            <div class="story-meta"><span>{story.publication.data.venue}</span><span>{story.publication.data.year}</span></div>
+            <p class="mono-label">{String(index + 1).padStart(2, '0')} / {story.label}</p>
+            <h3><a href={getPublicationUrl(story.publication.slug)}>{story.publication.data.title}</a></h3>
+            <p class="story-summary">{story.summary}</p>
+            <div class="story-meta">
+              <span>{story.publication.data.venue}</span>
+              <span>{story.publication.data.year}</span>
+              {story.publication.data.status && <span>{story.publication.data.status}</span>}
+            </div>
             <div class="story-links">
-              <a href={getPublicationUrl(story.publication.slug)} class="text-link">{story.hasVisualStory ? `${story.publication.data.story?.readTime} visual research brief` : 'Explore project'}</a>
+              <a href={getPublicationUrl(story.publication.slug)} class="text-link">1 min read</a>
               {story.links.slice(0, 2).map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer" class="text-link">{link.label}</a>)}
             </div>
           </div>
         </article>
       ))}
     </div>
+
+    <a href={sitePath('publications/')} class="btn-secondary archive-link">Full publication archive <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
 <style>
-  .research-stories { background: radial-gradient(circle at 92% 14%,rgba(36,124,255,.13),transparent 29rem),var(--ink); }
-  .story-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 3rem; }
-  .story-intro .section-kicker { grid-column: 1/-1; }
-  .story-list { display: grid; gap: clamp(5rem,10vw,10rem); margin-top: clamp(5rem,10vw,9rem); }
-  .research-story { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(19rem,.85fr); align-items: center; gap: clamp(2rem,7vw,7rem); }
-  .research-story:nth-child(even) .story-visual { grid-column: 2; grid-row: 1; }
-  .research-story:nth-child(even) .story-content { grid-column: 1; grid-row: 1; }
-  .story-visual { position: relative; aspect-ratio: 16/10; overflow: hidden; clip-path: polygon(0 0,96% 0,100% 8%,100% 100%,4% 100%,0 92%); background: var(--surface); }
-  .story-visual::after { position: absolute; inset: 0; content: ''; border: 1px solid var(--line); background: linear-gradient(130deg,transparent 55%,rgba(50,199,255,.11)); }
-  .story-visual img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.04); transition: transform 1s ease,filter .8s ease; }
-  .story-visual.is-research-figure { background: #eef3f5; }.story-visual.is-research-figure img { object-fit: contain; padding: .8rem; filter: saturate(.9); }
-  .research-story:hover img { transform: scale(1.025); filter: saturate(.95); }
-  .story-number { position: absolute; z-index: 2; right: 1rem; top: .75rem; color: var(--cyan); font-family: ui-monospace,monospace; font-size: .65rem; }
-  .story-scan { position: absolute; z-index: 2; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg,transparent,var(--mint),transparent); opacity: .6; animation: story-scan 8s ease-in-out infinite; }
-  .story-placeholder { display: grid; height: 100%; place-items: center; background: radial-gradient(circle,rgba(36,124,255,.22),transparent 40%); }
-  .story-placeholder span { color: var(--mint); font-size: 5rem; }.story-placeholder i { position: absolute; width: 45%; height: 1px; background: var(--line); transform: rotate(25deg); }
-  .story-content h3 { margin-top: 1.2rem; font-size: clamp(2rem,4vw,4.5rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
-  .story-content > p:not(.mono-label) { margin-top: 1.5rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
-  [data-recruiter-copy] { display: none; }
-  :global(body[data-mode='recruiter']) [data-research-copy] { display: none; }
-  :global(body[data-mode='recruiter']) [data-recruiter-copy] { display: block; }
-  .story-meta { display: flex; gap: 1rem; margin-top: 1.6rem; color: #70849c; font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
-  .story-meta span + span::before { content: '/'; margin-right: 1rem; color: #3a4a5e; }
-  .story-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
-  :global(body[data-mode='recruiter']) .research-story:nth-child(n+3) { display: none; }
-  @keyframes story-scan { 0%,15% { top: 0; } 65%,100% { top: 100%; } }
-  @media (max-width: 800px) {
-    .story-intro, .research-story { grid-template-columns: 1fr; }
-    .story-intro .section-kicker { grid-column: auto; }
-    .research-story:nth-child(even) .story-visual, .research-story:nth-child(even) .story-content { grid-column: 1; grid-row: auto; }
-    .story-content { padding-inline: .35rem; }
+  .research-stories { background: radial-gradient(circle at 92% 14%,rgba(36,124,255,.1),transparent 29rem),var(--ink); }
+  .story-intro { display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: 3rem; }
+  .story-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1px; margin-top: clamp(3.5rem,7vw,6rem); border: 1px solid var(--line); background: var(--line); }
+  .research-story { display: grid; grid-template-rows: auto 1fr; background: var(--surface); }
+  .story-visual { position: relative; display: flex; height: 15rem; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--line); background: #eef3f5; padding: .8rem; }
+  .story-visual img { max-width: 100%; max-height: 13.4rem; width: auto; height: auto; }
+  .story-textonly { color: #4a6076; font-family: ui-monospace,monospace; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; }
+  .story-content { padding: 1.4rem 1.5rem 1.6rem; }
+  .story-content .mono-label { font-size: .5rem; letter-spacing: .12em; }
+  .story-content h3 { margin-top: 1rem; font-size: clamp(1.15rem,1.9vw,1.55rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.24; }
+  .story-content h3 a:hover { color: var(--cyan); }
+  .story-summary { margin-top: 1rem; color: var(--muted); font-size: .78rem; line-height: 1.72; }
+  .story-meta { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin-top: 1.3rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .story-meta span + span::before { content: '·'; margin-right: 1rem; color: #8ba0b8; }
+  .story-links { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1.4rem; border-top: 1px solid var(--line); padding-top: 1.1rem; }
+  .story-links .text-link { font-size: .72rem; }
+  .archive-link { margin-top: 2.5rem; }
+  @media (max-width: 860px) {
+    .story-intro, .story-list { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .story-visual { height: 11.5rem; }
+    .story-visual img { max-height: 9.9rem; }
   }
 </style>

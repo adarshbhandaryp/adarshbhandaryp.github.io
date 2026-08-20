@@ -1,25 +1,29 @@
 ---
-title: "LA-CLIP: Lesion-Aware Vision-Language Pretraining for Mammography via ROI-Guided Contrastive Learning"
+title: "Lesion-Aware AI for Mammography: Multi-Dataset Pretraining with ROI-Guided Contrastive Learning and Clinical Image Retrieval"
 authors:
-  - "Bhandary Panambur A"
-  - "Nguyen T-T"
-  - "Bayer S"
-  - "Maier A"
-venue: "European Congress of Radiology (ECR)"
+  - "Adarsh Bhandary Panambur"
+  - "Tri-Thien Nguyen"
+  - "Siming Bayer"
+  - "Andreas Maier"
+venue: "European Congress of Radiology (ECR) 2026, scientific exhibit C-15780"
 year: 2026
 type: "conference"
 status: "Accepted"
-abstract: "LA-CLIP studies lesion-aware mammography vision-language pretraining through region-of-interest-guided contrastive learning."
-plainLanguageSummary: "LA-CLIP studies lesion-aware mammography vision-language pretraining through ROI-guided contrastive representation learning."
-contribution: "Introduces lesion-region guidance into mammography image-text pretraining so localized pathology contributes directly to representation learning."
-method: "Uses region-of-interest guidance within a contrastive image-text learning objective for mammography pretraining."
+peerReviewed: true
+abstract: "Contrastive image-text pretraining for mammography usually aligns a whole image with a whole report, which lets a model succeed on global cues while ignoring the lesion. This work introduces region-of-interest guidance into multi-dataset contrastive pretraining so that localized pathology contributes directly to the learned representation, and evaluates the resulting embeddings for clinical image retrieval."
+plainLanguageSummary: "Global contrastive pretraining lets a mammography model align on breast density or view rather than on the lesion, because those cues are enough to match an image to its report. This work adds region-of-interest guidance to multi-dataset contrastive pretraining, so localized pathology has to contribute to the representation, and then tests the embeddings on clinical image retrieval — finding visually and diagnostically similar prior cases. Accepted as a scientific exhibit at ECR 2026; quantitative results are not yet publicly available. Note that this entry previously appeared on this site under the working title 'LA-CLIP', which is not the accepted title."
+contribution: "Brings lesion-region guidance into mammography image-text pretraining across multiple datasets, and evaluates the representation by retrieval rather than only by downstream classification."
+method: "Region-of-interest guidance is incorporated into a contrastive image-text pretraining objective across multiple mammography datasets, and the resulting embeddings are evaluated for clinical image retrieval."
 keyResults:
-  - "Accepted for ECR 2026."
-relevance: "Lesion-aware pretraining can encourage mammography vision-language models to encode localized pathology rather than relying on global image shortcuts."
-links: {}
+  - "Accepted as an ECR 2026 scientific exhibit (DOI 10.26044/ecr2026/C-15780). Quantitative results are not yet publicly available."
+relevance: "Retrieval is a use case radiologists already have — find me a similar prior case — and it is a harder test of a representation than a single classification head."
+limitation: "Conference exhibit; no peer-reviewed full paper and no public numbers yet."
+links:
+  doi: "10.26044/ecr2026/C-15780"
 tags:
-  - "Mammography"
-  - "Vision-Language Pretraining"
-  - "Contrastive Learning"
+  - "Vision-Language Models"
+  - "Foundation Models"
+  - "Medical Imaging"
 featured: false
+citation: "A. Bhandary Panambur, T.-T. Nguyen, S. Bayer, A. Maier. Lesion-Aware AI for Mammography: Multi-Dataset Pretraining with ROI-Guided Contrastive Learning and Clinical Image Retrieval. ECR 2026, C-15780. doi:10.26044/ecr2026/C-15780"
 ---

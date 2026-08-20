@@ -8,18 +8,22 @@ import { getPublications } from '../../utils/publications';
 const publications = await getPublications();
 const years = [...new Set(publications.map((publication) => publication.data.year))].sort((a, b) => b - a);
 const types = [...new Set(publications.map((publication) => publication.data.type))].sort();
-const tags = [...new Set(publications.flatMap((publication) => publication.data.tags))].sort();
+const topics = [...new Set(publications.flatMap((publication) => publication.data.tags))].sort();
+const withFigures = publications.filter((publication) => publication.data.story?.heroFigure).length;
 ---
 
-<BaseLayout title="Publications | Adarsh Bhandary Panambur" description="Research archive spanning medical imaging, mammography, breast MRI, self-supervised learning, vision-language models, clinical validation, and patents.">
+<BaseLayout
+  title="Publications | Adarsh Bhandary Panambur"
+  description="Full publication record: peer-reviewed papers, preprints, workshop papers, clinical evaluation studies and a patent application across mammography, breast MRI, self-supervised learning and vision-language models."
+>
   <Nav />
   <main id="main-content">
     <header class="archive-hero">
-      <div class="archive-grid grid-field" aria-hidden="true"></div>
+      <div class="archive-bg grid-field" aria-hidden="true"></div>
       <div class="shell archive-hero-inner">
-        <p class="section-kicker">RESEARCH OUTPUT / {publications.length} ENTRIES</p>
-        <h1>PUBLICATION<br/><span>ARCHIVE</span></h1>
-        <p>A structured record of papers, preprints, workshops, clinical validation studies, and medical-device research.</p>
+        <p class="section-kicker">{publications.length} ENTRIES · {withFigures} WITH FIGURES FROM THE PAPERS</p>
+        <h1>PUBLICATIONS</h1>
+        <p>Every entry below carries its verified venue, year and DOI or preprint link. Where a paper has a figure I made, that figure is on the card — nothing here is an illustration of research that does not exist.</p>
       </div>
     </header>
 
@@ -27,7 +31,7 @@ const tags = [...new Set(publications.flatMap((publication) => publication.data.
       <div class="shell">
         <form id="publication-filters" class="archive-filters" aria-label="Publication filters">
           <label><span>YEAR</span><select id="filter-year"><option value="all">All years</option>{years.map((year) => <option value={String(year)}>{year}</option>)}</select></label>
-          <label><span>TOPIC</span><select id="filter-tag"><option value="all">All topics</option>{tags.map((tag) => <option value={tag}>{tag}</option>)}</select></label>
+          <label><span>TOPIC</span><select id="filter-tag"><option value="all">All topics</option>{topics.map((tag) => <option value={tag}>{tag}</option>)}</select></label>
           <label><span>TYPE</span><select id="filter-type"><option value="all">All types</option>{types.map((type) => <option value={type}>{type}</option>)}</select></label>
           <p id="publication-count" aria-live="polite">SHOWING {publications.length} / {publications.length}</p>
         </form>
@@ -35,7 +39,7 @@ const tags = [...new Set(publications.flatMap((publication) => publication.data.
         <div id="publication-grid" class="archive-grid-list">
           {publications.map((publication) => (
             <div data-publication-card data-year={publication.data.year} data-type={publication.data.type} data-tags={publication.data.tags.join('|')}>
-              <PublicationCard publication={publication} compact />
+              <PublicationCard publication={publication} />
             </div>
           ))}
         </div>
@@ -56,8 +60,11 @@ const tags = [...new Set(publications.flatMap((publication) => publication.data.
   const applyFilters = () => {
     let visible = 0;
     cards.forEach((card) => {
-      const show = (yearFilter?.value === 'all' || card.dataset.year === yearFilter?.value) && (typeFilter?.value === 'all' || card.dataset.type === typeFilter?.value) && (tagFilter?.value === 'all' || (card.dataset.tags || '').split('|').includes(tagFilter?.value || ''));
-      card.toggleAttribute('hidden', !show); if (show) visible += 1;
+      const show = (yearFilter?.value === 'all' || card.dataset.year === yearFilter?.value)
+        && (typeFilter?.value === 'all' || card.dataset.type === typeFilter?.value)
+        && (tagFilter?.value === 'all' || (card.dataset.tags || '').split('|').includes(tagFilter?.value || ''));
+      card.toggleAttribute('hidden', !show);
+      if (show) visible += 1;
     });
     if (count) count.textContent = `SHOWING ${visible} / ${cards.length}`;
     empty?.toggleAttribute('hidden', visible > 0);
@@ -66,9 +73,19 @@ const tags = [...new Set(publications.flatMap((publication) => publication.data.
 </script>
 
 <style>
-  .archive-hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 10rem 0 6rem; background: radial-gradient(circle at 75% 30%,rgba(36,124,255,.3),transparent 31rem),var(--ink); }.archive-grid { position: absolute; inset: 0; opacity: .48; }.archive-hero-inner { position: relative; }.archive-hero h1 { margin-top: 2rem; font-size: clamp(4rem,11vw,10rem); font-weight: 600; letter-spacing: -.07em; line-height: .75; }.archive-hero h1 span { color: transparent; -webkit-text-stroke: 1px rgba(222,237,255,.55); }.archive-hero-inner > p:last-child { max-width: 42rem; margin-top: 3rem; color: var(--muted); font-size: 1rem; line-height: 1.75; }
-  .archive-section { padding-block: 4rem 8rem; background: var(--ink); }.archive-filters { position: sticky; z-index: 20; top: calc(4.6rem + var(--notice-height)); display: grid; grid-template-columns: repeat(3,1fr) auto; gap: 1rem; align-items: end; border: 1px solid var(--line); background: rgba(17,31,51,.95); padding: 1rem; backdrop-filter: blur(15px); }.archive-filters label { display: grid; gap: .45rem; }.archive-filters label span,.archive-filters > p { color: #8fa3bb; font: .52rem ui-monospace,monospace; letter-spacing: .1em; }.archive-filters select { width: 100%; border: 1px solid var(--line); border-radius: .2rem; background: var(--surface-2); color: white; padding: .65rem .7rem; font-size: .72rem; }.archive-filters > p { padding: .7rem 0; color: var(--cyan); }
-  .archive-grid-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2rem; }.archive-empty { margin-top: 3rem; border: 1px solid var(--line); padding: 2rem; color: var(--muted); text-align: center; }
-  @media (max-width: 920px) { .archive-grid-list { grid-template-columns: repeat(2,1fr); }.archive-filters { grid-template-columns: repeat(3,1fr); }.archive-filters > p { grid-column: 1/-1; } }
-  @media (max-width: 620px) { .archive-hero { padding-top: 8rem; }.archive-grid-list { grid-template-columns: 1fr; }.archive-filters { position: static; grid-template-columns: 1fr; }.archive-filters > p { grid-column: auto; } }
+  .archive-hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 9.5rem 0 5rem; background: radial-gradient(circle at 75% 30%,rgba(36,124,255,.22),transparent 31rem),var(--ink); }
+  .archive-bg { position: absolute; inset: 0; opacity: .4; }
+  .archive-hero-inner { position: relative; }
+  .archive-hero h1 { margin-top: 1.8rem; font-size: clamp(3.4rem,10vw,8.5rem); font-weight: 600; letter-spacing: -.07em; line-height: .82; }
+  .archive-hero-inner > p:last-child { max-width: 46rem; margin-top: 2.2rem; color: var(--muted); font-size: 1rem; line-height: 1.78; }
+  .archive-section { padding-block: 3.5rem 7rem; background: var(--ink); }
+  .archive-filters { position: sticky; z-index: 20; top: calc(4.6rem + var(--notice-height)); display: grid; grid-template-columns: repeat(3,1fr) auto; gap: 1rem; align-items: end; border: 1px solid var(--line); background: rgba(17,31,51,.95); padding: 1rem; backdrop-filter: blur(15px); }
+  .archive-filters label { display: grid; gap: .45rem; }
+  .archive-filters label span, .archive-filters > p { color: #8fa3bb; font: .52rem ui-monospace,monospace; letter-spacing: .1em; }
+  .archive-filters select { width: 100%; border: 1px solid var(--line); border-radius: .2rem; background: var(--surface-2); color: white; padding: .65rem .7rem; font-size: .72rem; }
+  .archive-filters > p { padding: .7rem 0; color: var(--cyan); }
+  .archive-grid-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+  .archive-empty { margin-top: 3rem; border: 1px solid var(--line); padding: 2rem; color: var(--muted); text-align: center; }
+  @media (max-width: 980px) { .archive-grid-list { grid-template-columns: repeat(2,minmax(0,1fr)); } .archive-filters { grid-template-columns: repeat(3,1fr); } .archive-filters > p { grid-column: 1/-1; } }
+  @media (max-width: 620px) { .archive-hero { padding-top: 8rem; } .archive-grid-list { grid-template-columns: 1fr; } .archive-filters { position: static; grid-template-columns: 1fr; } .archive-filters > p { grid-column: auto; } }
 </style>

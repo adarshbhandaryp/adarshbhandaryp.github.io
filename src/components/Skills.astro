@@ -1,0 +1,36 @@
+---
+import skills from '../data/skills.json';
+---
+
+<section id="skills" class="section-shell skills-section section-rule" aria-labelledby="skills-title">
+  <div class="shell">
+    <div class="skills-head reveal">
+      <div>
+        <p class="section-kicker">05 / SKILLS</p>
+        <h2 id="skills-title" class="section-title">WHAT I WORK WITH</h2>
+      </div>
+      <p class="section-copy">Grouped by what they are for, not sorted by how impressive they sound.</p>
+    </div>
+
+    <div class="skills-grid reveal">
+      {skills.map((group) => (
+        <article>
+          <h3>{group.category}</h3>
+          <ul>{group.items.map((item) => <li>{item}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section { background: var(--ink); }
+  .skills-head { display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: 3rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1px; margin-top: clamp(3rem,6vw,5rem); border: 1px solid var(--line); background: var(--line); }
+  .skills-grid article { background: var(--surface); padding: 1.4rem 1.5rem 1.7rem; }
+  .skills-grid h3 { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .56rem; font-weight: 600; letter-spacing: .12em; line-height: 1.6; }
+  .skills-grid ul { display: grid; gap: .5rem; margin-top: 1.3rem; }
+  .skills-grid li { color: #d2dded; font-size: .82rem; line-height: 1.45; }
+  @media (max-width: 900px) { .skills-head { grid-template-columns: 1fr; } .skills-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+  @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } }
+</style>

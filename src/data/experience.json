@@ -1,82 +1,83 @@
 [
   {
     "role": "Research Scientist",
-    "company": "National High Performance Computing Center (NHR@FAU), FAU",
+    "company": "NHR@FAU · Erlangen National High Performance Computing Center",
     "location": "Erlangen, Germany",
-    "dates": "June 2026 - Present",
-    "phase": "AI systems + HPC",
-    "recruiterSummary": "Builds locally deployed and API-backed AI applications across retrieval, agents, GPU inference, and research software.",
+    "dates": "June 2026 — Present",
+    "phase": "AI systems + applied GenAI",
+    "summary": "Builds AI solutions on locally deployed LLMs and VLMs, foundation-model APIs, retrieval, and GPU inference at cluster scale.",
     "description": [
-      "Design and prototype AI applications using locally deployed LLMs and VLMs, foundation-model APIs, and retrieval pipelines.",
-      "Build tool-using agent workflows and research software with open-source AI frameworks.",
-      "Engineer scalable training, serving, and inference workflows on GPU clusters and supercomputing infrastructure.",
-      "Develop, deploy, and optimize multimodal AI systems for practical research applications.",
-      "Collaborate with academic and industrial partners to translate AI research into practical solutions."
+      "Develop AI solutions built on locally deployed LLMs and VLMs, foundation-model APIs, embeddings and retrieval.",
+      "Build tool-using agent workflows and research software on open-source AI frameworks.",
+      "Engineer training, serving and inference workflows for GPU clusters and supercomputing infrastructure.",
+      "Take AI prototypes from idea to working system quickly, then harden the ones that prove useful.",
+      "Work with academic and industrial partners to translate AI research into practical solutions."
     ]
   },
   {
     "role": "PhD Researcher",
-    "company": "Pattern Recognition Lab, FAU",
+    "company": "Pattern Recognition Lab, FAU Erlangen-Nürnberg",
     "location": "Erlangen, Germany",
-    "dates": "May 2020 - Present",
-    "phase": "Foundation models",
-    "recruiterSummary": "Built a ~100,000-image research repository, multimodal foundation models, and reproducible SLURM pipelines.",
+    "dates": "May 2020 — Present",
+    "phase": "Medical AI research",
+    "summary": "Self-supervised and multimodal learning for mammography and breast MRI, from method design through to publication.",
     "description": [
-      "Developed self-supervised learning methods improving classification and lesion detection in mammography.",
-      "Built a multi-country mammography dataset repository of approximately 100,000 images for large-scale experimentation.",
-      "Designed and trained multimodal vision-language foundation models for breast imaging analysis.",
-      "Ranked 4th in the MICCAI ODELIA Challenge 2025 for breast MRI malignancy classification.",
-      "Designed reproducible MLOps pipelines using Docker and SLURM for large-scale deep learning."
+      "Developed self-supervised and transfer-learning methods for mammography classification, detection and localization.",
+      "Designed vision-language models for mammography report generation over a curated 81,076-image multi-institutional public dataset.",
+      "Built weakly supervised breast MRI models that localize lesion evidence from a single annotated slice per examination.",
+      "Studied explainability — attention maps, Grad-CAM, token-level grounding — as evidence for clinical review rather than as proof of correctness.",
+      "Published across IJCARS, Scientific Reports, MICCAI, SPIE Medical Imaging, IEEE NSS/MIC and BVM.",
+      "Ran reproducible large-scale experiments with Docker and SLURM on GPU clusters."
     ]
   },
   {
     "role": "Guest Researcher",
     "company": "West China Hospital, Sichuan University",
     "location": "Chengdu, China",
-    "dates": "July 2024 - September 2024",
+    "dates": "July 2024 — September 2024",
     "phase": "Clinical validation",
-    "recruiterSummary": "Validated a breast MRI AI prototype with radiologists on an external clinical cohort.",
+    "summary": "Retrospective evaluation of a breast MRI AI research prototype on an external clinical cohort, with radiologists.",
     "description": [
-      "Conducted clinical validation of a Siemens Healthineers breast MRI AI prototype.",
-      "Initiated research projects aimed at improving clinical screening workflows.",
-      "Collaborated with radiologists to streamline and improve medical image annotation quality."
+      "Evaluated a Siemens Healthineers breast MRI AI research prototype on a retrospective external cohort.",
+      "Worked with radiologists on lesion annotation quality and reading-workflow questions.",
+      "Reported the study as an ECR 2025 scientific exhibit (DOI 10.26044/ecr2025/C-21110)."
     ]
   },
   {
     "role": "Doctoral Researcher",
     "company": "Siemens Healthineers",
     "location": "Erlangen, Germany",
-    "dates": "May 2020 - February 2024",
-    "phase": "Medical AI",
-    "recruiterSummary": "Developed and validated mammography AI under international clinical and regulatory constraints.",
+    "dates": "May 2020 — February 2024",
+    "phase": "Mammography AI",
+    "summary": "Mammography AI development and retrospective clinical evaluation in international collaborations.",
     "description": [
-      "Performed clinical validation of mammography AI algorithms in international collaborations (Vietnam cohort).",
-      "Contributed to workflow optimization under regulatory and clinical constraints.",
-      "Developed deep learning methods for categorizing positioning artifacts in mammography."
+      "Contributed to retrospective evaluation of AI-assisted mammography reading in a Vietnamese screening cohort (ECR 2024, ECR 2025).",
+      "Developed deep-learning methods for categorizing mammography positioning artifacts.",
+      "Worked on imaging AI within regulatory and clinical-workflow constraints."
     ]
   },
   {
     "role": "Working Student and Master's Thesis",
     "company": "Siemens Healthineers",
     "location": "Erlangen, Germany",
-    "dates": "October 2017 - March 2020",
+    "dates": "October 2017 — March 2020",
     "phase": "Deep learning",
-    "recruiterSummary": "Prototyped clinical workflow software and deep-learning systems while contributing to medical-device IP.",
+    "summary": "Clinical-workflow prototyping, deep learning for CT lung nodules, and co-invented medical-device IP.",
     "description": [
-      "Developed MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
+      "Built MATLAB prototypes for compliance-based task prioritization in clinical workflows.",
       "Evaluated IoT technologies for healthcare workflow optimization.",
-      "Co-invented a secure method for unlocking medical devices."
+      "Co-inventor on a European patent application for unlocking a medical device (EP 3644550 A1)."
     ]
   },
   {
     "role": "Senior Engineer (Medical Devices)",
     "company": "Transcaal Engineers India Pvt. Ltd.",
     "location": "Bangalore, India",
-    "dates": "March 2015 - February 2016",
+    "dates": "March 2015 — February 2016",
     "phase": "Medical devices",
-    "recruiterSummary": "Led biomedical engineering delivery across five states while generating approximately 25% of annual company revenue.",
+    "summary": "Led biomedical engineering delivery and quality assurance services across five Indian states.",
     "description": [
-      "Generated approximately 25% annual company revenue through QA services across five Indian states.",
+      "Delivered medical-device QA services across five Indian states.",
       "Led and mentored a biomedical engineering team."
     ]
   },
@@ -84,9 +85,9 @@
     "role": "Calibration Engineer",
     "company": "Transcaal Engineers India Pvt. Ltd.",
     "location": "Bangalore, India",
-    "dates": "September 2014 - February 2015",
+    "dates": "September 2014 — February 2015",
     "phase": "Medical devices",
-    "recruiterSummary": "Delivered hospital equipment testing, preventive maintenance, and standards-based compliance work.",
+    "summary": "Hospital equipment testing, preventive maintenance and standards-based compliance work.",
     "description": [
       "Performed preventive maintenance and compliance testing of medical devices using Fluke biomedical equipment."
     ]

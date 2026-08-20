@@ -1,0 +1,50 @@
+[
+  {
+    "stage": "CLASSICAL / DEEP LEARNING",
+    "period": "2019 — 2022",
+    "summary": "CNN classifiers for calcification patches and unstained blood cells, with augmentation studies rather than architecture chasing.",
+    "anchor": "BVM 2022 · IJLH 2023"
+  },
+  {
+    "stage": "TRANSFER LEARNING",
+    "period": "2022 — 2023",
+    "summary": "Reusing abnormality classifiers as initialization for harder targets, including luminal subtype prediction from whole mammograms.",
+    "anchor": "arXiv:2301.09282"
+  },
+  {
+    "stage": "SELF-SUPERVISED LEARNING",
+    "period": "2023 — 2025",
+    "summary": "DINO pretraining on the target cohort, then using its attention as a task-aware augmentation policy instead of a segmentation label.",
+    "anchor": "BVM 2024 · IJCARS 2025"
+  },
+  {
+    "stage": "MULTIMODAL AI",
+    "period": "2024 — 2025",
+    "summary": "Contrast-enhanced mammography, neighbourhood-informed losses, and multi-view multi-modal detection that mirrors how radiologists read.",
+    "anchor": "SPIE MI 2024 · Deep-Breath MICCAI 2025"
+  },
+  {
+    "stage": "VISION-LANGUAGE MODELS",
+    "period": "2025",
+    "summary": "End-to-end mammography report generation from a frozen vision encoder and a frozen biomedical LLM joined by a small trained bridge.",
+    "anchor": "IEEE NSS/MIC/RTSD 2025"
+  },
+  {
+    "stage": "FOUNDATION MODELS",
+    "period": "2025 — 2026",
+    "summary": "Objectives that adapt to a dataset's own structure, and lesion-aware contrastive pretraining across multiple public cohorts.",
+    "anchor": "arXiv:2607.26043 · ECR 2026"
+  },
+  {
+    "stage": "LLMs / RAG / AGENTIC AI",
+    "period": "2026",
+    "summary": "Domain-adapted SigLIP encoders with 4B-parameter LLMs for grounded report generation; retrieval, agents and local models in applied work.",
+    "anchor": "NHR@FAU · manuscript in preparation"
+  },
+  {
+    "stage": "AI SYSTEMS / HPC",
+    "period": "2026 — present",
+    "summary": "GPU inference, model serving, and reproducible distributed workflows so the research above runs at cluster scale.",
+    "anchor": "NHR@FAU"
+  }
+]

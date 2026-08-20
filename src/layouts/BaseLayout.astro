@@ -12,7 +12,7 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} | Medical AI Researcher`,
+  title = `${profile.name} | AI Research Scientist`,
   description = profile.tagline,
   image = sitePath('profile_photo.jpg'),
   type = 'website',
@@ -25,13 +25,30 @@ const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: profile.name,
+  alternateName: 'Adarsh Panambur',
   url: new URL(sitePath(), Astro.site || Astro.url).toString(),
   image: new URL(sitePath('profile_photo.jpg'), Astro.site || Astro.url).toString(),
-  jobTitle: 'Research Scientist',
-  affiliation: { '@type': 'Organization', name: 'National High Performance Computing Center (NHR@FAU)' },
+  jobTitle: 'AI Research Scientist',
+  description: profile.title,
+  affiliation: [
+    { '@type': 'Organization', name: 'Erlangen National High Performance Computing Center (NHR@FAU)' },
+    { '@type': 'Organization', name: 'Pattern Recognition Lab, Friedrich-Alexander-Universitat Erlangen-Nurnberg' },
+  ],
   homeLocation: { '@type': 'Place', name: profile.location },
   sameAs: [profile.github, profile.linkedin],
-  knowsAbout: ['Artificial Intelligence', 'High-performance computing', 'Large language models', 'Vision-language models', 'Multimodal AI', 'Medical imaging', 'Clinical AI validation'],
+  knowsAbout: [
+    'Self-supervised learning',
+    'Vision-language models',
+    'Large language models',
+    'Multimodal AI',
+    'Foundation models',
+    'Medical imaging',
+    'Mammography',
+    'Breast MRI',
+    'Explainable AI',
+    'GPU inference',
+    'High-performance computing',
+  ],
 };
 const structuredData = jsonLd ? [personJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])] : [personJsonLd];
 ---

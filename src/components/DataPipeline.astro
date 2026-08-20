@@ -1,11 +1,11 @@
 ---
 const stages = [
-  { index: '01', label: 'IMAGE', detail: 'High-resolution medical imaging data', symbol: '▧' },
-  { index: '02', label: 'PATCHES', detail: 'Local tissue and lesion regions', symbol: '▦' },
-  { index: '03', label: 'REPRESENTATION', detail: 'Self-supervised visual features', symbol: '◫' },
-  { index: '04', label: 'EMBEDDINGS', detail: 'Aligned latent vectors', symbol: '∷' },
-  { index: '05', label: 'MULTIMODAL MODEL', detail: 'Image-text foundation model', symbol: '⌘' },
-  { index: '06', label: 'CLINICAL OUTPUT', detail: 'Reports, predictions, and evidence', symbol: '◎' },
+  { index: '01', label: 'DATA', detail: 'High-resolution mammography, breast MRI, CT and cell imaging — curated and standardized.' },
+  { index: '02', label: 'REPRESENTATION LEARNING', detail: 'Self-supervised pretraining on the target cohort rather than on ImageNet alone.' },
+  { index: '03', label: 'VISION / LANGUAGE', detail: 'Aligning image regions with radiology language so models can be described, not just scored.' },
+  { index: '04', label: 'REASONING', detail: 'Structured findings, BI-RADS categories, generated reports and grounded evidence.' },
+  { index: '05', label: 'AI SYSTEMS', detail: 'Distributed training, GPU inference and serving that make the above reproducible.' },
+  { index: '06', label: 'CLINICAL APPLICATION', detail: 'Retrospective evaluation with radiologists on real, external cohorts.' },
 ];
 ---
 
@@ -13,32 +13,23 @@ const stages = [
   <div class="shell">
     <div class="pipeline-heading reveal">
       <div>
-        <p class="section-kicker">02 / REPRESENTATION</p>
+        <p class="section-kicker">02 / THE THREAD</p>
         <h2 id="pipeline-title" class="section-title">FROM DATA TO INTELLIGENCE</h2>
       </div>
-      <p class="section-copy">The scientific thread running through my work: preserve the signal in complex medical images, learn useful representations, align them with language, and translate the model into clinical evidence.</p>
+      <p class="section-copy">One line runs through everything I have worked on: keep the information that matters in a difficult image, learn a representation from it, connect that representation to language and reasoning, then make it run and hold up on someone else's data.</p>
     </div>
 
-    <div class="pipeline-canvas reveal" data-pipeline>
+    <div class="pipeline-frame reveal" data-pipeline>
       <div class="pipeline-beam" aria-hidden="true"></div>
-      {stages.map((stage, index) => (
-        <article class="pipeline-stage" data-pipeline-stage data-index={index} tabindex="0">
-          <span class="stage-index">{stage.index}</span>
-          <div class={`stage-visual stage-visual-${index + 1}`} aria-hidden="true">
-            <i>{stage.symbol}</i>
-            {index === 1 && <span class="patch-grid">{Array.from({ length: 16 }).map(() => <b></b>)}</span>}
-            {index === 3 && <span class="embedding-bars">{Array.from({ length: 9 }).map((_, bar) => <b style={`--bar:${bar}`}></b>)}</span>}
-          </div>
-          <h3>{stage.label}</h3>
-          <p>{stage.detail}</p>
-        </article>
-      ))}
-    </div>
-
-    <div class="pipeline-legend mono-label reveal">
-      <span><i class="dot mint"></i>Medical imaging</span>
-      <span><i class="dot cyan"></i>Representation learning</span>
-      <span><i class="dot blue"></i>Clinical translation</span>
+      <ol class="pipeline-canvas">
+        {stages.map((stage, index) => (
+          <li class="pipeline-stage" data-pipeline-stage data-index={index}>
+            <span class="stage-index">{stage.index}</span>
+            <h3>{stage.label}</h3>
+            <p>{stage.detail}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
 </section>
@@ -65,42 +56,30 @@ const stages = [
 
 <style>
   .pipeline-section { overflow: hidden; background: linear-gradient(180deg,var(--ink),var(--surface) 55%,var(--ink)); }
-  .pipeline-heading { display: grid; grid-template-columns: 1.25fr .75fr; align-items: end; gap: 3rem; }
-  .pipeline-canvas { --pipeline-progress: 0%; position: relative; display: grid; grid-template-columns: repeat(6,1fr); margin-top: clamp(4rem,9vw,8rem); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .pipeline-canvas::after { position: absolute; z-index: 0; left: 0; top: -.5px; width: var(--pipeline-progress); height: 1px; content: ''; background: var(--cyan); box-shadow: 0 0 1.2rem var(--cyan); transition: width .8s cubic-bezier(.2,.8,.2,1); }
-  .pipeline-beam { position: absolute; z-index: 0; left: var(--pipeline-progress); top: -4rem; width: 1px; height: calc(100% + 8rem); opacity: .45; background: linear-gradient(transparent,var(--cyan),transparent); transition: left .8s cubic-bezier(.2,.8,.2,1); }
-  .pipeline-stage { position: relative; z-index: 1; min-width: 0; border-right: 1px solid var(--line); padding: 1rem clamp(.65rem,1.6vw,1.35rem) 1.5rem; opacity: .38; transition: opacity .5s ease, background .5s ease; }
+  .pipeline-heading { display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: 3rem; }
+  .pipeline-frame { --pipeline-progress: 0%; position: relative; margin-top: clamp(3.5rem,8vw,7rem); }
+  .pipeline-canvas { position: relative; display: grid; grid-template-columns: repeat(6,1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pipeline-canvas::after { position: absolute; z-index: 0; left: 0; top: -.5px; width: var(--pipeline-progress); height: 1px; content: ''; background: var(--cyan); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+  .pipeline-beam { position: absolute; z-index: 0; left: var(--pipeline-progress); top: -2rem; width: 1px; height: calc(100% + 4rem); opacity: .3; background: linear-gradient(transparent,var(--cyan),transparent); transition: left .8s cubic-bezier(.2,.8,.2,1); }
+  .pipeline-stage { position: relative; z-index: 1; min-width: 0; min-height: 15rem; border-right: 1px solid var(--line); padding: 1rem clamp(.7rem,1.4vw,1.2rem) 1.6rem; opacity: .72; transition: opacity .5s ease, background .5s ease; }
   .pipeline-stage:last-child { border-right: 0; }
-  .pipeline-stage.is-active { opacity: 1; background: linear-gradient(180deg,rgba(50,199,255,.05),transparent); }
-  .stage-index { color: #647992; font-family: ui-monospace,monospace; font-size: .55rem; }
-  .stage-visual { position: relative; display: grid; aspect-ratio: 1; place-items: center; margin-block: 2rem; border: 1px solid var(--line); background: radial-gradient(circle,rgba(36,124,255,.12),transparent 65%); }
-  .stage-visual::before, .stage-visual::after { position: absolute; content: ''; background: var(--line); }
-  .stage-visual::before { width: 120%; height: 1px; }
-  .stage-visual::after { width: 1px; height: 120%; }
-  .stage-visual > i { position: relative; z-index: 1; display: grid; width: 46%; aspect-ratio: 1; place-items: center; border: 1px solid rgba(124,245,204,.4); border-radius: 50%; color: var(--mint); font-size: clamp(1.2rem,3vw,2.3rem); font-style: normal; box-shadow: inset 0 0 1.5rem rgba(50,199,255,.08); }
-  .pipeline-stage h3 { min-height: 2.4rem; font-family: ui-monospace,monospace; font-size: clamp(.58rem,.8vw,.72rem); letter-spacing: .08em; }
-  .pipeline-stage p { margin-top: .65rem; color: var(--muted); font-size: clamp(.67rem,.85vw,.78rem); line-height: 1.55; }
-  .patch-grid { position: absolute; z-index: 2; display: grid; width: 44%; grid-template-columns: repeat(4,1fr); gap: 2px; }
-  .patch-grid b { aspect-ratio: 1; background: rgba(50,199,255,.18); }
-  .patch-grid b:nth-child(6), .patch-grid b:nth-child(7), .patch-grid b:nth-child(10) { background: rgba(124,245,204,.75); }
-  .embedding-bars { position: absolute; z-index: 2; display: flex; width: 56%; height: 45%; align-items: center; justify-content: center; gap: 3px; }
-  .embedding-bars b { width: 5%; height: calc(20% + (var(--bar) % 5) * 14%); background: linear-gradient(var(--cyan),var(--blue)); }
-  .pipeline-legend { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem; color: #70849e; }
-  .pipeline-legend span { display: flex; align-items: center; gap: .45rem; }
-  .dot { display: inline-block; width: .4rem; height: .4rem; border-radius: 50%; }
-  .mint { background: var(--mint); }.cyan { background: var(--cyan); }.blue { background: var(--blue); }
-  @media (max-width: 850px) {
+  .pipeline-stage.is-active { opacity: 1; background: linear-gradient(180deg,rgba(50,199,255,.045),transparent); }
+  .stage-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .pipeline-stage h3 { margin-top: 2.6rem; color: var(--mint); font-family: ui-monospace,monospace; font-size: clamp(.56rem,.76vw,.68rem); font-weight: 600; letter-spacing: .08em; line-height: 1.55; }
+  .pipeline-stage p { margin-top: .8rem; color: var(--muted); font-size: clamp(.67rem,.85vw,.76rem); line-height: 1.6; }
+  @media (max-width: 950px) {
     .pipeline-heading { grid-template-columns: 1fr; }
-    .pipeline-canvas { grid-template-columns: 1fr; border-left: 1px solid var(--line); }
-    .pipeline-canvas::after { top: 0; width: 1px; height: var(--pipeline-progress); }
+    .pipeline-canvas { grid-template-columns: repeat(2,1fr); }
+    .pipeline-stage { min-height: 12rem; }
+    .pipeline-stage:nth-child(2n) { border-right: 0; }
     .pipeline-beam { display: none; }
-    .pipeline-stage { display: grid; grid-template-columns: 2.8rem 7rem 1fr; align-items: center; gap: 1rem; border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem; }
-    .pipeline-stage:last-child { border-bottom: 0; }
-    .stage-visual { grid-row: span 2; grid-column: 2; width: 7rem; margin: 0; }
-    .pipeline-stage h3, .pipeline-stage p { grid-column: 3; min-height: 0; margin: 0; }
+    .pipeline-canvas::after { display: none; }
+    .pipeline-stage { opacity: 1; }
   }
-  @media (max-width: 520px) {
-    .pipeline-stage { grid-template-columns: 1.7rem 4.8rem 1fr; gap: .65rem; padding-inline: .55rem; }
-    .stage-visual { width: 4.8rem; }
+  @media (max-width: 560px) {
+    .pipeline-canvas { grid-template-columns: 1fr; }
+    .pipeline-stage { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); padding-block: 1.1rem 1.3rem; }
+    .pipeline-stage:last-child { border-bottom: 0; }
+    .pipeline-stage h3 { margin-top: .7rem; }
   }
 </style>

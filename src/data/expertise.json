@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ssl",
+    "title": "SELF-SUPERVISED LEARNING",
+    "detail": "Representation learning, DINO-style pretraining, transfer learning, foundation-model research."
+  },
+  {
+    "id": "vlm",
+    "title": "VISION-LANGUAGE MODELS",
+    "detail": "Medical image-text learning, CLIP-style models, multimodal reasoning, report generation."
+  },
+  {
+    "id": "llm",
+    "title": "LARGE LANGUAGE MODELS",
+    "detail": "Local LLMs, foundation-model APIs, RAG, LLM evaluation, applied GenAI systems."
+  },
+  {
+    "id": "medical",
+    "title": "MULTIMODAL MEDICAL AI",
+    "detail": "Mammography, breast MRI, detection, localization, explainability, clinical validation."
+  },
+  {
+    "id": "systems",
+    "title": "AI SYSTEMS + HPC",
+    "detail": "GPU inference, model serving, distributed and HPC workflows, research software."
+  }
+]

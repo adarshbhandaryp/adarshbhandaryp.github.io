@@ -1,17 +1,16 @@
 {
   "name": "Adarsh Bhandary Panambur",
   "shortName": "Adarsh",
-  "title": "Medical AI Researcher · Multimodal AI · Foundation Models · HPC",
-  "role": "Research Scientist · Medical AI Researcher · AI Systems Builder",
-  "tagline": "I build AI systems that move from research datasets to foundation models, GPU infrastructure, and clinical applications.",
+  "navName": "ADARSH BHANDARY P.",
+  "title": "AI Research Scientist · Medical AI · Multimodal AI · AI Systems",
+  "role": "Research Scientist · Medical AI · Multimodal AI · AI Systems",
+  "tagline": "I work across representation learning, multimodal and foundation models, LLM and VLM applications, and scalable GPU inference — and on getting those methods close enough to clinical imaging data to be tested properly.",
   "location": "Erlangen, Germany",
   "email": "adarshbhandaryp@gmail.com",
   "linkedin": "https://linkedin.com/in/adarshbhandaryp",
   "github": "https://github.com/adarshbhandaryp",
-  "proof": [
-    "FAU Pattern Recognition Lab",
-    "Siemens Healthineers",
-    "West China Hospital",
-    "4th Place MICCAI ODELIA Challenge 2025"
+  "affiliations": [
+    "NHR@FAU · Erlangen National High Performance Computing Center",
+    "Pattern Recognition Lab, FAU Erlangen-Nürnberg"
   ]
 }

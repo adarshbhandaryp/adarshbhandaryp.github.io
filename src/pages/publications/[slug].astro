@@ -5,10 +5,9 @@ import Footer from '../../components/Footer.astro';
 import PublicationCard from '../../components/PublicationCard.astro';
 import FigureLightbox from '../../components/research/FigureLightbox.astro';
 import MetricStrip from '../../components/research/MetricStrip.astro';
-import PaperTakeaway from '../../components/research/PaperTakeaway.astro';
 import ResearchFigure from '../../components/research/ResearchFigure.astro';
 import ResearchStorySection from '../../components/research/ResearchStorySection.astro';
-import { externalPublicationLinks, getPublications, getPublicationSummary, isVerifiedPublicationText } from '../../utils/publications';
+import { externalPublicationLinks, getPublications } from '../../utils/publications';
 import { sitePath } from '../../utils/site';
 
 export async function getStaticPaths() {
@@ -20,41 +19,66 @@ const { publication } = Astro.props;
 const { data } = publication;
 const story = data.story;
 const links = externalPublicationLinks(publication);
-const summary = getPublicationSummary(publication);
-const verifiedResults = data.keyResults.filter((result: string) => isVerifiedPublicationText(result));
 const citation = data.citation || `${data.authors.join(', ')}. (${data.year}). ${data.title}. ${data.venue}.`;
-const related = (await getPublications()).filter((item) => item.slug !== publication.slug && item.data.tags.some((tag) => data.tags.includes(tag))).slice(0, 3);
-const socialImage = story?.heroFigure.src || data.image;
-const articleJsonLd = {
-  '@context': 'https://schema.org', '@type': 'ScholarlyArticle',
-  headline: data.title, abstract: isVerifiedPublicationText(data.abstract) ? data.abstract : summary,
-  datePublished: String(data.year), author: data.authors.map((name: string) => ({ '@type': 'Person', name })),
-  isPartOf: { '@type': 'Periodical', name: data.venue }, keywords: data.tags.join(', '),
-  url: new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`, Astro.site || Astro.url).toString(),
-  image: socialImage ? new URL(socialImage, Astro.site || Astro.url).toString() : undefined,
+const related = (await getPublications())
+  .filter((item) => item.slug !== publication.slug && item.data.tags.some((tag) => data.tags.includes(tag)))
+  .slice(0, 3);
+const socialImage = story?.heroFigure.src;
+const doiUrl = data.links.doi
+  ? (data.links.doi.startsWith('http') ? data.links.doi : `https://doi.org/${data.links.doi}`)
+  : undefined;
+const canonical = new URL(
+  Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`,
+  Astro.site || Astro.url,
+).toString();
+
+const articleJsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: data.title,
+  name: data.title,
+  abstract: data.plainLanguageSummary,
+  datePublished: String(data.year),
+  inLanguage: 'en',
+  author: data.authors.map((name: string) => ({ '@type': 'Person', name })),
+  keywords: data.tags.join(', '),
+  url: canonical,
+  mainEntityOfPage: canonical,
+  creativeWorkStatus: data.peerReviewed ? 'Published' : 'Draft',
 };
+if (data.type === 'journal') articleJsonLd.isPartOf = { '@type': 'Periodical', name: data.venue };
+else articleJsonLd.publication = data.venue;
+if (doiUrl) { articleJsonLd.sameAs = doiUrl; articleJsonLd.identifier = doiUrl; }
+if (socialImage) articleJsonLd.image = new URL(socialImage, Astro.site || Astro.url).toString();
 ---
 
-<BaseLayout title={`${data.title} | Adarsh Bhandary Panambur`} description={story?.storyIntro || summary} image={socialImage} type="article" jsonLd={articleJsonLd}>
+<BaseLayout
+  title={`${data.title} | Adarsh Bhandary Panambur`}
+  description={data.plainLanguageSummary}
+  image={socialImage}
+  type="article"
+  jsonLd={articleJsonLd}
+>
   <Nav />
   <main id="main-content">
     {story ? (
       <article class="visual-story">
-        <header class="story-signal">
-          <div class="story-grid grid-field" aria-hidden="true"></div>
-          <div class="shell story-signal-inner">
-            <a href={sitePath('publications/')} class="back-link">← PUBLICATION ARCHIVE</a>
-            <div class="story-signal-top">
-              <p>VISUAL RESEARCH BRIEF · {story.readTime.toUpperCase()}</p>
-              <span>{data.type} / {data.year} / {data.status || 'Research output'}</span>
+        <header class="story-head">
+          <div class="story-bg grid-field" aria-hidden="true"></div>
+          <div class="shell story-head-inner">
+            <a href={sitePath('publications/')} class="back-link">← All publications</a>
+            <div class="story-head-top">
+              <p>{story.readTime.toUpperCase()}</p>
+              <span>{data.type} · {data.year}{data.status ? ` · ${data.status}` : ''}</span>
             </div>
             <p class="story-short-title">{story.shortTitle}</p>
             <h1>{story.researchQuestion}</h1>
-            <div class="story-paper-meta">
-              <p>{data.title}</p>
-              <p>{data.authors.join(' · ')}</p>
-              <p>{data.venue}</p>
-            </div>
+            {!data.peerReviewed && <p class="story-flag">Not peer reviewed — treat the numbers below as preliminary.</p>}
+            <dl class="story-paper-meta">
+              <div><dt>Paper</dt><dd>{data.title}</dd></div>
+              <div><dt>Authors</dt><dd>{data.authors.join(' · ')}</dd></div>
+              <div><dt>Venue</dt><dd>{data.venue}</dd></div>
+            </dl>
             <div class="story-tags">{data.tags.map((tag) => <span>{tag}</span>)}</div>
           </div>
         </header>
@@ -67,39 +91,57 @@ const articleJsonLd = {
         <div class="shell story-layout">
           <div class="story-main">
             <section class="story-intro" aria-labelledby="story-intro-title">
-              <p>00 / PAPER SIGNAL</p>
-              <h2 id="story-intro-title">THE RESEARCH IN ONE PASS</h2>
+              <p>IN ONE SENTENCE</p>
+              <h2 id="story-intro-title" class="sr-only">Summary</h2>
               <strong>{story.storyIntro}</strong>
             </section>
 
             {story.sections.map((section) => <ResearchStorySection section={section} />)}
 
-            {story.personalContribution && (
-              <section id="contribution" class="personal-contribution">
-                <p>07 / MY CONTRIBUTION</p><h2>WHAT I OWNED</h2><blockquote>{story.personalContribution}</blockquote>
+            {story.limitation && (
+              <section id="limitation" class="story-limitation" aria-labelledby="limitation-title">
+                <p>LIMITATION</p>
+                <h2 id="limitation-title">What this does not show</h2>
+                <blockquote>{story.limitation}</blockquote>
               </section>
             )}
 
-            <PaperTakeaway items={story.takeaway} />
+            {story.personalContribution && (
+              <section id="contribution" class="story-contribution" aria-labelledby="contribution-title">
+                <p>MY ROLE</p>
+                <h2 id="contribution-title">What I did</h2>
+                <blockquote>{story.personalContribution}</blockquote>
+              </section>
+            )}
 
             <section class="story-actions" aria-labelledby="story-actions-title">
-              <p>FOLLOW THE EVIDENCE</p><h2 id="story-actions-title">READ / VERIFY / CITE</h2>
-              <div>{links.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}<button type="button" data-copy-citation data-citation={citation}>CITE ⧉</button></div>
+              <p>READ IT YOURSELF</p>
+              <h2 id="story-actions-title">Paper · DOI · Code · Citation</h2>
+              <div>
+                {links.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}
+                <button type="button" data-copy-citation data-citation={citation}>Copy citation ⧉</button>
+              </div>
               <span id="citation-status" aria-live="polite"></span>
             </section>
 
             <details class="paper-reference">
-              <summary>ABSTRACT + CITATION</summary>
-              <div><h2>Abstract</h2><p>{data.abstract}</p><h2>Citation</h2><p>{citation}</p>{isVerifiedPublicationText(data.bibtex) && <pre><code>{data.bibtex}</code></pre>}</div>
+              <summary>View original abstract + citation</summary>
+              <div>
+                <h3>Abstract</h3>
+                <p>{data.abstract}</p>
+                <h3>Citation</h3>
+                <p class="citation-line">{citation}</p>
+                {data.bibtex && <pre><code>{data.bibtex}</code></pre>}
+              </div>
             </details>
           </div>
 
-          <aside class="story-index" aria-label="Visual brief sections">
+          <aside class="story-index" aria-label="On this page">
             <p>{story.readTime.toUpperCase()}</p>
-            <a href="#main-content">Paper signal</a>
+            <a href="#main-content">Overview</a>
             {story.sections.map((section) => <a href={`#${section.id}`}>{section.label.replace(/^\d+\s*\/\s*/, '')}</a>)}
-            {story.personalContribution && <a href="#contribution">My contribution</a>}
-            <a href="#summary">30-second summary</a>
+            {story.limitation && <a href="#limitation">Limitation</a>}
+            {story.personalContribution && <a href="#contribution">My role</a>}
           </aside>
         </div>
         <FigureLightbox />
@@ -107,33 +149,66 @@ const articleJsonLd = {
     ) : (
       <article>
         <header class="paper-hero">
-          <div class="paper-grid grid-field" aria-hidden="true"></div>
+          <div class="story-bg grid-field" aria-hidden="true"></div>
           <div class="shell paper-header-inner">
-            <a href={sitePath('publications/')} class="back-link">← PUBLICATION ARCHIVE</a>
+            <a href={sitePath('publications/')} class="back-link">← All publications</a>
             <div class="paper-header-grid">
-              <div><p class="section-kicker">{data.type} / {data.year} / {data.status || 'Research output'}</p><h1>{data.title}</h1><p class="paper-authors">{data.authors.join(' · ')}</p></div>
-              <aside><span>VENUE</span><strong>{data.venue}</strong><span>TOPICS</span><p>{data.tags.join(' / ')}</p></aside>
+              <div>
+                <p class="section-kicker">{data.type} · {data.year}{data.status ? ` · ${data.status}` : ''}</p>
+                <h1>{data.title}</h1>
+                <p class="paper-authors">{data.authors.join(' · ')}</p>
+                {!data.peerReviewed && <p class="story-flag">Not peer reviewed.</p>}
+              </div>
+              <aside>
+                <span>Venue</span><strong>{data.venue}</strong>
+                <span>Topics</span><p>{data.tags.join(' · ')}</p>
+              </aside>
             </div>
-            {links.length > 0 && <div class="paper-links">{links.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>}
+            {links.length > 0 && (
+              <div class="paper-links">{links.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>
+            )}
           </div>
         </header>
+
         <div class="shell paper-layout">
           <div class="paper-content">
-            {data.image && <figure class="paper-figure"><img src={data.image} alt={data.imageAlt || data.title} /><figcaption>{data.figureCaption}{data.sourceUrl && <> <a href={data.sourceUrl} target="_blank" rel="noopener noreferrer">{data.sourceLabel || 'Source'} ↗</a></>}</figcaption></figure>}
-            <section><span>00 / OVERVIEW</span><h2>Scientific summary</h2><p>{summary}</p></section>
-            {isVerifiedPublicationText(data.abstract) && <section><span>01 / ABSTRACT</span><h2>Abstract</h2><p>{data.abstract}</p></section>}
-            <section><span>02 / RELEVANCE</span><h2>Why it matters</h2><p>{data.relevance}</p></section>
-            {isVerifiedPublicationText(data.contribution) && <section><span>03 / CONTRIBUTION</span><h2>Contribution</h2><p>{data.contribution}</p></section>}
-            {isVerifiedPublicationText(data.method) && <section><span>04 / METHOD</span><h2>Method overview</h2><p>{data.method}</p></section>}
-            {verifiedResults.length > 0 && <section><span>05 / FINDINGS</span><h2>Key findings</h2><ul>{verifiedResults.map((result: string) => <li>{result}</li>)}</ul></section>}
-            <section><span>06 / REFERENCE</span><h2>Citation</h2><div class="citation-box"><p>{citation}</p>{isVerifiedPublicationText(data.bibtex) && <pre><code>{data.bibtex}</code></pre>}</div></section>
+            <section id="summary"><span>01 / SUMMARY</span><h2>What this paper does</h2><p>{data.plainLanguageSummary}</p></section>
+            <section id="method"><span>02 / METHOD</span><h2>How</h2><p>{data.method}</p></section>
+            {data.keyResults.length > 0 && (
+              <section id="findings"><span>03 / FINDINGS</span><h2>Reported results</h2><ul>{data.keyResults.map((result: string) => <li>{result}</li>)}</ul></section>
+            )}
+            <section id="relevance"><span>04 / WHY IT MATTERS</span><h2>Relevance</h2><p>{data.relevance}</p></section>
+            {data.limitation && (
+              <section id="limitation"><span>05 / LIMITATION</span><h2>What it does not show</h2><p>{data.limitation}</p></section>
+            )}
+            <section id="cite"><span>06 / REFERENCE</span><h2>Citation</h2>
+              <div class="citation-box"><p>{citation}</p>{data.bibtex && <pre><code>{data.bibtex}</code></pre>}</div>
+              <details class="paper-reference inline"><summary>View original abstract</summary><div><p>{data.abstract}</p></div></details>
+            </section>
           </div>
-          <aside class="paper-index"><p>ON THIS PAGE</p><a href="#main-content">Overview</a>{isVerifiedPublicationText(data.abstract) && <span>Abstract</span>}<span>Why it matters</span>{isVerifiedPublicationText(data.method) && <span>Method</span>}<span>Citation</span></aside>
+
+          <aside class="paper-index" aria-label="On this page">
+            <p>On this page</p>
+            <a href="#summary">Summary</a>
+            <a href="#method">Method</a>
+            {data.keyResults.length > 0 && <a href="#findings">Findings</a>}
+            <a href="#relevance">Why it matters</a>
+            {data.limitation && <a href="#limitation">Limitation</a>}
+            <a href="#cite">Citation</a>
+          </aside>
         </div>
       </article>
     )}
 
-    {related.length > 0 && <section class="related-papers"><div class="shell"><p class="section-kicker">CONNECTED RESEARCH</p><h2>Related publications</h2><div>{related.map((item) => <PublicationCard publication={item} compact />)}</div></div></section>}
+    {related.length > 0 && (
+      <section class="related-papers">
+        <div class="shell">
+          <p class="section-kicker">Related work</p>
+          <h2>Connected publications</h2>
+          <div>{related.map((item) => <PublicationCard publication={item} />)}</div>
+        </div>
+      </section>
+    )}
   </main>
   <Footer />
 </BaseLayout>
@@ -142,22 +217,108 @@ const articleJsonLd = {
   const citationButton = document.querySelector<HTMLButtonElement>('[data-copy-citation]');
   const citationStatus = document.getElementById('citation-status');
   citationButton?.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(citationButton.dataset.citation || ''); if (citationStatus) citationStatus.textContent = 'Citation copied.'; }
-    catch { if (citationStatus) citationStatus.textContent = 'Select the citation in the reference panel below.'; }
+    try {
+      await navigator.clipboard.writeText(citationButton.dataset.citation || '');
+      if (citationStatus) citationStatus.textContent = 'Citation copied.';
+    } catch {
+      if (citationStatus) citationStatus.textContent = 'Copy blocked — the citation is in the reference panel below.';
+    }
   });
 </script>
 
 <style>
-  .back-link { color: #8397af; font: .58rem ui-monospace,monospace; letter-spacing: .1em; }.back-link:hover { color: var(--cyan); }
-  .story-signal { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 8rem 0 4rem; background: radial-gradient(circle at 78% 30%,rgba(36,124,255,.34),transparent 31rem),radial-gradient(circle at 8% 78%,rgba(124,245,204,.09),transparent 24rem),var(--ink); }.story-grid { position: absolute; inset: 0; opacity: .46; }.story-signal-inner { position: relative; }.story-signal-top { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; color: var(--cyan); font: .56rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }.story-signal-top span { color: #8298b3; }.story-short-title { margin-top: 2.2rem; color: #c0cee0; font: 600 .72rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }.story-signal h1 { max-width: 18ch; margin-top: .8rem; font-size: clamp(3rem,7.5vw,8.5rem); font-weight: 500; letter-spacing: -.065em; line-height: .9; }.story-paper-meta { display: grid; grid-template-columns: 1.2fr 1fr .8fr; gap: 1rem; margin-top: 3.2rem; border-top: 1px solid var(--line); padding-top: 1.2rem; color: #9aadc4; font-size: .66rem; line-height: 1.55; }.story-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.3rem; }.story-tags span { border: 1px solid var(--line); padding: .38rem .5rem; color: #a6b8cc; font: .5rem ui-monospace,monospace; text-transform: uppercase; }
-  .story-stage { position: relative; z-index: 3; margin-top: 3rem; }.story-stage :global(.metric-strip) { margin-top: 1rem; }.story-layout { display: grid; grid-template-columns: minmax(0,1fr) 11rem; gap: clamp(3rem,7vw,7rem); }.story-main { min-width: 0; }.story-intro { padding-block: clamp(5rem,9vw,9rem); }.story-intro > p,.personal-contribution > p,.story-actions > p { color: var(--cyan); font: .55rem ui-monospace,monospace; letter-spacing: .12em; }.story-intro h2,.personal-contribution h2,.story-actions h2 { margin-top: .9rem; font-size: clamp(2rem,4vw,4rem); font-weight: 500; letter-spacing: -.045em; }.story-intro strong { display: block; max-width: 25ch; margin: 2.5rem 0 0 auto; color: #c8d6e6; font: 500 clamp(1.35rem,2.6vw,2.35rem)/1.35 Outfit,sans-serif; }
-  .story-index { position: sticky; top: calc(7rem + var(--notice-height)); align-self: start; display: grid; gap: .8rem; margin-top: 5rem; border-left: 1px solid var(--line); padding-left: 1rem; color: #8094ad; font: .52rem ui-monospace,monospace; text-transform: uppercase; }.story-index p { margin-bottom: .35rem; color: var(--mint); }.story-index a:hover { color: var(--cyan); }
-  .personal-contribution { scroll-margin-top: calc(6.5rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(5rem,8vw,8rem); }.personal-contribution blockquote { max-width: 50rem; margin: 2.5rem 0 0 auto; border-left: 2px solid var(--mint); padding-left: 1.5rem; color: #c4d2e1; font-size: 1.05rem; line-height: 1.8; }
-  .story-actions { border-top: 1px solid var(--line); padding-block: 4rem; }.story-actions > div { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }.story-actions a,.story-actions button { border: 1px solid var(--line-bright); padding: .7rem .85rem; color: #dce8f4; font: .57rem ui-monospace,monospace; text-transform: uppercase; }.story-actions a:hover,.story-actions button:hover { border-color: var(--cyan); color: var(--cyan); }.story-actions > span { display: block; min-height: 1.2rem; margin-top: .8rem; color: var(--mint); font-size: .62rem; }
-  .paper-reference { margin-bottom: 7rem; border: 1px solid var(--line); background: var(--surface); }.paper-reference summary { cursor: pointer; padding: 1rem 1.2rem; color: var(--cyan); font: .58rem ui-monospace,monospace; letter-spacing: .1em; }.paper-reference > div { border-top: 1px solid var(--line); padding: 1.5rem; }.paper-reference h2 { margin-top: 1.5rem; font-size: 1.4rem; font-weight: 500; }.paper-reference h2:first-child { margin-top: 0; }.paper-reference p { max-width: 58rem; margin-top: .7rem; color: var(--muted); font-size: .76rem; line-height: 1.75; }.paper-reference pre { margin-top: 1rem; overflow-x: auto; border-top: 1px solid var(--line); padding-top: 1rem; color: #8799af; font: .63rem/1.65 ui-monospace,monospace; }
-  .paper-hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 8rem 0 4.5rem; background: radial-gradient(circle at 75% 35%,rgba(36,124,255,.28),transparent 31rem),var(--ink); }.paper-grid { position: absolute; inset: 0; opacity: .44; }.paper-header-inner { position: relative; }.paper-header-grid { display: grid; grid-template-columns: minmax(0,1fr) 18rem; gap: 4rem; margin-top: 3rem; }.paper-header-grid h1 { max-width: 22ch; margin-top: 1rem; font-size: clamp(2.6rem,6vw,6rem); font-weight: 500; letter-spacing: -.055em; line-height: .98; }.paper-authors { max-width: 55rem; margin-top: 1.8rem; color: var(--muted); font-size: .78rem; line-height: 1.75; }.paper-header-grid > aside { align-self: end; display: grid; gap: .6rem; border-left: 1px solid var(--line-bright); padding-left: 1.4rem; }.paper-header-grid aside span { margin-top: .8rem; color: var(--cyan); font: .52rem ui-monospace,monospace; letter-spacing: .1em; }.paper-header-grid aside strong,.paper-header-grid aside p { color: #c4d1e0; font-size: .72rem; font-weight: 500; line-height: 1.55; }.paper-links { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2.5rem; }.paper-links a { border: 1px solid var(--line-bright); border-radius: .2rem; padding: .65rem .8rem; color: #d8e4f2; font: .58rem ui-monospace,monospace; text-transform: uppercase; }.paper-links a:hover { border-color: var(--cyan); color: var(--cyan); }
-  .paper-layout { display: grid; grid-template-columns: minmax(0,1fr) 13rem; gap: clamp(3rem,8vw,8rem); padding-block: 5rem 8rem; }.paper-content { min-width: 0; }.paper-figure { margin-bottom: 5rem; border: 1px solid var(--line); background: var(--surface); }.paper-figure img { max-height: 38rem; width: 100%; object-fit: contain; }.paper-figure figcaption { border-top: 1px solid var(--line); padding: .8rem 1rem; color: var(--muted); font-size: .66rem; line-height: 1.6; }.paper-figure a { color: var(--cyan); }.paper-content section { border-top: 1px solid var(--line); padding: 2.5rem 0 3.5rem; }.paper-content section > span { color: var(--cyan); font: .52rem ui-monospace,monospace; letter-spacing: .12em; }.paper-content h2 { margin-top: .8rem; font-size: clamp(1.8rem,3vw,3rem); font-weight: 500; letter-spacing: -.035em; }.paper-content section > p,.paper-content li { max-width: 55rem; margin-top: 1.2rem; color: #bdcadd; font-size: .9rem; line-height: 1.85; }.paper-content ul { margin-top: 1.2rem; }.paper-content li { position: relative; margin-top: .65rem; padding-left: 1.3rem; }.paper-content li::before { position: absolute; left: 0; content: '→'; color: var(--mint); }.citation-box { margin-top: 1.2rem; border: 1px solid var(--line); background: var(--surface); padding: 1.2rem; }.citation-box p { color: #c3d0df; font: .72rem/1.7 ui-monospace,monospace; }.citation-box pre { margin-top: 1rem; overflow-x: auto; border-top: 1px solid var(--line); padding-top: 1rem; color: var(--muted); font: .65rem/1.6 ui-monospace,monospace; }.paper-index { position: sticky; top: calc(7rem + var(--notice-height)); align-self: start; display: grid; gap: .8rem; border-left: 1px solid var(--line); padding-left: 1rem; color: #8094ad; font: .55rem ui-monospace,monospace; text-transform: uppercase; }.paper-index p { margin-bottom: .4rem; color: var(--cyan); }
-  .related-papers { border-top: 1px solid var(--line); padding-block: 5rem; background: var(--surface); }.related-papers h2 { margin-top: .8rem; font-size: 2.5rem; font-weight: 500; }.related-papers .shell > div { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2rem; }
-  @media (max-width: 850px) { .story-paper-meta { grid-template-columns: 1fr; }.story-layout,.paper-header-grid,.paper-layout { grid-template-columns: 1fr; }.story-index,.paper-header-grid > aside,.paper-index { display: none; }.related-papers .shell > div { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { .story-signal-top { display: grid; }.story-signal { padding-top: 7rem; }.story-stage { width: 100%; padding-inline: .7rem; } }
+  .back-link { color: #8397af; font: .6rem ui-monospace,monospace; letter-spacing: .06em; }
+  .back-link:hover { color: var(--cyan); }
+  .story-bg { position: absolute; inset: 0; opacity: .38; }
+  .story-flag { display: inline-block; margin-top: 1.4rem; border: 1px solid rgba(246,200,110,.35); padding: .45rem .6rem; color: var(--amber); font: .6rem ui-monospace,monospace; letter-spacing: .04em; }
+
+  .story-head { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 8rem 0 3rem; background: radial-gradient(circle at 78% 30%,rgba(36,124,255,.26),transparent 31rem),var(--ink); }
+  .story-head-inner { position: relative; }
+  .story-head-top { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2.2rem; color: var(--cyan); font: 600 .56rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .story-head-top span { color: #8298b3; font-weight: 400; }
+  .story-short-title { margin-top: 1.8rem; color: #c0cee0; font: 600 .68rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .story-head h1 { max-width: 22ch; margin-top: .8rem; font-size: clamp(2.4rem,5.6vw,5.5rem); font-weight: 500; letter-spacing: -.055em; line-height: .95; }
+  .story-paper-meta { display: grid; grid-template-columns: 1.3fr 1.4fr .9fr; gap: 1.5rem; margin-top: 2.6rem; border-top: 1px solid var(--line); padding-top: 1.2rem; }
+  .story-paper-meta dt { color: var(--cyan); font: 600 .5rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .story-paper-meta dd { margin: .5rem 0 0; color: #9aadc4; font-size: .7rem; line-height: 1.6; }
+  .story-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.3rem; }
+  .story-tags span { border: 1px solid var(--line); padding: .34rem .48rem; color: #a6b8cc; font: .5rem ui-monospace,monospace; text-transform: uppercase; }
+
+  .story-stage { position: relative; z-index: 3; margin-top: 2.5rem; }
+  .story-stage :global(.metric-strip) { margin-top: 1rem; }
+  .story-layout { display: grid; grid-template-columns: minmax(0,1fr) 10rem; gap: clamp(2.5rem,6vw,6rem); padding-bottom: 5rem; }
+  .story-main { min-width: 0; }
+  .story-intro { padding-block: clamp(2.8rem,5vw,4.5rem); }
+  .story-intro > p, .story-limitation > p, .story-contribution > p, .story-actions > p { color: var(--cyan); font: 600 .55rem ui-monospace,monospace; letter-spacing: .12em; }
+  .story-intro strong { display: block; max-width: 36ch; margin-top: 1.4rem; color: #d3e0ef; font: 500 clamp(1.2rem,2.2vw,1.85rem)/1.42 Outfit,sans-serif; }
+
+  .story-index { position: sticky; top: calc(6.5rem + var(--notice-height)); align-self: start; display: grid; gap: .75rem; margin-top: 3.5rem; border-left: 1px solid var(--line); padding-left: .9rem; color: #8094ad; font: .52rem ui-monospace,monospace; letter-spacing: .04em; text-transform: uppercase; }
+  .story-index p { margin-bottom: .3rem; color: var(--mint); }
+  .story-index a:hover { color: var(--cyan); }
+
+  .story-limitation, .story-contribution { scroll-margin-top: calc(6rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(2.6rem,5vw,4rem); }
+  .story-limitation h2, .story-contribution h2 { margin-top: .8rem; font-size: clamp(1.4rem,2.6vw,2.1rem); font-weight: 500; letter-spacing: -.03em; }
+  .story-limitation blockquote, .story-contribution blockquote { max-width: 46rem; margin: 1.4rem 0 0; border-left: 2px solid var(--amber); padding-left: 1.2rem; color: #c4d2e1; font-size: .95rem; line-height: 1.8; }
+  .story-contribution blockquote { border-left-color: var(--mint); }
+
+  .story-actions { border-top: 1px solid var(--line); padding-block: clamp(2.6rem,5vw,4rem); }
+  .story-actions h2 { margin-top: .8rem; font-size: clamp(1.4rem,2.6vw,2.1rem); font-weight: 500; letter-spacing: -.03em; }
+  .story-actions > div { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+  .story-actions a, .story-actions button { border: 1px solid var(--line-bright); padding: .65rem .8rem; color: #dce8f4; font: .58rem ui-monospace,monospace; letter-spacing: .04em; }
+  .story-actions a:hover, .story-actions button:hover { border-color: var(--cyan); color: var(--cyan); }
+  .story-actions > span { display: block; min-height: 1.2rem; margin-top: .8rem; color: var(--mint); font-size: .62rem; }
+
+  .paper-reference { margin-bottom: 3rem; border: 1px solid var(--line); background: var(--surface); }
+  .paper-reference summary { cursor: pointer; padding: .9rem 1.1rem; color: var(--cyan); font: .6rem ui-monospace,monospace; letter-spacing: .06em; }
+  .paper-reference > div { border-top: 1px solid var(--line); padding: 1.3rem; }
+  .paper-reference h3 { margin-top: 1.3rem; font-size: .95rem; font-weight: 600; }
+  .paper-reference h3:first-child { margin-top: 0; }
+  .paper-reference p { max-width: 56rem; margin-top: .6rem; color: var(--muted); font-size: .78rem; line-height: 1.78; }
+  .paper-reference .citation-line { font-family: ui-monospace,monospace; font-size: .7rem; }
+  .paper-reference pre { margin-top: 1rem; overflow-x: auto; border-top: 1px solid var(--line); padding-top: 1rem; color: #8799af; font: .63rem/1.65 ui-monospace,monospace; }
+  .paper-reference.inline { margin-top: 1.5rem; margin-bottom: 0; }
+
+  .paper-hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); padding: 8rem 0 4rem; background: radial-gradient(circle at 75% 35%,rgba(36,124,255,.22),transparent 31rem),var(--ink); }
+  .paper-header-inner { position: relative; }
+  .paper-header-grid { display: grid; grid-template-columns: minmax(0,1fr) 17rem; gap: 3.5rem; margin-top: 2.4rem; }
+  .paper-header-grid h1 { max-width: 24ch; margin-top: 1rem; font-size: clamp(2.1rem,4.6vw,4rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.04; }
+  .paper-authors { max-width: 52rem; margin-top: 1.5rem; color: var(--muted); font-size: .78rem; line-height: 1.75; }
+  .paper-header-grid > aside { align-self: end; display: grid; gap: .5rem; border-left: 1px solid var(--line-bright); padding-left: 1.3rem; }
+  .paper-header-grid aside span { margin-top: .7rem; color: var(--cyan); font: 600 .5rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .paper-header-grid aside strong, .paper-header-grid aside p { color: #c4d1e0; font-size: .74rem; font-weight: 500; line-height: 1.55; }
+  .paper-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2.2rem; }
+  .paper-links a { border: 1px solid var(--line-bright); border-radius: .2rem; padding: .6rem .75rem; color: #d8e4f2; font: .58rem ui-monospace,monospace; letter-spacing: .04em; }
+  .paper-links a:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .paper-layout { display: grid; grid-template-columns: minmax(0,1fr) 11rem; gap: clamp(2.5rem,6vw,6rem); padding-block: 3.5rem 6rem; }
+  .paper-content { min-width: 0; }
+  .paper-content section { border-top: 1px solid var(--line); padding: 1.8rem 0 2.2rem; scroll-margin-top: calc(6rem + var(--notice-height)); }
+  .paper-content section:first-child { border-top: 0; }
+  .paper-content section > span { color: var(--cyan); font: 600 .52rem ui-monospace,monospace; letter-spacing: .12em; }
+  .paper-content h2 { margin-top: .7rem; font-size: clamp(1.4rem,2.4vw,2.1rem); font-weight: 500; letter-spacing: -.03em; }
+  .paper-content section > p, .paper-content li { max-width: 52rem; margin-top: 1rem; color: #bdcadd; font-size: .9rem; line-height: 1.85; }
+  .paper-content ul { margin-top: 1rem; }
+  .paper-content li { position: relative; margin-top: .6rem; padding-left: 1.2rem; }
+  .paper-content li::before { position: absolute; left: 0; content: '→'; color: var(--mint); }
+  .citation-box { margin-top: 1rem; border: 1px solid var(--line); background: var(--surface); padding: 1.1rem; }
+  .citation-box p { color: #c3d0df; font: .72rem/1.7 ui-monospace,monospace; }
+  .citation-box pre { margin-top: 1rem; overflow-x: auto; border-top: 1px solid var(--line); padding-top: 1rem; color: var(--muted); font: .65rem/1.6 ui-monospace,monospace; }
+  .paper-index { position: sticky; top: calc(6.5rem + var(--notice-height)); align-self: start; display: grid; gap: .75rem; border-left: 1px solid var(--line); padding-left: .9rem; color: #8094ad; font: .55rem ui-monospace,monospace; text-transform: uppercase; }
+  .paper-index p { margin-bottom: .35rem; color: var(--cyan); }
+  .paper-index a:hover { color: var(--cyan); }
+
+  .related-papers { border-top: 1px solid var(--line); padding-block: 4rem; background: var(--surface); }
+  .related-papers h2 { margin-top: .7rem; font-size: 1.9rem; font-weight: 500; }
+  .related-papers .shell > div { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+
+  @media (max-width: 900px) {
+    .story-paper-meta { grid-template-columns: 1fr; gap: 1rem; }
+    .story-layout, .paper-header-grid, .paper-layout { grid-template-columns: 1fr; }
+    .story-index, .paper-header-grid > aside, .paper-index { display: none; }
+    .related-papers .shell > div { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .story-head-top { display: grid; }
+    .story-head { padding-top: 7rem; }
+  }
 </style>

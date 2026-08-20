@@ -1,48 +1,62 @@
 ---
-import { externalPublicationLinks, getPublications, getPublicationSummary, getPublicationUrl } from '../utils/publications';
+import { externalPublicationLinks, getPublications, getPublicationUrl } from '../utils/publications';
 import { sitePath } from '../utils/site';
 
-const publications = (await getPublications()).filter((publication) => publication.data.featured).slice(0, 5);
+const featured = (await getPublications()).filter((publication) => publication.data.featured).slice(0, 6);
+const total = (await getPublications()).length;
 ---
 
 <section id="publications" class="section-shell publications-preview section-rule" aria-labelledby="publications-title">
   <div class="shell">
     <div class="publications-head reveal">
-      <div><p class="section-kicker">07 / SELECTED PAPERS</p><h2 id="publications-title" class="section-title">PUBLICATIONS</h2></div>
-      <div><p class="section-copy">A focused selection from work in mammography, breast MRI, representation learning, and multimodal medical AI.</p><a href={sitePath('publications/')} class="btn-secondary">Full archive <span>↗</span></a></div>
+      <div>
+        <p class="section-kicker">07 / SELECTED PAPERS</p>
+        <h2 id="publications-title" class="section-title">PUBLICATIONS</h2>
+      </div>
+      <div>
+        <p class="section-copy">Peer-reviewed papers, preprints and clinical evaluations across mammography, breast MRI, representation learning and vision-language models. {total} entries in total, each with its DOI or preprint link.</p>
+        <a href={sitePath('publications/')} class="btn-secondary">Full archive <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
 
-    <div class="publication-ledger">
-      {publications.map((publication, index) => {
+    <ol class="publication-ledger">
+      {featured.map((publication, index) => {
         const links = externalPublicationLinks(publication);
         return (
-          <article class="publication-row reveal">
-            <span class="publication-index">0{index + 1}</span>
+          <li class="publication-row reveal">
+            <span class="publication-index">{String(index + 1).padStart(2, '0')}</span>
             <div class="publication-primary">
-              <p>{publication.data.venue} / {publication.data.year}</p>
+              <p>{publication.data.venue} · {publication.data.year}{publication.data.status ? ` · ${publication.data.status}` : ''}</p>
               <h3><a href={getPublicationUrl(publication.slug)}>{publication.data.title}</a></h3>
-              <small>{getPublicationSummary(publication)}</small>
+              <small>{publication.data.plainLanguageSummary}</small>
             </div>
             <div class="publication-tags">{publication.data.tags.slice(0, 3).map((tag) => <span>{tag}</span>)}</div>
             <div class="publication-actions">
-              <a href={getPublicationUrl(publication.slug)} aria-label={`Read ${publication.data.title}`}>SUMMARY</a>
+              <a href={getPublicationUrl(publication.slug)} aria-label={`Read the brief for ${publication.data.title}`}>1 MIN READ</a>
               {links[0] && <a href={links[0].href} target="_blank" rel="noopener noreferrer">{links[0].label.toUpperCase()} ↗</a>}
             </div>
-          </article>
+          </li>
         );
       })}
-    </div>
+    </ol>
   </div>
 </section>
 
 <style>
   .publications-preview { background: var(--ink); }
-  .publications-head { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; gap: 4rem; }.publications-head .btn-secondary { margin-top: 1.8rem; }
-  .publication-ledger { margin-top: 5rem; border-top: 1px solid var(--line); }
-  .publication-row { display: grid; grid-template-columns: 3rem minmax(0,1fr) 12rem 8rem; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--line); padding: 1.7rem 0; transition: background .25s ease; }.publication-row:hover { background: linear-gradient(90deg,rgba(50,199,255,.035),transparent); }
-  .publication-index { color: #536b84; font-family: ui-monospace,monospace; font-size: .56rem; }.publication-primary p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .09em; text-transform: uppercase; }.publication-primary h3 { max-width: 50rem; margin-top: .65rem; font-size: clamp(1.25rem,2.2vw,2rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.18; }.publication-primary h3 a:hover { color: var(--cyan); }.publication-primary small { display: block; max-width: 48rem; margin-top: .8rem; color: var(--muted); font-size: .72rem; line-height: 1.65; }
-  .publication-tags { display: grid; gap: .35rem; color: #71869f; font-family: ui-monospace,monospace; font-size: .52rem; text-transform: uppercase; }.publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .55rem; }.publication-actions a:hover { color: var(--cyan); }
-  :global(body[data-mode='recruiter']) .publication-row:nth-child(n+4) { display: none; }
-  @media (max-width: 850px) { .publications-head { grid-template-columns: 1fr; }.publication-row { grid-template-columns: 2rem 1fr auto; }.publication-tags { display: none; }.publication-actions { grid-column: 2/-1; grid-row: 2; display: flex; justify-self: start; } }
-  @media (max-width: 520px) { .publication-row { grid-template-columns: 1.5rem 1fr; gap: .8rem; }.publication-actions { grid-column: 2; }.publication-primary small { display: none; } }
+  .publications-head { display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: 4rem; }
+  .publications-head .btn-secondary { margin-top: 1.6rem; }
+  .publication-ledger { margin-top: clamp(3rem,6vw,4.5rem); border-top: 1px solid var(--line); }
+  .publication-row { display: grid; grid-template-columns: 2.6rem minmax(0,1fr) 11rem 8rem; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--line); padding: 1.6rem 0; transition: background .25s ease; }
+  .publication-row:hover { background: linear-gradient(90deg,rgba(50,199,255,.03),transparent); }
+  .publication-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .56rem; }
+  .publication-primary p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .06em; }
+  .publication-primary h3 { max-width: 46rem; margin-top: .6rem; font-size: clamp(1.1rem,1.8vw,1.5rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.24; }
+  .publication-primary h3 a:hover { color: var(--cyan); }
+  .publication-primary small { display: block; max-width: 46rem; margin-top: .75rem; color: var(--muted); font-size: .74rem; line-height: 1.68; }
+  .publication-tags { display: grid; gap: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .52rem; text-transform: uppercase; }
+  .publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .55rem; }
+  .publication-actions a:hover { color: var(--cyan); }
+  @media (max-width: 900px) { .publications-head { grid-template-columns: 1fr; } .publication-row { grid-template-columns: 2rem 1fr auto; } .publication-tags { display: none; } .publication-actions { grid-column: 2/-1; grid-row: 2; display: flex; gap: 1.2rem; justify-self: start; } }
+  @media (max-width: 520px) { .publication-row { grid-template-columns: 1.5rem 1fr; gap: .8rem; } .publication-actions { grid-column: 2; } }
 </style>

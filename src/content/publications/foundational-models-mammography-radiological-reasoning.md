@@ -1,26 +1,28 @@
 ---
 title: "Towards Foundational Models in Mammography: Leveraging Vision-Language Models for Radiological Reasoning"
 authors:
-  - "Panambur AB"
-  - "Bhat S"
-  - "Nguyen T"
-  - "Bayer S"
-  - "Maier A"
-venue: "Journal submission"
+  - "Adarsh Bhandary Panambur"
+  - "Sheethal Bhat"
+  - "Tri-Thien Nguyen"
+  - "Siming Bayer"
+  - "Andreas Maier"
+venue: "Journal submission — under internal review"
 year: 2025
-type: "journal"
-status: "Under internal review"
-abstract: "This work studies vision-language foundation models for mammography, with a focus on image-text representation learning and radiological reasoning."
-plainLanguageSummary: "This work investigates mammography foundation models for radiological reasoning using vision-language representation learning."
-contribution: "Investigates how mammography image-text models can support structured radiological reasoning beyond single-task image classification."
-method: "Uses vision-language representation learning to connect mammography images with radiology language and reasoning-oriented model outputs."
+type: "preprint"
+status: "Under internal review · no results disclosed"
+peerReviewed: false
+abstract: "A journal submission on vision-language foundation models for mammography, focused on image-text representation learning and structured radiological reasoning rather than single-task image classification. The manuscript is under internal review and no quantitative results are publicly available."
+plainLanguageSummary: "A journal manuscript on vision-language foundation models for mammography, focused on whether image-text representation learning can support structured radiological reasoning rather than a single classification output. It is listed here for completeness of the record: the work is under internal review, no venue has been assigned, and no quantitative results are publicly available, so this page deliberately contains no numbers. The related and more developed strand of this line of work — token-level attention grounding of generated mammography reports — is written up separately on this site."
+contribution: "Investigates how mammography image-text models can support structured radiological reasoning beyond single-task classification."
+method: "Vision-language representation learning connecting mammography images with radiology language and reasoning-oriented model outputs. Methodological detail is withheld while the manuscript is under review."
 keyResults:
-  - "Current status: under internal review; numerical results are not publicly disclosed."
-relevance: "Reasoning-oriented foundation models may support more structured, auditable, and clinically aligned mammography AI systems."
+  - "Under internal review. No quantitative results are publicly disclosed and none are reproduced here."
+relevance: "Reasoning-oriented foundation models could make mammography AI more structured and auditable than a single-score classifier, which is the direction the rest of this work also points in."
+limitation: "Not peer reviewed, no venue, and no public results. Listed for completeness only."
 links: {}
 tags:
-  - "Mammography"
+  - "Foundation Models"
   - "Vision-Language Models"
-  - "Radiological Reasoning"
-featured: true
+featured: false
+citation: "A. Bhandary Panambur, S. Bhat, T.-T. Nguyen, S. Bayer, A. Maier. Towards Foundational Models in Mammography: Leveraging Vision-Language Models for Radiological Reasoning. Journal submission, under internal review, 2025."
 ---

@@ -18,8 +18,9 @@ const researchFigure = z.object({
   alt: z.string(),
   caption: z.string(),
   label: z.string().optional(),
-  sourceUrl: z.string().url().optional(),
+  /** Where the figure came from, e.g. "Figure from the paper" or "Figure from my PhD thesis". */
   sourceLabel: z.string().optional(),
+  sourceUrl: z.string().url().optional(),
   orientation: z.enum(['landscape', 'portrait', 'square']).default('landscape'),
   width: z.number().int().positive().optional(),
   height: z.number().int().positive().optional(),
@@ -32,28 +33,28 @@ const storyMetric = z.object({
   tone: z.enum(['default', 'positive', 'caution']).default('default'),
 });
 
-const storyCard = z.object({
-  label: z.string(),
-  title: z.string(),
-  body: z.string(),
-  tone: z.enum(['default', 'positive', 'caution']).default('default'),
-});
-
 const storySection = z.object({
   id: z.string(),
   label: z.string(),
   title: z.string(),
-  duration: z.string().optional(),
   body: z.array(z.string()).default([]),
   pipeline: z.array(z.string()).optional(),
   metrics: z.array(storyMetric).optional(),
   comparisons: z.array(storyMetric).optional(),
+  /** Small result table: exact reported values only. */
+  table: z
+    .object({
+      caption: z.string(),
+      columns: z.array(z.string()),
+      rows: z.array(z.object({ cells: z.array(z.string()), highlight: z.boolean().default(false) })),
+      footnote: z.string().optional(),
+    })
+    .optional(),
   figures: z.array(researchFigure).optional(),
-  cards: z.array(storyCard).optional(),
 });
 
 const visualStory = z.object({
-  readTime: z.string(),
+  readTime: z.string().default('1 min read'),
   shortTitle: z.string(),
   researchQuestion: z.string(),
   storyIntro: z.string(),
@@ -61,7 +62,7 @@ const visualStory = z.object({
   signalStats: z.array(storyMetric).default([]),
   sections: z.array(storySection),
   personalContribution: z.string().optional(),
-  takeaway: z.array(storyCard),
+  limitation: z.string().optional(),
 });
 
 const publications = defineCollection({
@@ -73,18 +74,17 @@ const publications = defineCollection({
     year: z.number(),
     type: z.enum(['journal', 'conference', 'workshop', 'preprint', 'thesis', 'patent']),
     status: z.string().optional(),
+    /** True when the entry has not been through peer review (preprint, manuscript in preparation). */
+    peerReviewed: z.boolean().default(true),
     abstract: z.string(),
+    /** 80-120 word summary written from verified source material. */
     plainLanguageSummary: z.string(),
     contribution: z.string(),
     method: z.string(),
     keyResults: z.array(z.string()),
     relevance: z.string(),
+    limitation: z.string().optional(),
     links: publicationLinks,
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-    figureCaption: z.string().optional(),
-    sourceUrl: z.string().url().optional(),
-    sourceLabel: z.string().optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     citation: z.string().optional(),

@@ -5,12 +5,13 @@ import { sitePath } from '../utils/site';
 
 <section id="contact" class="contact-section section-rule" aria-labelledby="contact-title">
   <div class="shell contact-grid">
-    <div><p class="section-kicker">08 / CONNECT</p><h2 id="contact-title">BUILD THE NEXT USEFUL SYSTEM.</h2></div>
+    <div><p class="section-kicker">08 / CONTACT</p><h2 id="contact-title">GET IN TOUCH.</h2></div>
     <div class="contact-copy">
-      <p>Open to research collaborations and conversations at the intersection of medical AI, multimodal systems, scalable compute, and clinical translation.</p>
+      <p>I am interested in research collaborations and roles across multimodal AI, vision-language models, applied GenAI systems and medical imaging. Email is the fastest way to reach me.</p>
       <div class="contact-actions">
-        <a href={`mailto:${profile.email}`} class="btn-primary">Start a conversation <span>↗</span></a>
-        <a href={sitePath('cv/')} class="btn-secondary">View CV</a>
+        <a href={`mailto:${profile.email}`} class="btn-primary">{profile.email} <span aria-hidden="true">↗</span></a>
+        <a href={sitePath('cv/')} class="btn-secondary">CV</a>
+        <a href={sitePath('CV.pdf')} class="btn-ghost">CV (PDF) ↘</a>
       </div>
       <div class="contact-links"><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><span>{profile.location}</span></div>
     </div>
@@ -19,6 +20,6 @@ import { sitePath } from '../utils/site';
 
 <style>
   .contact-section { padding-block: clamp(6rem,12vw,12rem); background: radial-gradient(circle at 20% 50%,rgba(36,124,255,.17),transparent 30rem),var(--ink); }
-  .contact-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; gap: 4rem; }.contact-grid h2 { max-width: 10ch; margin-top: 1.2rem; font-size: clamp(3.2rem,8vw,8rem); font-weight: 600; letter-spacing: -.065em; line-height: .88; }.contact-copy > p { color: var(--muted); font-size: clamp(1rem,1.5vw,1.2rem); line-height: 1.8; }.contact-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }.contact-links { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 2rem; color: #71869e; font-family: ui-monospace,monospace; font-size: .58rem; text-transform: uppercase; }.contact-links a:hover { color: var(--cyan); }
+  .contact-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: end; gap: 4rem; }.contact-grid h2 { max-width: 10ch; margin-top: 1.2rem; font-size: clamp(3.2rem,8vw,8rem); font-weight: 600; letter-spacing: -.065em; line-height: .88; }.contact-copy > p { color: var(--muted); font-size: clamp(1rem,1.5vw,1.2rem); line-height: 1.8; }.contact-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }.contact-links { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 2rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .58rem; text-transform: uppercase; }.contact-links a:hover { color: var(--cyan); }
   @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; }.contact-grid h2 { font-size: clamp(3.1rem,16vw,5rem); } }
 </style>

@@ -5,8 +5,8 @@ import Hero from '../components/Hero.astro';
 import AISystemsFlagship from '../components/AISystemsFlagship.astro';
 import DataPipeline from '../components/DataPipeline.astro';
 import FeaturedResearch from '../components/FeaturedResearch.astro';
-import ScaleSection from '../components/ScaleSection.astro';
-import ResearchConstellation from '../components/ResearchConstellation.astro';
+import TechnicalEvolution from '../components/TechnicalEvolution.astro';
+import Skills from '../components/Skills.astro';
 import ExperienceJourney from '../components/ExperienceJourney.astro';
 import FlagshipPublications from '../components/FlagshipPublications.astro';
 import Contact from '../components/Contact.astro';
@@ -14,17 +14,17 @@ import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout
-  title="Adarsh Bhandary Panambur | Research Scientist · AI Systems · Medical AI · HPC"
-  description="Research Scientist at NHR@FAU building locally deployed LLM and VLM applications, retrieval and agent workflows, scalable GPU inference, multimodal AI, and clinically grounded medical AI systems."
+  title="Adarsh Bhandary Panambur — AI Research Scientist · Medical AI · Vision-Language Models"
+  description="Research Scientist at NHR@FAU and PhD researcher at FAU Erlangen-Nürnberg. Self-supervised learning, vision-language models, large language models, multimodal medical AI, and GPU/HPC inference systems."
 >
   <Nav />
   <main id="main-content">
     <Hero />
     <AISystemsFlagship />
-    <div data-research-depth><DataPipeline /></div>
+    <DataPipeline />
     <FeaturedResearch />
-    <div data-research-depth><ScaleSection /></div>
-    <div data-research-depth><ResearchConstellation /></div>
+    <TechnicalEvolution />
+    <Skills />
     <ExperienceJourney />
     <FlagshipPublications />
     <Contact />

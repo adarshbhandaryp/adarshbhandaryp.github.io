@@ -1,82 +1,71 @@
 [
-    {
-        "category": "Programming",
-        "items": [
-            "Python",
-            "MATLAB",
-            "C++",
-            "LaTeX"
-        ]
-    },
-    {
-        "category": "Machine Learning & AI",
-        "items": [
-            "Self-supervised Learning",
-            "Multimodal Learning",
-            "Vision-Language Models",
-            "LVLMs",
-            "Generative AI",
-            "Diffusion Models",
-            "Transformers",
-            "LLMs"
-        ]
-    },
-    {
-        "category": "Frameworks",
-        "items": [
-            "PyTorch",
-            "TensorFlow",
-            "Keras",
-            "Hugging Face",
-            "nnU-Net",
-            "OpenCV",
-            "MMDetection",
-            "MONAI"
-        ]
-    },
-    {
-        "category": "MLOps & Systems",
-        "items": [
-            "Docker",
-            "Git",
-            "SLURM",
-            "Axolotl",
-            "DeepSpeed",
-            "SGLang",
-            "WandB",
-            "Linux"
-        ]
-    },
-    {
-        "category": "Data Science",
-        "items": [
-            "NumPy",
-            "pandas",
-            "scikit-learn",
-            "SciPy",
-            "XGBoost",
-            "SimpleITK",
-            "Albumentations"
-        ]
-    },
-    {
-        "category": "Modalities",
-        "items": [
-            "Mammography",
-            "Breast MRI",
-            "Chest X-ray",
-            "Low-dose CT",
-            "ECG"
-        ]
-    },
-    {
-        "category": "Languages",
-        "items": [
-            "English (C2)",
-            "German (B1)",
-            "Hindi",
-            "Konkani",
-            "Kannada"
-        ]
-    }
+  {
+    "category": "REPRESENTATION & VISION",
+    "items": [
+      "Self-Supervised Learning",
+      "DINO / Vision Transformers",
+      "Transfer Learning",
+      "Detection",
+      "Localization",
+      "Explainability"
+    ]
+  },
+  {
+    "category": "MULTIMODAL & FOUNDATION MODELS",
+    "items": [
+      "Vision-Language Models",
+      "CLIP / SigLIP",
+      "Image-Text Learning",
+      "Medical VLMs",
+      "Report Generation",
+      "Foundation Models"
+    ]
+  },
+  {
+    "category": "GENERATIVE AI",
+    "items": [
+      "LLMs",
+      "RAG",
+      "Embeddings",
+      "Agents",
+      "Foundation-Model APIs",
+      "Local LLM Deployment"
+    ]
+  },
+  {
+    "category": "AI SYSTEMS",
+    "items": [
+      "PyTorch",
+      "Hugging Face",
+      "GPU Inference",
+      "SLURM",
+      "HPC",
+      "Distributed Training",
+      "Model Serving",
+      "Containers"
+    ]
+  },
+  {
+    "category": "MEDICAL AI",
+    "items": [
+      "Mammography",
+      "Breast MRI",
+      "Clinical Validation",
+      "Medical Image Analysis",
+      "Multimodal Clinical Data"
+    ]
+  },
+  {
+    "category": "ENGINEERING & DATA",
+    "items": [
+      "Python",
+      "C++",
+      "NumPy / pandas",
+      "scikit-learn",
+      "SimpleITK",
+      "MONAI",
+      "Docker",
+      "Git"
+    ]
+  }
 ]

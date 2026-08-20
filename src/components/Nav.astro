@@ -4,27 +4,31 @@ import { sitePath } from '../utils/site';
 import AskAdarsh from './AskAdarsh.astro';
 
 const links = [
-  { name: 'Work', href: sitePath('#work') },
+  { name: 'Systems', href: sitePath('#systems') },
   { name: 'Research', href: sitePath('#research') },
   { name: 'Publications', href: sitePath('publications/') },
-  { name: 'About', href: sitePath('#experience') },
+  { name: 'Skills', href: sitePath('#skills') },
+  { name: 'Experience', href: sitePath('#experience') },
 ];
 
 const commands = [
-  { label: 'Explore research', meta: 'Medical AI · projects', href: sitePath('#research'), keywords: 'research medical ai mammography' },
-  { label: 'Ask Adarsh', meta: 'Research · experience · output', action: 'ask', keywords: 'ask assistant chat' },
-  { label: 'Publication archive', meta: 'Papers · preprints · studies', href: sitePath('publications/'), keywords: 'publication papers archive' },
-  { label: 'Medical AI', meta: 'Mammography · MRI · clinical AI', href: sitePath('#research'), keywords: 'medical ai breast mammography MRI' },
-  { label: 'HPC & AI systems', meta: 'GPU clusters · SLURM · inference', href: sitePath('#work'), keywords: 'hpc gpu slurm distributed compute llm' },
-  { label: 'Experience journey', meta: 'FAU · Siemens · WCH · NHR', href: sitePath('#experience'), keywords: 'experience siemens west china nhr fau' },
-  { label: 'Talks & recognition', meta: 'Conference presentations', href: sitePath('talks/'), keywords: 'talks recognition conference presentations gallery' },
-  { label: 'MammoBLIP', meta: 'Vision-language report generation', href: sitePath('publications/mammoblip-mammography-report-generation/'), keywords: 'vlm vision language mammoblip report' },
-  { label: 'Breast MRI research', meta: 'BE-WISE · clinical validation', href: sitePath('#research'), keywords: 'mri breast be-wise odelia' },
-  { label: 'Download CV', meta: 'PDF résumé', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
-  { label: 'Recruiter CV', meta: 'Web · print-friendly', href: sitePath('cv/'), keywords: 'cv resume recruiter experience' },
+  { label: 'Publication archive', meta: 'Papers · preprints · studies', href: sitePath('publications/'), keywords: 'publication papers archive doi arxiv' },
+  { label: 'Ask Adarsh', meta: 'Quick answers about my work', action: 'ask', keywords: 'ask assistant chat question' },
+  { label: 'AI systems & applied GenAI', meta: 'Local LLMs · RAG · GPU inference', href: sitePath('#systems'), keywords: 'llm rag agents gpu inference slurm hpc genai local models' },
+  { label: 'Featured research', meta: 'Four flagship studies', href: sitePath('#research'), keywords: 'research flagship mammography mri representation learning' },
+  { label: 'Attention-Guided Erasing', meta: 'Self-supervised augmentation · IJCARS 2025', href: sitePath('publications/attention-guided-erasing-transfer-learning-breast-abnormality/'), keywords: 'age dino ssl attention erasing self-supervised' },
+  { label: 'MammoBLIP', meta: 'Vision-language report generation · IEEE MIC 2025', href: sitePath('publications/mammoblip-mammography-report-generation/'), keywords: 'vlm vision language mammoblip report generation biomedlm' },
+  { label: 'BE-WISE', meta: 'Weakly supervised breast MRI · BVM 2026', href: sitePath('publications/be-wise-breast-mri-explanation/'), keywords: 'mri breast be-wise odelia weak supervision localization' },
+  { label: 'Explainable mammography VLM', meta: 'SigLIP + LLM · token-level attention', href: sitePath('publications/explainable-mammography-vlm/'), keywords: 'vlm siglip gemma medgemma explainable attention tokens' },
+  { label: 'Technical evolution', meta: 'CNNs → SSL → VLMs → AI systems', href: sitePath('#evolution'), keywords: 'evolution timeline trajectory progression' },
+  { label: 'Skills', meta: 'Grouped by capability', href: sitePath('#skills'), keywords: 'skills stack pytorch hugging face slurm' },
+  { label: 'Experience', meta: 'NHR@FAU · FAU · Siemens · WCH', href: sitePath('#experience'), keywords: 'experience siemens west china nhr fau career' },
+  { label: 'Talks & conferences', meta: 'Presentation photos', href: sitePath('talks/'), keywords: 'talks conference presentations gallery photos' },
+  { label: 'CV (web)', meta: 'Print-friendly page', href: sitePath('cv/'), keywords: 'cv resume experience print' },
+  { label: 'CV (PDF)', meta: 'Download', href: sitePath('CV.pdf'), keywords: 'cv resume pdf download' },
   { label: 'GitHub', meta: '@adarshbhandaryp', href: profile.github, external: true, keywords: 'github code' },
   { label: 'LinkedIn', meta: 'Professional profile', href: profile.linkedin, external: true, keywords: 'linkedin social' },
-  { label: 'Contact', meta: profile.email, href: `mailto:${profile.email}`, keywords: 'contact email' },
+  { label: 'Email', meta: profile.email, href: `mailto:${profile.email}`, keywords: 'contact email' },
 ];
 ---
 
@@ -36,7 +40,7 @@ const commands = [
   <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
   <div class="shell nav-inner">
     <a href={sitePath()} class="nav-mark" aria-label={`${profile.name} home`}>
-      <span>ABP</span><i aria-hidden="true"></i><small>RESEARCH OS</small>
+      <span>{profile.navName}</span>
     </a>
 
     <div class="nav-links" aria-label="Main links">
@@ -44,11 +48,7 @@ const commands = [
     </div>
 
     <div class="nav-actions">
-      <div class="mode-switch" role="group" aria-label="Content mode">
-        <button type="button" data-mode-button="research" aria-pressed="true">Research</button>
-        <button type="button" data-mode-button="recruiter" aria-pressed="false">Recruiter</button>
-      </div>
-      <button type="button" class="nav-command" data-open-command aria-label="Open command palette"><span>⌘</span>K</button>
+      <button type="button" class="nav-command" data-open-command aria-label="Search this site"><span>⌘</span>K</button>
       <button type="button" class="nav-ask" data-open-ask>Ask Adarsh</button>
       <button type="button" class="mobile-trigger" id="mobile-trigger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button>
     </div>
@@ -56,13 +56,9 @@ const commands = [
 
   <div id="mobile-nav" class="mobile-nav" hidden>
     <div class="shell">
-      <div class="mobile-mode-switch" role="group" aria-label="Content mode">
-        <button type="button" data-mode-button="research" aria-pressed="true">Research mode</button>
-        <button type="button" data-mode-button="recruiter" aria-pressed="false">Recruiter mode</button>
-      </div>
       {links.map((link, index) => <a href={link.href}><span>0{index + 1}</span>{link.name}</a>)}
-      <a href={sitePath('cv/')}><span>05</span>CV</a>
-      <button type="button" data-open-ask><span>06</span>Ask Adarsh</button>
+      <a href={sitePath('cv/')}><span>06</span>CV</a>
+      <button type="button" data-open-ask><span>07</span>Ask Adarsh</button>
     </div>
   </div>
 </nav>
@@ -72,7 +68,7 @@ const commands = [
     <div class="command-search">
       <span aria-hidden="true">⌕</span>
       <label id="command-title" class="sr-only" for="command-input">Search the site</label>
-      <input id="command-input" type="search" placeholder="Search MRI, VLM, HPC…" autocomplete="off" aria-controls="command-results" />
+      <input id="command-input" type="search" placeholder="Search papers, methods, skills…" autocomplete="off" aria-controls="command-results" />
       <button type="button" data-close-command aria-label="Close command palette">ESC</button>
     </div>
     <div class="command-list" id="command-results" role="listbox" aria-label="Commands">
@@ -105,15 +101,6 @@ const commands = [
   const commandItems = Array.from(document.querySelectorAll<HTMLElement>('[data-command-item]'));
   const commandEmpty = document.getElementById('command-empty');
   let activeCommand = 0;
-
-  const setMode = (mode: 'research' | 'recruiter') => {
-    document.body.dataset.mode = mode;
-    document.querySelectorAll<HTMLButtonElement>('[data-mode-button]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.modeButton === mode)));
-    try { localStorage.setItem('adarsh-mode', mode); } catch {}
-  };
-  const storedMode = (() => { try { return localStorage.getItem('adarsh-mode'); } catch { return null; } })();
-  setMode(storedMode === 'recruiter' ? 'recruiter' : 'research');
-  document.querySelectorAll<HTMLButtonElement>('[data-mode-button]').forEach((button) => button.addEventListener('click', () => setMode(button.dataset.modeButton === 'recruiter' ? 'recruiter' : 'research')));
 
   const updateScroll = () => {
     nav?.classList.toggle('is-scrolled', window.scrollY > 24);
@@ -199,17 +186,13 @@ const commands = [
   .site-nav.is-scrolled, .site-nav.menu-open { border-color: var(--line); background: rgba(10,20,36,.88); backdrop-filter: blur(18px); }
   .scroll-progress { position: absolute; inset: auto 0 0; height: 1px; transform: scaleX(0); transform-origin: left; background: linear-gradient(90deg,var(--cyan),var(--mint)); }
   .nav-inner { display: flex; height: 4.6rem; align-items: center; justify-content: space-between; gap: 1rem; }
-  .nav-mark { display: flex; align-items: center; gap: .6rem; font-family: Outfit,sans-serif; font-weight: 700; letter-spacing: -.03em; }
-  .nav-mark i { width: .3rem; height: .3rem; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 1rem var(--cyan); }
-  .nav-mark small { color: var(--muted); font-family: ui-monospace,monospace; font-size: .55rem; letter-spacing: .14em; }
+  .nav-mark { display: flex; align-items: center; font-family: Outfit,sans-serif; font-size: .84rem; font-weight: 600; letter-spacing: .04em; }
+  .nav-mark:hover { color: var(--cyan); }
   .nav-links { display: flex; gap: 2rem; margin-left: auto; }
   .nav-links a { position: relative; color: #bdc9d9; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
   .nav-links a::after { position: absolute; inset: auto 100% -.5rem 0; height: 1px; content: ''; background: var(--cyan); transition: right .2s ease; }
   .nav-links a:hover::after { right: 0; }
   .nav-actions { display: flex; align-items: center; gap: .55rem; }
-  .mode-switch { display: flex; border: 1px solid var(--line); padding: .18rem; border-radius: .25rem; }
-  .mode-switch button { border: 0; border-radius: .18rem; background: transparent; color: var(--muted); padding: .42rem .55rem; font-size: .58rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-  .mode-switch button[aria-pressed='true'] { background: var(--surface-2); color: var(--text); }
   .nav-command { border: 1px solid var(--line); border-radius: .25rem; color: var(--muted); padding: .46rem .6rem; font-family: ui-monospace,monospace; font-size: .66rem; }
   .nav-command span { color: var(--cyan); margin-right: .2rem; }
   .nav-ask { border: 1px solid var(--line-bright); border-radius: .25rem; color: var(--text); padding: .55rem .75rem; font-size: .64rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
@@ -217,15 +200,12 @@ const commands = [
   .mobile-trigger span { display: block; width: 1.25rem; height: 1px; background: white; }
   .mobile-nav { border-top: 1px solid var(--line); background: rgba(10,20,36,.98); }
   .mobile-nav .shell { display: grid; padding-block: 1rem 1.6rem; }
-  .mobile-mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-bottom: .7rem; }
-  .mobile-mode-switch button { display: block !important; border: 1px solid var(--line) !important; border-radius: .2rem; padding: .65rem !important; color: var(--muted); font-family: ui-monospace,monospace !important; font-size: .58rem !important; text-align: center !important; text-transform: uppercase; }
-  .mobile-mode-switch button[aria-pressed='true'] { border-color: var(--line-bright); background: var(--surface-2); color: white; }
   .mobile-nav a, .mobile-nav button { display: flex; gap: 1rem; border-bottom: 1px solid var(--line); padding: .85rem 0; text-align: left; font-family: Outfit,sans-serif; font-size: 1.35rem; }
   .mobile-nav span { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .58rem; }
   .command-search { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem; border-bottom: 1px solid var(--line); padding: .9rem 1rem; }
   .command-search > span { color: var(--cyan); font-size: 1.5rem; }
   .command-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--text); font-size: 1.05rem; }
-  .command-search input::placeholder { color: #687b94; }
+  .command-search input::placeholder { color: #8ba0b8; }
   .command-search button { border: 1px solid var(--line); border-radius: .2rem; color: var(--muted); padding: .3rem .45rem; font-family: ui-monospace,monospace; font-size: .58rem; }
   .command-list { max-height: 31rem; overflow-y: auto; padding: .5rem; }
   .command-item { display: flex; width: 100%; align-items: center; justify-content: space-between; border-radius: .3rem; padding: .78rem .9rem; text-align: left; }
@@ -234,7 +214,7 @@ const commands = [
   .command-item small { color: var(--muted); font-size: .7rem; font-weight: 400; }
   .command-item b { color: var(--cyan); font-weight: 400; }
   .command-empty { padding: 2rem; text-align: center; color: var(--muted); }
-  .command-footer { display: flex; gap: 1.2rem; border-top: 1px solid var(--line); padding: .65rem 1rem; color: #687b94; font-family: ui-monospace,monospace; font-size: .58rem; text-transform: uppercase; }
-  @media (max-width: 960px) { .nav-links, .mode-switch, .nav-ask { display: none; } .mobile-trigger { display: grid; } }
-  @media (max-width: 520px) { .nav-mark small, .nav-command { display: none; } .construction-notice { padding-inline: .65rem; font-size: .47rem; letter-spacing: .11em; } }
+  .command-footer { display: flex; gap: 1.2rem; border-top: 1px solid var(--line); padding: .65rem 1rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .58rem; text-transform: uppercase; }
+  @media (max-width: 960px) { .nav-links, .nav-ask { display: none; } .mobile-trigger { display: grid; } }
+  @media (max-width: 520px) { .nav-command { display: none; } .nav-mark { font-size: .74rem; } .construction-notice { padding-inline: .65rem; font-size: .47rem; letter-spacing: .11em; } }
 </style>
