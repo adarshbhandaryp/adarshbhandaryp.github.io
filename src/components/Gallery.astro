@@ -1,5 +1,16 @@
 ---
 import { talkPhotos } from '../data/gallery';
+import { sitePath } from '../utils/site';
+
+interface Props {
+  /** Section kicker, e.g. "08 / TALKS". */
+  kicker?: string;
+  /** Anchor id for in-page navigation. */
+  id?: string;
+  /** Show a link through to the dedicated talks page. */
+  showLink?: boolean;
+}
+const { kicker = 'TALKS', id = 'talks', showLink = false } = Astro.props;
 
 const meta = [
   { title: 'Attention-Guided Erasing', event: 'BVM', city: 'Erlangen', year: '2024' },
@@ -10,9 +21,15 @@ const meta = [
 ];
 ---
 
-<section id="recognition" class="section-shell gallery-section section-rule" aria-labelledby="gallery-title">
+<section id={id} class="section-shell gallery-section section-rule" aria-labelledby="gallery-title">
   <div class="shell">
-    <div class="gallery-head reveal"><div><p class="section-kicker">TALKS</p><h2 id="gallery-title" class="section-title">PRESENTING THE WORK</h2></div><p class="section-copy">Oral and poster presentations at BVM, SPIE Medical Imaging, IEEE MIC, CVIP and the Pattern Recognition Symposium.</p></div>
+    <div class="gallery-head reveal">
+      <div><p class="section-kicker">{kicker}</p><h2 id="gallery-title" class="section-title">PRESENTING THE WORK</h2></div>
+      <div>
+        <p class="section-copy">Oral and poster presentations at BVM, SPIE Medical Imaging, IEEE MIC, CVIP and the Pattern Recognition Symposium.</p>
+        {showLink && <a href={sitePath('talks/')} class="text-link gallery-link">All talks</a>}
+      </div>
+    </div>
     <div class="editorial-gallery reveal">
       {talkPhotos.map((photo, index) => (
         <button type="button" class="gallery-item" data-gallery-index={index} aria-label={`Open image: ${photo.caption}`}>
@@ -22,6 +39,7 @@ const meta = [
         </button>
       ))}
     </div>
+      <p class="gallery-hint">Scroll sideways for all {talkPhotos.length} — click any photo to enlarge.</p>
   </div>
 </section>
 
@@ -54,13 +72,15 @@ const meta = [
 <style>
   .gallery-section { overflow: hidden; background: var(--ink); }
   .gallery-head { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 4rem; }
-  .editorial-gallery { display: grid; grid-auto-columns: minmax(22rem,32rem); grid-auto-flow: column; gap: 1rem; margin-top: 5rem; overflow-x: auto; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
-  .gallery-item { position: relative; aspect-ratio: 4/5; overflow: hidden; scroll-snap-align: start; text-align: left; background: var(--surface); }
-  .gallery-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.72) saturate(.7) brightness(.72); transition: transform 1s ease,filter .6s ease; }
-  .gallery-item:hover img, .gallery-item:focus-visible img { transform: scale(1.035); filter: grayscale(.12) saturate(.9) brightness(.78); }
-  .gallery-item::after { position: absolute; inset: 0; content: ''; background: linear-gradient(to top,rgba(3,6,12,.95),transparent 60%); }
-  .gallery-overlay { position: absolute; z-index: 2; inset: auto 1.4rem 1.4rem; display: grid; gap: .45rem; }.gallery-overlay small { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .12em; }.gallery-overlay strong { font: 500 clamp(1.5rem,3vw,2.5rem) Outfit,sans-serif; line-height: 1; }.gallery-overlay i { color: var(--muted); font-size: .7rem; font-style: normal; }
-  .gallery-item > b { position: absolute; z-index: 2; right: 1rem; top: 1rem; color: white; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .gallery-link { margin-top: 1.4rem; }
+  .editorial-gallery { display: grid; grid-auto-columns: minmax(20rem,28rem); grid-auto-flow: column; gap: 1rem; margin-top: clamp(3rem,6vw,5rem); overflow-x: auto; padding-bottom: 1rem; scroll-snap-type: x mandatory; }
+  .gallery-hint { margin-top: .5rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .06em; }
+  .gallery-item { position: relative; aspect-ratio: 1/1; overflow: hidden; scroll-snap-align: start; text-align: left; background: var(--surface); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(.18) saturate(.95); transition: transform 1s ease,filter .6s ease; }
+  .gallery-item:hover img, .gallery-item:focus-visible img { transform: scale(1.03); filter: none; }
+  .gallery-item::after { position: absolute; inset: 0; content: ''; background: linear-gradient(to top,rgba(3,6,12,.94) 0%,rgba(3,6,12,.8) 26%,rgba(3,6,12,.34) 44%,transparent 62%); }
+  .gallery-overlay { position: absolute; z-index: 2; inset: auto 1.4rem 1.4rem; display: grid; gap: .45rem; }.gallery-overlay small { color: #8fe3ff; font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .12em; text-shadow: 0 1px 3px rgba(0,0,0,.85); }.gallery-overlay strong { font: 500 clamp(1.25rem,2.2vw,1.75rem) Outfit,sans-serif; line-height: 1.1; text-shadow: 0 1px 4px rgba(0,0,0,.8); }.gallery-overlay i { color: #c8d6e6; font-size: .7rem; font-style: normal; text-shadow: 0 1px 3px rgba(0,0,0,.85); }
+  .gallery-item > b { position: absolute; z-index: 2; right: 1rem; top: 1rem; color: white; font-family: ui-monospace,monospace; font-size: .62rem; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
   .gallery-lightbox { display: grid; max-height: 92vh; width: min(100%,65rem); grid-template-columns: 1fr auto; gap: .8rem; }.gallery-lightbox button { grid-column: 2; color: var(--cyan); font-family: ui-monospace,monospace; font-size: .62rem; }.gallery-lightbox img { grid-column: 1/-1; max-height: 78vh; width: 100%; object-fit: contain; background: #050810; }.gallery-lightbox p { grid-column: 1/-1; color: var(--muted); font-size: .8rem; }
   @media (max-width: 720px) { .gallery-head { grid-template-columns: 1fr; }.editorial-gallery { grid-auto-columns: 82vw; margin-inline: -.65rem; padding-inline: .65rem; } }
 </style>
