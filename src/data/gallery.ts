@@ -18,12 +18,12 @@ export const talkPhotos = [
     },
     {
         src: sitePath('spie.webp'),
-        alt: "Poster Presentation at Medical Imaging 2024: Computer-Aided Diagnosis (SPIE)",
-        caption: "Poster Presentation at SPIE Medical Imaging 2024, San Diego, USA"
+        alt: "Oral Presentation on a neighborhood representation loss for CESM at SPIE Medical Imaging 2024: Computer-Aided Diagnosis, San Diego, USA",
+        caption: "Oral Presentation on Representation Learning for CESM at SPIE Medical Imaging 2024, San Diego, USA"
     },
     {
         src: sitePath('prs2025.webp'),
-        alt: "Presentation at Pattern Recognition Symposium, Austria",
-        caption: "Pattern Recognition Symposium, Austria"
+        alt: "Oral Presentation at the Pattern Recognition Symposium 2025, Austria",
+        caption: "Oral Presentation at the Pattern Recognition Symposium 2025, Austria"
     }
 ];
