@@ -53,14 +53,14 @@ const orientation = figure.orientation || 'landscape';
 <style>
   .research-figure { position: relative; margin: 0; border: 1px solid var(--line); background: var(--surface); }
   .research-figure.is-portrait { max-width: 44rem; margin-inline: auto; }
-  .figure-label { position: absolute; z-index: 3; left: .8rem; top: .8rem; border: 1px solid rgba(5,8,16,.16); background: rgba(242,247,255,.9); padding: .32rem .48rem; color: #10233b; font: 600 .62rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .figure-label { position: absolute; z-index: 3; left: .8rem; top: .8rem; border: 1px solid rgba(5,8,16,.16); background: rgba(242,247,255,.9); padding: .32rem .48rem; color: #10233b; font: 600 .75rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
   .figure-open { position: relative; display: grid; width: 100%; overflow: hidden; background: white; cursor: zoom-in; }
   .figure-open img { display: block; width: 100%; height: auto; max-height: 60rem; object-fit: contain; }
   .is-hero .figure-open img { max-height: 68vh; }
-  .figure-expand { position: absolute; right: .75rem; bottom: .75rem; border: 1px solid rgba(255,255,255,.32); background: rgba(5,8,16,.82); padding: .38rem .5rem; color: white; font: .62rem ui-monospace,monospace; letter-spacing: .08em; opacity: 0; transform: translateY(.25rem); transition: opacity .2s ease, transform .2s ease; }
+  .figure-expand { position: absolute; right: .75rem; bottom: .75rem; border: 1px solid rgba(255,255,255,.32); background: rgba(5,8,16,.82); padding: .38rem .5rem; color: white; font: .75rem ui-monospace,monospace; letter-spacing: .08em; opacity: 0; transform: translateY(.25rem); transition: opacity .2s ease, transform .2s ease; }
   .figure-open:hover .figure-expand, .figure-open:focus-visible .figure-expand { opacity: 1; transform: none; }
-  figcaption { display: grid; gap: .45rem; border-top: 1px solid var(--line); padding: .8rem 1rem; color: var(--muted); font-size: .68rem; line-height: 1.62; }
-  figcaption a, figcaption em { color: var(--cyan); font-style: normal; font-size: .62rem; }
+  figcaption { display: grid; gap: .45rem; border-top: 1px solid var(--line); padding: .8rem 1rem; color: var(--muted); font-size: .81rem; line-height: 1.62; }
+  figcaption a, figcaption em { color: var(--cyan); font-style: normal; font-size: .75rem; }
   figcaption em { color: #7f94ad; }
   @media (max-width: 640px) { .figure-expand { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .figure-expand { transition: none; } }

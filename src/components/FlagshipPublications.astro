@@ -1,9 +1,16 @@
 ---
-import { externalPublicationLinks, getPublications, getPublicationUrl } from '../utils/publications';
+import { externalPublicationLinks, getPublications, getPublicationUrl, publicationMetaLine } from '../utils/publications';
 import { sitePath } from '../utils/site';
 
-const featured = (await getPublications()).filter((publication) => publication.data.featured).slice(0, 6);
-const total = (await getPublications()).length;
+const all = await getPublications();
+const featured = all.filter((publication) => publication.data.featured).slice(0, 6);
+const total = all.length;
+
+/** One reported number per row — the full summary lives on the publication page. */
+function headlineStat(publication: (typeof featured)[number]) {
+  const signals = publication.data.story?.signalStats ?? [];
+  return signals.find((stat) => stat.tone === 'positive') ?? signals[0] ?? null;
+}
 ---
 
 <section id="publications" class="section-shell publications-preview section-rule" aria-labelledby="publications-title">
@@ -14,23 +21,26 @@ const total = (await getPublications()).length;
         <h2 id="publications-title" class="section-title">PUBLICATIONS</h2>
       </div>
       <div>
-        <p class="section-copy">Peer-reviewed papers, preprints and clinical evaluations across mammography, breast MRI, representation learning and vision-language models. {total} entries in total, each with its DOI or preprint link.</p>
+        <p class="section-copy"><span class="count-up" data-count={String(total)}>{total}</span> entries across mammography, breast MRI, representation learning and vision-language models — each with its DOI or preprint link.</p>
         <a href={sitePath('publications/')} class="btn-secondary">Full archive <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
-    <ol class="publication-ledger">
+    <ol class="publication-ledger" data-stagger-each="1">
       {featured.map((publication, index) => {
         const links = externalPublicationLinks(publication);
+        const stat = headlineStat(publication);
         return (
-          <li class="publication-row reveal">
+          <li class="publication-row">
             <span class="publication-index">{String(index + 1).padStart(2, '0')}</span>
             <div class="publication-primary">
-              <p>{publication.data.venue} · {publication.data.year}{publication.data.status ? ` · ${publication.data.status}` : ''}</p>
+              <p>{publicationMetaLine(publication)}</p>
               <h3><a href={getPublicationUrl(publication.slug)}>{publication.data.title}</a></h3>
-              <small>{publication.data.plainLanguageSummary}</small>
+              <div class="publication-tags">{publication.data.tags.slice(0, 3).map((tag) => <span>{tag}</span>)}</div>
             </div>
-            <div class="publication-tags">{publication.data.tags.slice(0, 3).map((tag) => <span>{tag}</span>)}</div>
+            {stat ? (
+              <p class:list={['publication-stat', !publication.data.peerReviewed && 'is-unreviewed']}><strong class="count-up" data-count={stat.value}>{stat.value}</strong><span>{stat.label}</span></p>
+            ) : <p class="publication-stat"></p>}
             <div class="publication-actions">
               <a href={getPublicationUrl(publication.slug)} aria-label={`Read the brief for ${publication.data.title}`}>1 MIN READ</a>
               {links[0] && <a href={links[0].href} target="_blank" rel="noopener noreferrer">{links[0].label.toUpperCase()} ↗</a>}
@@ -46,17 +56,23 @@ const total = (await getPublications()).length;
   .publications-preview { background: var(--ink); }
   .publications-head { display: grid; grid-template-columns: 1.05fr .95fr; align-items: end; gap: 4rem; }
   .publications-head .btn-secondary { margin-top: 1.6rem; }
-  .publication-ledger { margin-top: clamp(3rem,6vw,4.5rem); border-top: 1px solid var(--line); }
-  .publication-row { display: grid; grid-template-columns: 2.6rem minmax(0,1fr) 11rem 8rem; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--line); padding: 1.6rem 0; transition: background .25s ease; }
-  .publication-row:hover { background: linear-gradient(90deg,rgba(50,199,255,.03),transparent); }
-  .publication-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; }
-  .publication-primary p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .62rem; letter-spacing: .06em; }
-  .publication-primary h3 { max-width: 46rem; margin-top: .6rem; font-size: clamp(1.1rem,1.8vw,1.5rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.24; }
+  .publication-ledger { margin-top: clamp(2.5rem,5vw,4rem); border-top: 1px solid var(--line); }
+  .publication-row { position: relative; display: grid; grid-template-columns: 2.6rem minmax(0,1fr) 11rem 8rem; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--line); padding: 1.35rem 0; transition: background .25s ease; }
+  .publication-row::before { position: absolute; left: 0; top: 0; width: 0; height: 1px; content: ''; background: linear-gradient(90deg,var(--cyan),transparent); transition: width .55s cubic-bezier(.2,.8,.2,1); }
+  .publication-row:hover::before { width: 100%; }
+  .publication-row:hover { background: linear-gradient(90deg,rgba(50,199,255,.045),transparent 70%); }
+  .publication-index { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; }
+  .publication-primary > p { color: var(--cyan); font-family: ui-monospace,monospace; font-size: .75rem; letter-spacing: .06em; }
+  .publication-primary h3 { max-width: 46rem; margin-top: .5rem; font-size: clamp(1.1rem,1.8vw,1.5rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.24; }
   .publication-primary h3 a:hover { color: var(--cyan); }
-  .publication-primary small { display: block; max-width: 46rem; margin-top: .75rem; color: var(--muted); font-size: .74rem; line-height: 1.68; }
-  .publication-tags { display: grid; gap: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; text-transform: uppercase; }
-  .publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .publication-tags { display: flex; flex-wrap: wrap; gap: .3rem .9rem; margin-top: .6rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; text-transform: uppercase; }
+  .publication-stat { display: grid; align-content: start; gap: .25rem; }
+  .publication-stat strong { color: var(--mint); font-family: Outfit,sans-serif; font-size: clamp(1.5rem,2.4vw,2.1rem); font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+  .publication-stat span { color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; letter-spacing: .04em; line-height: 1.4; text-transform: uppercase; }
+  /* Numbers from work that has not been reviewed yet are not shown in the same colour as reviewed results. */
+  .publication-stat.is-unreviewed strong { color: var(--amber); }
+  .publication-actions { display: grid; gap: .7rem; justify-items: end; color: #c6d3e3; font-family: ui-monospace,monospace; font-size: .75rem; }
   .publication-actions a:hover { color: var(--cyan); }
-  @media (max-width: 900px) { .publications-head { grid-template-columns: 1fr; } .publication-row { grid-template-columns: 2rem 1fr auto; } .publication-tags { display: none; } .publication-actions { grid-column: 2/-1; grid-row: 2; display: flex; gap: 1.2rem; justify-self: start; } }
-  @media (max-width: 520px) { .publication-row { grid-template-columns: 1.5rem 1fr; gap: .8rem; } .publication-actions { grid-column: 2; } }
+  @media (max-width: 900px) { .publications-head { grid-template-columns: 1fr; } .publication-row { grid-template-columns: 2rem 1fr auto; } .publication-stat { grid-column: 2/-1; grid-row: 2; grid-auto-flow: column; align-items: baseline; gap: .55rem; } .publication-actions { grid-column: 2/-1; grid-row: 3; display: flex; gap: 1.2rem; justify-self: start; } }
+  @media (max-width: 520px) { .publication-row { grid-template-columns: 1.5rem 1fr; gap: .8rem; } .publication-stat, .publication-actions { grid-column: 2; } }
 </style>

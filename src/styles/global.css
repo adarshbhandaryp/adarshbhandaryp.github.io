@@ -22,7 +22,7 @@
   --blue: #247cff;
   --mint: #7cf5cc;
   --amber: #f6c86e;
-  --section-pad: clamp(5.5rem, 10vw, 10rem);
+  --section-pad: clamp(4.25rem, 7vw, 7.5rem);
   /* Height of the top notice bar; 0 while no notice is shown. */
   --notice-height: 0rem;
 }
@@ -87,7 +87,7 @@ button, input { font: inherit; }
 .mono-label {
   color: var(--cyan);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: .7rem;
+  font-size: .83rem;
   font-weight: 600;
   letter-spacing: .18em;
   line-height: 1.5;
@@ -97,7 +97,7 @@ button, input { font: inherit; }
 .section-title {
   margin-top: 1.25rem;
   max-width: 15ch;
-  font-size: clamp(2.8rem, 7vw, 7rem);
+  font-size: clamp(2.8rem,7vw,7rem);
   font-weight: 600;
   letter-spacing: -.055em;
   line-height: .93;
@@ -106,7 +106,7 @@ button, input { font: inherit; }
 .section-copy {
   max-width: 42rem;
   color: var(--muted);
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-size: clamp(1rem,1.5vw,1.2rem);
   line-height: 1.8;
 }
 
@@ -120,7 +120,7 @@ button, input { font: inherit; }
   gap: .65rem;
   border-radius: .25rem;
   padding: .78rem 1.1rem;
-  font-size: .78rem;
+  font-size: .92rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -133,18 +133,79 @@ button, input { font: inherit; }
 .btn-ghost { color: var(--muted); }
 .btn-ghost:hover { color: var(--text); }
 
-.text-link { display: inline-flex; align-items: center; gap: .5rem; color: var(--text); font-size: .82rem; font-weight: 600; }
+.text-link { display: inline-flex; align-items: center; gap: .5rem; color: var(--text); font-size: .95rem; font-weight: 600; }
 .text-link::after { content: '↗'; color: var(--cyan); transition: transform .2s ease; }
 .text-link:hover::after { transform: translate(.15rem,-.15rem); }
 
 .reveal {
   opacity: 0;
-  transform: translateY(2rem);
-  transition: opacity .75s cubic-bezier(.2,.8,.2,1), transform .75s cubic-bezier(.2,.8,.2,1);
+  transform: translateY(1.6rem);
+  transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
+  transition-delay: var(--d, 0s);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
-.reveal:nth-child(2) { transition-delay: .08s; }
-.reveal:nth-child(3) { transition-delay: .16s; }
+
+/* Staggered children: JS sets --d on each direct child of [data-stagger]. */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition: opacity .6s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.2,.8,.2,1);
+  transition-delay: var(--d, 0s);
+}
+[data-stagger].is-visible > * { opacity: 1; transform: none; }
+
+/* Numbers that count up when scrolled into view. */
+.count-up { font-variant-numeric: tabular-nums; }
+
+/* Reusable animated marker used by section headings. */
+.pulse-dot {
+  display: inline-block;
+  width: .4rem;
+  height: .4rem;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 0 rgba(124, 245, 204, .5);
+  animation: pulse-ring 2.6s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(124, 245, 204, .45); }
+  70% { box-shadow: 0 0 0 .7rem rgba(124, 245, 204, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 245, 204, 0); }
+}
+
+/* Scroll-position indicator under the nav. */
+.scroll-progress {
+  position: fixed;
+  left: 0;
+  top: var(--notice-height);
+  z-index: 130;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--cyan), var(--mint));
+  pointer-events: none;
+}
+
+/* Chip list — replaces long bulleted skill/stack lists. */
+.chip-set { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(50, 199, 255, .05);
+  padding: .34rem .68rem;
+  color: #d2dded;
+  font-size: .86rem;
+  line-height: 1.35;
+  transition: border-color .25s ease, background .25s ease, transform .25s ease, color .25s ease;
+}
+.chip:hover {
+  border-color: var(--line-bright);
+  background: rgba(50, 199, 255, .12);
+  color: var(--text);
+  transform: translateY(-2px);
+}
 
 .grid-field {
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
@@ -190,7 +251,7 @@ button, input { font: inherit; }
 @media (max-width: 767px) {
   :root { --section-pad: 5rem; }
   .shell { width: min(100% - 1.25rem, 86rem); }
-  .section-title { font-size: clamp(2.5rem, 14vw, 4rem); }
+  .section-title { font-size: clamp(2.5rem,14vw,4rem); }
   .grid-field { background-size: 3rem 3rem; }
 }
 
@@ -203,6 +264,9 @@ button, input { font: inherit; }
     transition-duration: .01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+  [data-stagger] > * { opacity: 1; transform: none; }
+  .pulse-dot { animation: none; }
+  .scroll-progress { display: none; }
 }
 
 @media print {

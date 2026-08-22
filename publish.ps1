@@ -92,29 +92,32 @@ $pending = git status --porcelain
 if (-not $pending) { Warn 'working tree is clean — nothing to commit'; exit 0 }
 
 $message = @'
-Replace Research OS branding with real identity; rebuild publications from thesis sources
+Raise type scale, cut homepage text, restore motion; fix blank /talks/ page
 
-- Remove ABP / Research OS branding and the Research|Recruiter mode toggle; one site for all readers
-- Hero: 5 expertise signals replace the ~100K images / #4 ODELIA stat strip
-- Import 19 real figures from the PhD thesis and manuscripts (Grad-CAM, attention maps,
-  slice-probability profiles, per-class AUC, ablations, architecture diagrams)
-- Delete all AI-generated publication illustrations; text-only cards where no real visual exists
-- Verify all 23 publications against DOI/arXiv/PubMed/proceedings; fix 3 wrong titles and add
-  DOIs for BE-WISE, MammoBLIP, MM-DETR, Exemplar Med-DETR, PatchCLIP and the ECR exhibits
-- Add BE-WISER and the explainable mammography VLM as new entries
-- Rewrite every summary from thesis LaTeX with exact reported metrics and dataset context
-- Publication pages restructured to a 1-min brief; add scripts/validate-stories.mjs QC gate
-- Correct LinkedIn URL and add Google Scholar across hero, contact, nav, CV and JSON-LD sameAs
-- Add Talks to the main nav so the conference gallery is reachable without the command palette
-
-Pre-application review:
-- Fix MM-DETR mAP delta (7.4 points absolute, not 12.8%) and an off-by-one task count in AGE
-- Remove an internal editorial note that was rendering on 20 pages via related-work cards
-- Unify job title across page titles, CV header and JSON-LD; soften one unquantified SOTA claim
-- Re-encode talk photos and portrait to WebP: 2.68 MB -> 0.98 MB
-- Raise minimum text size from 7.7px to a 10px floor; add missing h1 on /talks/
-- Truncate publication meta descriptions to ~155 chars for search snippets
-- Remove the global accuracy notice now that every link and DOI has been verified
+- Type scale: nothing renders below 12px (previous floor was 10px, with 363 of
+  379 text elements sitting at 10-13px); body copy now renders at 14-15px
+- Homepage word count 2855 -> 1993:
+  - Publication ledger rows drop the 100-word summary in favour of the one
+    reported result per paper (test AUC, BLEU, macro F1)
+  - Featured research cards show a one-sentence hook plus two reported metrics
+  - Experience shows three bullets per role, linking to the full CV for the rest
+  - AI-systems stack and skills lists become chip sets
+- Restore motion, all gated behind prefers-reduced-motion:
+  - Six animated stage glyphs in "From data to intelligence" (patch grid,
+    embedding bars, image-text alignment, reasoning tree, serving lanes,
+    validation ring)
+  - A highlight travelling 01 -> 08 through the AI-systems chain
+  - Scroll-drawn rails and node pulses on the trajectory timeline
+  - Figure zoom and light sweep on research cards; hover rails on list rows
+  - Reported numbers count up on scroll; scroll-position bar under the nav
+- Fix: /talks/ rendered completely blank in production. The reveal
+  IntersectionObserver existed only on the homepage, so that page's .reveal
+  elements stayed at opacity 0 permanently. Moved into BaseLayout so no page
+  can render reveal markup without it, plus a scroll fallback that catches
+  content an anchor jump skips past
+- Fix: venue, year and status no longer print twice where the venue string
+  already contains them; results from work that has not been peer reviewed
+  render in amber rather than mint and always carry the label
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_0152znbqXGJc5HpjctnfPsVV

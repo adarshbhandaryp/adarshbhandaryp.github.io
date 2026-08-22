@@ -20,6 +20,34 @@ export function getPublicationSummary(publication: PublicationEntry) {
   return publication.data.plainLanguageSummary;
 }
 
+/**
+ * Venue, year and status as parts of one line, without repeating themselves.
+ * Several venue strings already carry the year ("BVM 2026, 10-17") or the status
+ * ("Manuscript in preparation - no venue yet"), so those parts are dropped rather
+ * than printed twice. Work that has not been peer reviewed always says so.
+ */
+export function publicationMetaParts(publication: PublicationEntry) {
+  const { venue, year, status, peerReviewed } = publication.data;
+  const haystack = venue.toLowerCase();
+  const parts = [venue];
+
+  if (!haystack.includes(String(year))) parts.push(String(year));
+
+  for (const part of (status ?? '').split('·').map((piece) => piece.trim()).filter(Boolean)) {
+    if (!haystack.includes(part.toLowerCase())) parts.push(part);
+  }
+
+  if (!peerReviewed && !parts.join(' ').toLowerCase().includes('not peer reviewed')) {
+    parts.push('not peer reviewed');
+  }
+
+  return parts;
+}
+
+export function publicationMetaLine(publication: PublicationEntry) {
+  return publicationMetaParts(publication).join(' · ');
+}
+
 export function externalPublicationLinks(publication: PublicationEntry) {
   const links = publication.data.links;
 

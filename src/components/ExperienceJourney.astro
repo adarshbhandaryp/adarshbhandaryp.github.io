@@ -2,6 +2,9 @@
 import experience from '../data/experience.json';
 import education from '../data/education.json';
 import { sitePath } from '../utils/site';
+
+/* The homepage shows the first three bullets per role; the CV page carries the full list. */
+const HOMEPAGE_BULLETS = 3;
 ---
 
 <section id="experience" class="section-shell experience-section section-rule" aria-labelledby="experience-title">
@@ -17,26 +20,31 @@ import { sitePath } from '../utils/site';
       </div>
     </div>
 
-    <ol class="role-list reveal">
-      {experience.map((role) => (
-        <li>
-          <div class="role-when">
-            <p class="role-phase">{role.phase}</p>
-            <p class="role-dates">{role.dates}</p>
-            <p class="role-location">{role.location}</p>
-          </div>
-          <div class="role-what">
-            <h3>{role.role}</h3>
-            <p class="role-company">{role.company}</p>
-            <ul>{role.description.map((item) => <li>{item}</li>)}</ul>
-          </div>
-        </li>
-      ))}
+    <ol class="role-list" data-stagger-each="1">
+      {experience.map((role) => {
+        const shown = role.description.slice(0, HOMEPAGE_BULLETS);
+        const hidden = role.description.length - shown.length;
+        return (
+          <li>
+            <div class="role-when">
+              <p class="role-phase">{role.phase}</p>
+              <p class="role-dates">{role.dates}</p>
+              <p class="role-location">{role.location}</p>
+            </div>
+            <div class="role-what">
+              <h3>{role.role}</h3>
+              <p class="role-company">{role.company}</p>
+              <ul>{shown.map((item) => <li>{item}</li>)}</ul>
+              {hidden > 0 && <a href={sitePath('cv/')} class="role-more">{hidden} more on the CV →</a>}
+            </div>
+          </li>
+        );
+      })}
     </ol>
 
     <div class="education reveal">
       <p class="mono-label">EDUCATION</p>
-      <div>
+      <div data-stagger="90">
         {education.map((item) => (
           <article>
             <h3>{item.degree}</h3>
@@ -53,23 +61,28 @@ import { sitePath } from '../utils/site';
   .experience-section { background: linear-gradient(180deg,var(--ink),var(--surface)); }
   .experience-head { display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: 3rem; }
   .experience-head .text-link { margin-top: 1.4rem; }
-  .role-list { margin-top: clamp(3rem,6vw,5rem); border-top: 1px solid var(--line); }
-  .role-list > li { display: grid; grid-template-columns: 15rem minmax(0,1fr); gap: clamp(1.5rem,4vw,4rem); border-bottom: 1px solid var(--line); padding-block: 1.9rem 2.1rem; }
+  .role-list { margin-top: clamp(2.5rem,5vw,4rem); border-top: 1px solid var(--line); }
+  .role-list > li { position: relative; display: grid; grid-template-columns: 15rem minmax(0,1fr); gap: clamp(1.5rem,4vw,4rem); border-bottom: 1px solid var(--line); padding-block: 1.6rem 1.8rem; transition: background .35s ease; }
+  .role-list > li::before { position: absolute; left: 0; top: 0; width: 0; height: 1px; content: ''; background: linear-gradient(90deg,var(--cyan),transparent); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .role-list > li:hover::before { width: 100%; }
+  .role-list > li:hover { background: linear-gradient(90deg,rgba(50,199,255,.04),transparent 60%); }
   .role-when { position: relative; }
-  .role-phase { color: var(--mint); font-family: ui-monospace,monospace; font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-  .role-dates { margin-top: .7rem; color: #cbd8e8; font-family: ui-monospace,monospace; font-size: .62rem; }
-  .role-location { margin-top: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .role-phase { color: var(--mint); font-family: ui-monospace,monospace; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .role-dates { margin-top: .7rem; color: #cbd8e8; font-family: ui-monospace,monospace; font-size: .75rem; }
+  .role-location { margin-top: .35rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; }
   .role-what h3 { font-size: clamp(1.25rem,2.2vw,1.7rem); font-weight: 500; letter-spacing: -.02em; }
-  .role-company { margin-top: .45rem; color: var(--cyan); font-size: .78rem; }
-  .role-what ul { display: grid; gap: .55rem; margin-top: 1.2rem; }
-  .role-what li { position: relative; max-width: 52rem; color: var(--muted); font-size: .8rem; line-height: 1.72; padding-left: 1.1rem; }
+  .role-company { margin-top: .45rem; color: var(--cyan); font-size: .92rem; }
+  .role-what ul { display: grid; gap: .5rem; margin-top: 1rem; }
+  .role-what li { position: relative; max-width: 52rem; color: var(--muted); font-size: .94rem; line-height: 1.68; padding-left: 1.1rem; }
   .role-what li::before { position: absolute; left: 0; top: .1rem; content: '—'; color: #8ba0b8; }
-  .education { margin-top: clamp(3rem,6vw,5rem); }
+  .role-more { display: inline-block; margin-top: .85rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; transition: color .2s ease; }
+  .role-more:hover { color: var(--cyan); }
+  .education { margin-top: clamp(2.5rem,5vw,4rem); }
   .education > div { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 1rem; border: 1px solid var(--line); background: var(--line); }
   .education article { background: var(--surface); padding: 1.2rem; }
   .education h3 { font-size: .92rem; font-weight: 500; line-height: 1.35; }
-  .education p { margin-top: .55rem; color: var(--muted); font-size: .74rem; line-height: 1.55; }
-  .education small { display: block; margin-top: .7rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .62rem; }
+  .education p { margin-top: .55rem; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+  .education small { display: block; margin-top: .7rem; color: #8ba0b8; font-family: ui-monospace,monospace; font-size: .75rem; }
   @media (max-width: 860px) {
     .experience-head { grid-template-columns: 1fr; }
     .role-list > li { grid-template-columns: 1fr; gap: 1rem; }

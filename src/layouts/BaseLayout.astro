@@ -84,6 +84,116 @@ const structuredData = jsonLd ? [personJsonLd, ...(Array.isArray(jsonLd) ? jsonL
 	</head>
 	<body class="bg-primary text-text">
     <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="scroll-progress no-print" aria-hidden="true"></div>
     <slot />
+
+    <script>
+      /*
+       * Motion is set up here rather than per page: any page that renders a
+       * `.reveal` element needs this observer, and without it the element stays
+       * at opacity 0 forever.
+       *
+       * Two staggering modes:
+       *  [data-stagger]      — the container reveals at once, children offset in sequence.
+       *                        Only for groups that fit roughly within one viewport.
+       *  [data-stagger-each] — each child reveals on its own as it scrolls in; the value is
+       *                        the column count, so the delay restarts on every row. Used
+       *                        for long lists, which would otherwise sit invisible until
+       *                        far into view.
+       */
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((group) => {
+        const step = Number(group.dataset.stagger) || 60;
+        Array.from(group.children).forEach((child, index) => {
+          (child as HTMLElement).style.setProperty('--d', `${Math.min(index * step, 700)}ms`);
+        });
+      });
+      document.querySelectorAll<HTMLElement>('[data-stagger-each]').forEach((group) => {
+        const columns = Math.max(Number(group.dataset.staggerEach) || 1, 1);
+        Array.from(group.children).forEach((child, index) => {
+          child.classList.add('reveal');
+          (child as HTMLElement).style.setProperty('--d', `${(index % columns) * 110}ms`);
+        });
+      });
+
+      const animated = Array.from(document.querySelectorAll<HTMLElement>('.reveal, [data-stagger]'));
+      let pending = animated;
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        animated.forEach((element) => element.classList.add('is-visible'));
+        pending = [];
+      } else {
+        /* threshold 0 keeps this correct for containers taller than the viewport. */
+        const revealObserver = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+        }), { rootMargin: '0px 0px -9%', threshold: 0 });
+        animated.forEach((element) => revealObserver.observe(element));
+      }
+
+      /* Scroll-position bar, plus a safety net: an anchor jump can skip past an
+       * element fast enough that the observer never sees it intersect, which would
+       * leave real content stuck at opacity 0. Anything already above the fold is
+       * shown unconditionally. The pending list empties, so this costs nothing later. */
+      const progress = document.querySelector<HTMLElement>('.scroll-progress');
+      let queued = false;
+      const update = () => {
+        queued = false;
+        if (progress) {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          progress.style.setProperty('--scroll', String(max > 0 ? Math.min(window.scrollY / max, 1) : 0));
+        }
+        if (pending.length) {
+          pending = pending.filter((element) => {
+            if (element.classList.contains('is-visible')) return false;
+            if (element.getBoundingClientRect().top >= window.innerHeight) return true;
+            element.classList.add('is-visible');
+            return false;
+          });
+        }
+      };
+      window.addEventListener('scroll', () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
+      update();
+
+      /* Count numeric values up when they scroll into view. */
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      if (counters.length) {
+        const run = (element: HTMLElement) => {
+          const raw = element.dataset.count || '';
+          const match = raw.match(/-?[\d,]*\d(?:\.\d+)?/);
+          /* Leading zeros ("05") are deliberate formatting — never animate those away. */
+          if (!match || /^0\d/.test(match[0])) { element.textContent = raw; return; }
+          const numeric = match[0];
+          const grouped = numeric.includes(',');
+          const target = parseFloat(numeric.replace(/,/g, ''));
+          const decimals = (numeric.split('.')[1] || '').length;
+          const prefix = raw.slice(0, match.index);
+          const suffix = raw.slice((match.index || 0) + numeric.length);
+          const format = (value: number) => grouped
+            ? value.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+            : value.toFixed(decimals);
+          const duration = 900;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const t = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - t, 3);
+            element.textContent = `${prefix}${format(target * eased)}${suffix}`;
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        if (reducedMotion || !('IntersectionObserver' in window)) {
+          counters.forEach((element) => { element.textContent = element.dataset.count || ''; });
+        } else {
+          const countObserver = new IntersectionObserver((entries, observer) => entries.forEach((entry) => {
+            if (entry.isIntersecting) { run(entry.target as HTMLElement); observer.unobserve(entry.target); }
+          }), { threshold: .4 });
+          counters.forEach((element) => countObserver.observe(element));
+        }
+      }
+    </script>
 	</body>
 </html>

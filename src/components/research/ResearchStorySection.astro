@@ -72,7 +72,7 @@ const { section } = Astro.props;
 <style>
   .research-story-section { scroll-margin-top: calc(6rem + var(--notice-height)); border-top: 1px solid var(--line); padding-block: clamp(2.6rem,5vw,4rem); }
   .section-inner { display: grid; grid-template-columns: minmax(8rem,.24fr) minmax(0,1fr); gap: clamp(1rem,3vw,2.5rem); }
-  .section-label { padding-top: .35rem; color: var(--cyan); font: 600 .62rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .section-label { padding-top: .35rem; color: var(--cyan); font: 600 .75rem ui-monospace,monospace; letter-spacing: .12em; text-transform: uppercase; }
   .section-body { min-width: 0; }
   .section-body h2 { max-width: 30ch; font-size: clamp(1.45rem,2.6vw,2.2rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.16; }
 
@@ -82,8 +82,8 @@ const { section } = Astro.props;
   .research-pipeline { display: grid; grid-template-columns: repeat(auto-fit,minmax(7.5rem,1fr)); margin-top: 1.8rem; border: 1px solid var(--line); background: var(--surface); }
   .research-pipeline li { position: relative; min-height: 5.2rem; border-right: 1px solid var(--line); padding: .75rem .8rem; }
   .research-pipeline li:last-child { border-right: 0; }
-  .research-pipeline span { color: #8ba0b8; font: .62rem ui-monospace,monospace; }
-  .research-pipeline strong { display: block; margin-top: 1rem; color: #d9e6f3; font-size: .64rem; font-weight: 600; letter-spacing: .04em; line-height: 1.45; text-transform: uppercase; }
+  .research-pipeline span { color: #8ba0b8; font: .75rem ui-monospace,monospace; }
+  .research-pipeline strong { display: block; margin-top: 1rem; color: #d9e6f3; font-size: .78rem; font-weight: 600; letter-spacing: .04em; line-height: 1.45; text-transform: uppercase; }
 
   :global(.section-body .metric-strip) { margin-top: 1.8rem; }
 
@@ -92,15 +92,15 @@ const { section } = Astro.props;
   .comparison-grid article::before { display: block; width: 1.4rem; height: 2px; margin-bottom: 1rem; content: ''; background: var(--cyan); }
   .comparison-grid .tone-positive::before { background: var(--mint); }
   .comparison-grid .tone-caution::before { background: var(--amber); }
-  .comparison-grid span { color: #7f94ad; font: .62rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .comparison-grid span { color: #7f94ad; font: .75rem ui-monospace,monospace; letter-spacing: .1em; text-transform: uppercase; }
   .comparison-grid strong { display: block; margin-top: .5rem; font: 600 1.25rem/1.15 Outfit,sans-serif; letter-spacing: -.02em; }
-  .comparison-grid p { margin-top: .5rem; color: var(--muted); font-size: .64rem; line-height: 1.55; }
+  .comparison-grid p { margin-top: .5rem; color: var(--muted); font-size: .78rem; line-height: 1.55; }
 
   .result-table-wrap { margin-top: 1.8rem; overflow-x: auto; }
   .result-table { width: 100%; min-width: 22rem; border: 1px solid var(--line); border-collapse: collapse; background: var(--surface); }
-  .result-table caption { padding-bottom: .65rem; color: #8ba0b8; font: .62rem/1.6 ui-monospace,monospace; letter-spacing: .04em; text-align: left; }
-  .result-table th, .result-table td { border-bottom: 1px solid var(--line); padding: .65rem .8rem; font-size: .73rem; }
-  .result-table thead th { color: var(--cyan); font: 600 .62rem ui-monospace,monospace; letter-spacing: .1em; text-align: left; text-transform: uppercase; }
+  .result-table caption { padding-bottom: .65rem; color: #8ba0b8; font: .75rem/1.6 ui-monospace,monospace; letter-spacing: .04em; text-align: left; }
+  .result-table th, .result-table td { border-bottom: 1px solid var(--line); padding: .65rem .8rem; font-size: .86rem; }
+  .result-table thead th { color: var(--cyan); font: 600 .75rem ui-monospace,monospace; letter-spacing: .1em; text-align: left; text-transform: uppercase; }
   .result-table thead th.numeric { text-align: right; }
   .result-table .numeric { font-variant-numeric: tabular-nums; text-align: right; }
   .result-table tbody th { color: #cfdcec; font-weight: 500; text-align: left; }
@@ -108,7 +108,7 @@ const { section } = Astro.props;
   .result-table tbody tr:last-child th, .result-table tbody tr:last-child td { border-bottom: 0; }
   .result-table .is-highlight { background: rgba(124,245,204,.06); }
   .result-table .is-highlight th, .result-table .is-highlight td { color: var(--text); font-weight: 600; }
-  .table-footnote { max-width: 46rem; margin-top: .7rem; color: #7f94ad; font-size: .64rem; line-height: 1.6; }
+  .table-footnote { max-width: 46rem; margin-top: .7rem; color: #7f94ad; font-size: .78rem; line-height: 1.6; }
 
   .story-figures { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 1.8rem; align-items: start; }
   .story-figures.single { grid-template-columns: 1fr; }
